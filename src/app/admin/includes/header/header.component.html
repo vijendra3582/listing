@@ -1,0 +1,9 @@
+<nz-header>
+    <a routerLink="/dashboard"><div class="logo"></div></a>
+    <ul nz-menu nzMode="horizontal" class="menu-item">
+        <li *ngFor="let menu of adminMenu;" nzSelected nz-menu-item routerLink="{{ menu.link }}">
+            {{ menu.title }}
+        <li (click)="logout()" nz-menu-item class="logout-menu">Logout<i nz-icon nzType="logout" nzTheme="outline"></i>
+        </li>
+    </ul>
+</nz-header>

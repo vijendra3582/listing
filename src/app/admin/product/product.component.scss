@@ -1,0 +1,44 @@
+nz-steps {
+  float: left;
+}
+
+.ant-steps {
+  display: block;
+  float: left;
+  width: 20%;
+}
+
+.d-flex-center-product {
+  float: left;
+  width: 80%;
+  padding-left: 9%;
+}
+
+form.product-form {
+  width: 100%;
+}
+
+.steps-action {
+  float: left;
+  width: 100%;
+}
+
+nz-step {
+  padding-bottom: 1rem;
+}
+
+.steps-action > button {
+    margin-right: 2rem;
+}
+
+.steps-content {
+  float: left;
+  width: 50%;
+}
+
+.errors {
+  float: left;
+  width: 50%;
+  color: tomato;
+  font-weight: 500;
+}

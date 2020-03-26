@@ -1,0 +1,65 @@
+<div class="import-form">
+    <form nz-form [formGroup]="importForm">
+        <nz-form-item>
+            <nz-form-label nzRequired nzFor="file">Choose File</nz-form-label>
+            <nz-form-control>
+                <input type="file" id="file" (change)="beforeUploadFile($event.target.files)">
+                <button [disabled]="uploadingFile" nz-button>
+                    <i nz-icon [nzType]="uploadingFile ? 'loading' : 'upload'"></i>
+                    <span>Select File</span>
+                </button>
+            </nz-form-control>
+        </nz-form-item>
+        <button [disabled]="!listOfAllData.length" nz-button nzType="primary" (click)="submit()"
+            [nzLoading]="isSubmitLoading">Import Products</button>
+        <a href="/uploads/documents/product-sample.xlsx" class="download-sample" download="">Download Sample</a>
+    </form>
+</div>
+<div class="table-import">
+    <div class="operate"><span *ngIf="numberOfChecked">Selected {{ numberOfChecked }} items</span></div>
+    <nz-table #rowSelectionTable [nzData]="listOfAllData" [nzPageSize]="100"
+        (nzCurrentPageDataChange)="currentPageDataChange($event)">
+        <thead>
+            <tr>
+                <th nzShowCheckbox [(nzChecked)]="isAllDisplayDataChecked" [nzIndeterminate]="isIndeterminate"
+                    (nzCheckedChange)="checkAll($event)"></th>
+                <th>Category ID</th>
+                <th>Sub Category ID</th>
+                <th>Brand ID</th>
+                <th>Name</th>
+                <th>Slug</th>
+                <th>Description</th>
+                <th>Stock</th>
+                <th>Sale Price</th>
+                <th>Purchase Price</th>
+                <th>Discount Type</th>
+                <th>Discount</th>
+                <th>Tax Type</th>
+                <th>Tax</th>
+                <th>Featured</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let data of rowSelectionTable.data">
+                <td nzShowCheckbox [(nzChecked)]="mapOfCheckedId[data.id]" [nzDisabled]="data.disabled"
+                    (nzCheckedChange)="refreshStatus()"></td>
+                <td>{{ data.category_id }}</td>
+                <td>{{ data.sub_category_id }}</td>
+                <td>{{ data.brand_id }}</td>
+                <td>{{ data.name }}</td>
+                <td>{{ data.slug }}</td>
+                <td>{{ data.description }}</td>
+                <td>{{ data.stock }}</td>
+                <td>{{ data.sale_price }}</td>
+                <td>{{ data.purchase_price }}</td>
+                <td>{{ data.discount_type }}</td>
+                <td>{{ data.discount }}</td>
+                <td>{{ data.tax_type }}</td>
+                <td>{{ data.tax }}</td>
+                <td class="capitalize">{{ data.is_featured }}</td>
+                <td class="capitalize">{{ data.status }}</td>
+            </tr>
+        </tbody>
+    </nz-table>
+</div>

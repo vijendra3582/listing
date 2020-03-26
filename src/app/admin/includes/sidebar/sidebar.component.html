@@ -1,0 +1,22 @@
+<div class="content-wrapper">
+    <!-- SIDEBAR -->
+    <aside class="site-sidebar clearfix">
+        <nav class="sidebar-nav">
+            <ul class="nav in side-menu">
+                <li *ngFor="let menu of menues" class="current-page"
+                    [class]="[menu.children ? 'menu-item-has-children' : '']">
+                    <a href="javascript:void(0);">
+                        <i class="list-icon material-icons">{{ menu.icon }}</i> 
+                        <span class="hide-menu">{{ menu.name }}</span>
+                    </a>
+                    <ul *ngIf="menu.children" class="list-unstyled sub-menu">
+                        <li *ngFor="let children of menu.children">
+                            <a routerLink="/{{ children.link }}">{{ children.name }}</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <!-- /.side-menu -->
+        </nav>
+        <!-- /.sidebar-nav -->
+    </aside>

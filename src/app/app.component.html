@@ -1,0 +1,10 @@
+<nz-layout class="layout">
+    <app-header *ngIf="showAdmin"></app-header>
+    <nz-content>
+        <div [class]="{'inner-content' : showAdmin}">
+            <router-outlet></router-outlet>
+            <app-loader></app-loader>
+        </div>
+    </nz-content>
+    <app-footer *ngIf="showAdmin"></app-footer>
+</nz-layout>

@@ -1,0 +1,50 @@
+<span class="logo-name">{{ globalData.AppName }}</span>
+<div class="d-flex-center d-flex-center-mt4">
+    <form nz-form [formGroup]="registerForm" class="login-form">
+        <nz-form-item>
+            <nz-form-label nzRequired nzFor="name">Name</nz-form-label>
+            <nz-form-control>
+                <input nz-input id="name" formControlName="name" [(ngModel)]="registerData.name" />
+            </nz-form-control>
+            <app-field-error [submitted]="submitted" [server_message]="server_message.name" [server_message]="server_message.name" [control]="registerForm.get('name')"></app-field-error>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label nzRequired nzFor="email">E-mail</nz-form-label>
+            <nz-form-control>
+                <input nz-input formControlName="email" id="email" [(ngModel)]="registerData.email" />
+            </nz-form-control>
+            <app-field-error [submitted]="submitted" [server_message]="server_message.email" [control]="registerForm.get('email')"></app-field-error>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label nzRequired nzFor="mobile">Mobile</nz-form-label>
+            <nz-form-control>
+                <input formControlName="mobile" id="'mobile'" nz-input [(ngModel)]="registerData.mobile" />
+            </nz-form-control>
+            <app-field-error [submitted]="submitted" [server_message]="server_message.mobile" [control]="registerForm.get('mobile')"></app-field-error>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label nzRequired nzFor="password">Password</nz-form-label>
+            <nz-form-control>
+                <input nz-input type="password" id="password" formControlName="password"
+                    (ngModelChange)="updateConfirmValidator()" [(ngModel)]="registerData.password" />
+            </nz-form-control>
+            <app-field-error [submitted]="submitted" [server_message]="server_message.password" [control]="registerForm.get('password')"></app-field-error>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label nzRequired nzFor="confirm_password">Confirm Password</nz-form-label>
+            <nz-form-control>
+                <input nz-input type="password" formControlName="confirm_password" id="confirm_password"
+                    [(ngModel)]="registerData.confirm_password" />
+            </nz-form-control>
+            <app-field-error [submitted]="submitted" [server_message]="server_message.confirm_password" [control]="registerForm.get('confirm_password')"></app-field-error>
+        </nz-form-item>
+        <nz-form-item nz-row class="register-area">
+            <nz-form-control>
+                <button nz-button nzType="primary" class="login-form-button" [disabled]="!registerForm.valid"
+                    (click)="register()">Register</button>
+                Or
+                <a  routerLink="/auth/login">login now!</a>
+            </nz-form-control>
+        </nz-form-item>
+    </form>
+</div>

@@ -1,0 +1,12 @@
+.sub-menu-item li {
+  color: #000 !important;
+}
+.sub-menu-item li:focus {
+  outline: 0 !important;
+}
+li.logout-menu {
+  float: right;
+}
+li.logout-menu i {
+  margin-left: 8px;
+}

@@ -1,0 +1,422 @@
+<div class="buttons">
+    <span class="heading-uppper-table">{{ ProductAddEditModalTitle }}</span>
+    <a href="javascript:void(0)" (click)="add()" *ngIf="!ProductAddEditModal">New Product</a>
+    <a href="javascript:void(0)" (click)="cancel()" *ngIf="ProductAddEditModal">Manage Product</a>
+</div>
+<div class="nz-table" *ngIf="!ProductAddEditModal">
+    <nz-table #ajaxTable nzShowSizeChanger [nzFrontPagination]="false" [nzData]="listOfData" [nzLoading]="loading"
+        [nzTotal]="total" [(nzPageIndex)]="pageIndex" [(nzPageSize)]="pageSize" (nzPageIndexChange)="searchData()"
+        (nzPageSizeChange)="searchData(true)">
+        <thead (nzSortChange)="sort($event)" nzSingleSort>
+            <tr>
+                <th nzLeft="0px" nzShowSort nzSortKey="id">Product ID</th>
+                <th>Product SKU</th>
+                <th nzShowSort nzSortKey="name">Name</th>
+                <th>Logo</th>
+                <th>Category</th>
+                <th>Sub Category</th>
+                <th>Brand</th>
+                <th>Featured</th>
+                <th>Status</th>
+                <th nzRight="0px">Action</th>
+            </tr>
+            <tr>
+                <td class="p-td-search">
+                    <input type="text" (keyup.enter)="searchData(true)" [(ngModel)]="search.id" class="td-search">
+                </td>
+                <td class="p-td-search disabled"></td>
+                <td class="p-td-search">
+                    <input type="text" (keyup.enter)="searchData(true)" [(ngModel)]="search.name" class="td-search">
+                </td>
+                <td class="p-td-search disabled"></td>
+                <td class="p-td-search">
+                    <input type="text" (keyup.enter)="searchData(true)" [(ngModel)]="search.category" class="td-search">
+                </td>
+                <td class="p-td-search">
+                    <input type="text" (keyup.enter)="searchData(true)" [(ngModel)]="search.sub_category"
+                        class="td-search">
+                </td>
+                <td class="p-td-search">
+                    <input type="text" (keyup.enter)="searchData(true)" [(ngModel)]="search.brand" class="td-search">
+                </td>
+                <td class="p-td-search">
+                    <input type="text" (keyup.enter)="searchData(true)" [(ngModel)]="search.featured" class="td-search">
+                </td>
+                <td class="p-td-search">
+                    <input type="text" (keyup.enter)="searchData(true)" [(ngModel)]="search.status" class="td-search">
+                </td>
+                <td class="p-td-search disabled"></td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let data of ajaxTable.data; index as i">
+                <td nzLeft="0px">{{ data.id }}</td>
+                <td>{{ data.sku }}</td>
+                <td>{{ data.name }}</td>
+                <td>
+                    <img src="/uploads/images/{{ data.logo[0] }}" alt="{{ data.name }}" class="td-image">
+                </td>
+                <td>{{ data.category_name }}</td>
+                <td>{{ data.sub_category_name }}</td>
+                <td>{{ data.brand_name }}</td>
+                <td class="capitalize">
+                    <nz-switch [ngModel]="data.featured" nzCheckedChildren="Yes" nzUnCheckedChildren="No"
+                        (ngModelChange)="changeFeatured(data.id, data.featured)"></nz-switch>
+                </td>
+                <td class="capitalize">
+                    <nz-switch [ngModel]="data.status" nzCheckedChildren="Active" nzUnCheckedChildren="Inactive"
+                        (ngModelChange)="changeStatus(data.id, data.status)"></nz-switch>
+                </td>
+                <td nzRight="0px">
+                    <ul>
+                        <li class="orange"><a (click)="stockM(data.id)" class="stock">Stock</a></li>
+                        <li class="purple"><a (click)="discountM(data.id)" class="discount">Discount</a></li>
+                        <li class="black"><a (click)="taxM(data.id)" class="tax">Tax</a></li>
+                        <li class="gray"><a (click)="edit(data.id)" class="edit">Edit</a></li>
+                        <li class="tomato"><a nz-popconfirm nzPopconfirmTitle="Are you sure delete this product ?"
+                                (nzOnConfirm)="delete(data.id)" nzPopconfirmPlacement="topRight" class="delete"
+                                href="#">Delete</a></li>
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+    </nz-table>
+</div>
+<div class="div-modal" *ngIf="ProductAddEditModal">
+    <nz-steps [nzCurrent]="currentStepForm" nzDirection="vertical">
+        <nz-step nzTitle="Basic Detail"></nz-step>
+        <nz-step nzTitle="Product Detail"></nz-step>
+        <nz-step nzTitle="Product Images"></nz-step>
+        <nz-step nzTitle="Pricing"></nz-step>
+        <nz-step nzTitle="Finish"></nz-step>
+    </nz-steps>
+    <div class="d-flex-center-product d-flex-center-mt4">
+        <form nz-forms [formGroup]="productForm" class="product-form">
+            <div class="steps-content step-one" *ngIf="currentStepForm == 0">
+                <nz-form-item>
+                    <nz-form-label nzRequired nzFor="category_id">Category</nz-form-label>
+                    <nz-form-control>
+                        <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select category"
+                            formControlName="category_id" [(ngModel)]="product.category_id"
+                            (ngModelChange)="getSubCategory()">
+                            <nz-option *ngFor="let category of categories" nzLabel="{{ category.name }}"
+                                nzValue="{{ category.id }}"></nz-option>
+                        </nz-select>
+                    </nz-form-control>
+                    <app-field-error [submitted]="submitted" [server_message]="server_message.category_id"
+                        [control]="productForm.get('category_id')"></app-field-error>
+                </nz-form-item>
+                <nz-form-item>
+                    <nz-form-label nzRequired nzFor="sub_category_id">Sub Category</nz-form-label>
+                    <nz-form-control>
+                        <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select Sub Category"
+                            formControlName="sub_category_id" [(ngModel)]="product.sub_category_id">
+                            <nz-option *ngFor="let sub_category of sub_categories" nzLabel="{{ sub_category.name }}"
+                                nzValue="{{ sub_category.id }}"></nz-option>
+                        </nz-select>
+                    </nz-form-control>
+                    <app-field-error [submitted]="submitted" [server_message]="server_message.sub_category_id"
+                        [control]="productForm.get('sub_category_id')"></app-field-error>
+                </nz-form-item>
+                <nz-form-item>
+                    <nz-form-label nzRequired nzFor="brand_id">Brand</nz-form-label>
+                    <nz-form-control>
+                        <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select brand" formControlName="brand_id"
+                            [(ngModel)]="product.brand_id">
+                            <nz-option *ngFor="let brand of brands" nzLabel="{{ brand.name }}" nzValue="{{ brand.id }}">
+                            </nz-option>
+                        </nz-select>
+                    </nz-form-control>
+                    <app-field-error [submitted]="submitted" [server_message]="server_message.brand_id"
+                        [control]="productForm.get('brand_id')"></app-field-error>
+                </nz-form-item>
+                <div class="steps-action">
+                    <button
+                        [disabled]="productForm.get('category_id').errors || productForm.get('sub_category_id').errors || productForm.get('brand_id').errors"
+                        nz-button nzType="default" (click)="next()">
+                        <span>Next</span>
+                    </button>
+                </div>
+            </div>
+            <div class="steps-content step-two" *ngIf="currentStepForm == 1">
+                <nz-form-item>
+                    <nz-form-label nzRequired nzFor="name">Product Name</nz-form-label>
+                    <nz-form-control>
+                        <input nz-input id="name" formControlName="name" [(ngModel)]="product.name" />
+                    </nz-form-control>
+                    <app-field-error [submitted]="submitted" [server_message]="server_message.name"
+                        [control]="productForm.get('name')"></app-field-error>
+                </nz-form-item>
+                <nz-form-item>
+                    <nz-form-label nzRequired nzFor="slug">Slug</nz-form-label>
+                    <nz-form-control>
+                        <input nz-input id="slug" formControlName="slug" [(ngModel)]="product.slug"
+                            (focus)="convertToSlug()" />
+                    </nz-form-control>
+                    <app-field-error [submitted]="submitted" [server_message]="server_message.slug"
+                        [control]="productForm.get('slug')"></app-field-error>
+                </nz-form-item>
+                <nz-form-item>
+                    <nz-form-label nzRequired nzFor="description">Description</nz-form-label>
+                    <nz-form-control>
+                        <textarea rows="4" nz-input id="description" formControlName="description"
+                            [(ngModel)]="product.description"></textarea>
+                    </nz-form-control>
+                    <app-field-error [submitted]="submitted" [server_message]="server_message.description"
+                        [control]="productForm.get('description')"></app-field-error>
+                </nz-form-item>
+                <nz-form-item>
+                    <nz-form-label nzRequired nzFor="stock">Total Stock</nz-form-label>
+                    <nz-form-control>
+                        <input nz-input id="stock" formControlName="stock" [(ngModel)]="product.stock"
+                            (focus)="convertToSlug()" />
+                    </nz-form-control>
+                    <app-field-error [submitted]="submitted" [server_message]="server_message.stock"
+                        [control]="productForm.get('stock')"></app-field-error>
+                </nz-form-item>
+                <div class="steps-action">
+                    <button nz-button nzType="default" (click)="pre()">
+                        <span>Previous</span>
+                    </button>
+                    <button
+                        [disabled]="productForm.get('name').errors || productForm.get('slug').errors || productForm.get('description').errors  || productForm.get('stock').errors"
+                        nz-button nzType="default" (click)="next()">
+                        <span>Next</span>
+                    </button>
+                </div>
+            </div>
+            <div class="steps-content step-three" *ngIf="currentStepForm == 2">
+                <nz-form-item>
+                    <nz-form-label nzRequired nzFor="images">Images</nz-form-label>
+                    <nz-form-control>
+                        <input type="file" id="images" (change)="beforeUpload($event.target.files)" multiple>
+                        <button [disabled]="uploading" nz-button>
+                            <i nz-icon [nzType]="uploading ? 'loading' : 'upload'"></i>
+                            <span>Select File</span>
+                        </button>
+                    </nz-form-control>
+                    <div class="uploaded-images">
+                        <ul>
+                            <li *ngFor="let image of fileList; index as i">
+                                <img class="upload-image" src="/uploads/images/{{ image }}"/>
+                                <span class="image-name">{{ image }}</span>
+                                <span class="remove" (click)="removeImage(image, i, 'image')"><i nz-icon
+                                        nzType="close-circle" nzTheme="outline"></i></span>
+                            </li>
+                        </ul>
+                    </div>
+                </nz-form-item>
+                <nz-form-item>
+                    <nz-form-label nzRequired nzFor="images">Logo Image</nz-form-label>
+                    <nz-form-control>
+                        <input type="file" id="logo" (change)="beforeUploadLogo($event.target.files)" accept="image/png,image/jpeg,image/gif,image/bmp,image/jpg">
+                        <button [disabled]="uploadingLogo" nz-button>
+                            <i nz-icon [nzType]="uploadingLogo ? 'loading' : 'upload'"></i>
+                            <span>Select File</span>
+                        </button>
+                    </nz-form-control>
+                    <div class="uploaded-images">
+                        <ul>
+                            <li *ngFor="let image of fileListLogo; index as i">
+                                <img class="upload-image" src="/uploads/images/{{ image }}"/>
+                                <span class="image-name">{{ image }}</span>
+                                <span class="remove" (click)="removeImage(image, i, 'imageLogo')"><i nz-icon
+                                        nzType="close-circle" nzTheme="outline"></i></span>
+                            </li>
+                        </ul>
+                    </div>
+                </nz-form-item>
+                <div class="steps-action">
+                    <button nz-button nzType="default" (click)="pre()">
+                        <span>Previous</span>
+                    </button>
+                    <button [disabled]="fileList.length == 0 || fileListLogo.length == 0" nz-button nzType="default"
+                        (click)="next()">
+                        <span>Next</span>
+                    </button>
+                </div>
+            </div>
+            <div class="steps-content step-four" *ngIf="currentStepForm == 3">
+                <nz-form-item>
+                    <nz-form-label nzRequired nzFor="sale_price">Sale Price</nz-form-label>
+                    <nz-form-control>
+                        <input nz-input id="sale_price" formControlName="sale_price"
+                            (ngModelChange)="onChangeNumber($event, 'sale_price')" [(ngModel)]="product.sale_price" />
+                    </nz-form-control>
+                    <app-field-error [submitted]="submitted" [server_message]="server_message.sale_price"
+                        [control]="productForm.get('sale_price')"></app-field-error>
+                </nz-form-item>
+                <nz-form-item>
+                    <nz-form-label nzRequired nzFor="purchase_price">Purchase Price</nz-form-label>
+                    <nz-form-control>
+                        <input nz-input id="purchase_price" formControlName="purchase_price"
+                            (ngModelChange)="onChangeNumber($event, 'purchase_price')"
+                            [(ngModel)]="product.purchase_price" />
+                    </nz-form-control>
+                    <app-field-error [submitted]="submitted" [server_message]="server_message.purchase_price"
+                        [control]="productForm.get('purchase_price')"></app-field-error>
+                </nz-form-item>
+                <nz-form-item>
+                    <nz-form-label nzRequired nzFor="discount_type">Discount Type</nz-form-label>
+                    <nz-form-control>
+                        <nz-radio-group [(ngModel)]="product.discount_type" formControlName="discount_type">
+                            <label nz-radio nzValue="flat">Flat</label>
+                            <label nz-radio nzValue="percent">Percent</label>
+                        </nz-radio-group>
+                    </nz-form-control>
+                    <app-field-error [submitted]="submitted" [server_message]="server_message.discount_type"
+                        [control]="productForm.get('discount_type')"></app-field-error>
+                </nz-form-item>
+                <nz-form-item>
+                    <nz-form-label nzRequired nzFor="discount">Discount</nz-form-label>
+                    <nz-form-control>
+                        <input nz-input id="discount" formControlName="discount"
+                            (ngModelChange)="onChangeNumber($event, 'discount')" [(ngModel)]="product.discount" />
+                    </nz-form-control>
+                    <app-field-error [submitted]="submitted" [server_message]="server_message.discount"
+                        [control]="productForm.get('discount')"></app-field-error>
+                </nz-form-item>
+                <nz-form-item>
+                    <nz-form-label nzRequired nzFor="tax_type">Tax Type</nz-form-label>
+                    <nz-form-control>
+                        <nz-radio-group [(ngModel)]="product.tax_type" formControlName="tax_type">
+                            <label nz-radio nzValue="flat">Flat</label>
+                            <label nz-radio nzValue="percent">Percent</label>
+                        </nz-radio-group>
+                    </nz-form-control>
+                    <app-field-error [submitted]="submitted" [server_message]="server_message.tax_type"
+                        [control]="productForm.get('tax_type')"></app-field-error>
+                </nz-form-item>
+                <nz-form-item>
+                    <nz-form-label nzRequired nzFor="tax">Tax</nz-form-label>
+                    <nz-form-control>
+                        <input nz-input id="tax" formControlName="tax" (ngModelChange)="onChangeNumber($event, 'tax')"
+                            [(ngModel)]="product.tax" />
+                    </nz-form-control>
+                    <app-field-error [submitted]="submitted" [server_message]="server_message.tax"
+                        [control]="productForm.get('tax')"></app-field-error>
+                </nz-form-item>
+                <div class="steps-action">
+                    <button nz-button nzType="default" (click)="pre()">
+                        <span>Previous</span>
+                    </button>
+                    <button
+                        [disabled]="productForm.get('sale_price').errors || productForm.get('purchase_price').errors || productForm.get('discount').errors  || productForm.get('tax').errors"
+                        nz-button nzType="default" (click)="next()">
+                        <span>Next</span>
+                    </button>
+                </div>
+            </div>
+            <div class="steps-content step-five" *ngIf="currentStepForm == 4">
+                <nz-form-item>
+                    <nz-form-label nzRequired nzFor="is_featured">Featured</nz-form-label>
+                    <nz-form-control>
+                        <nz-radio-group [(ngModel)]="product.is_featured" formControlName="is_featured">
+                            <label nz-radio nzValue="no">No</label>
+                            <label nz-radio nzValue="yes">Yes</label>
+                        </nz-radio-group>
+                    </nz-form-control>
+                    <app-field-error [submitted]="submitted" [server_message]="server_message.is_featured"
+                        [control]="productForm.get('is_featured')"></app-field-error>
+                </nz-form-item>
+                <nz-form-item>
+                    <nz-form-label nzRequired nzFor="status">Status</nz-form-label>
+                    <nz-form-control>
+                        <nz-radio-group [(ngModel)]="product.status" formControlName="status">
+                            <label nz-radio nzValue="active">Active</label>
+                            <label nz-radio nzValue="inactive">Inactive</label>
+                        </nz-radio-group>
+                    </nz-form-control>
+                    <app-field-error [submitted]="submitted" [server_message]="server_message.status"
+                        [control]="productForm.get('status')"></app-field-error>
+                </nz-form-item>
+                <div class="steps-action">
+                    <button nz-button nzType="default" (click)="pre()">
+                        <span>Previous</span>
+                    </button>
+                    <button nz-button nzType="primary" [nzLoading]="isSubmitLoading" (click)="submit()">
+                        <span>{{ ProductAddEditModalButton }}</span>
+                    </button>
+                </div>
+            </div>
+            <div class="errors">
+                <ul>
+                    <li *ngFor="let item of server_message | keyvalue">
+                        {{ item.value.message }}
+                    </li>
+                </ul>
+            </div>
+        </form>
+    </div>
+</div>
+
+<nz-modal [(nzVisible)]="StockEditModal" nzTitle="{{ StockEditModalTitle }}" (nzOnCancel)="cancelStock()"
+    [nzFooter]="modalFooter" [nzNoAnimation]="true" [nzMaskClosable]="false">
+    <form nz-form >
+        <nz-form-item>
+            <nz-form-label nzRequired nzFor="stock">Total Stock</nz-form-label>
+            <nz-form-control>
+                <input nz-input id="stock" name="stock" [(ngModel)]="stock.stock"/>
+            </nz-form-control>
+            <app-field-error [server_message]="stockErrors.stock"></app-field-error>
+        </nz-form-item>
+        <ng-template #modalFooter>
+            <button nz-button nzType="default" (click)="cancelStock()">Cancel</button>
+            <button nz-button nzType="primary" (click)="updateStock()" [nzLoading]="isStockSubmitLoading">{{ StockEditModalButton }}</button>
+        </ng-template>
+    </form>
+</nz-modal>
+
+<nz-modal [(nzVisible)]="DiscountEditModal" nzTitle="{{ DiscountEditModalTitle }}" (nzOnCancel)="cancelDiscount()"
+    [nzFooter]="modalFooterDiscount" [nzNoAnimation]="true" [nzMaskClosable]="false">
+    <form nz-form >
+        <nz-form-item>
+            <nz-form-label nzRequired nzFor="discount_type">Discount Type</nz-form-label>
+            <nz-form-control>
+                <nz-radio-group [(ngModel)]="discount.discount_type" name="discount_type">
+                    <label nz-radio nzValue="flat">Flat</label>
+                    <label nz-radio nzValue="percent">Percent</label>
+                </nz-radio-group>
+            </nz-form-control>
+            <app-field-error [server_message]="discountErrors.discount_type"></app-field-error>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label nzRequired nzFor="discount">Discount</nz-form-label>
+            <nz-form-control>
+                <input nz-input id="discount" name="discount" [(ngModel)]="discount.discount"/>
+            </nz-form-control>
+            <app-field-error [server_message]="discountErrors.discount"></app-field-error>
+        </nz-form-item>
+        <ng-template #modalFooterDiscount>
+            <button nz-button nzType="default" (click)="cancelDiscount()">Cancel</button>
+            <button nz-button nzType="primary" (click)="updateDiscount()" [nzLoading]="isDiscountSubmitLoading">{{ DiscountEditModalButton }}</button>
+        </ng-template>
+    </form>
+</nz-modal>
+
+<nz-modal [(nzVisible)]="TaxEditModal" nzTitle="{{ TaxEditModalTitle }}" (nzOnCancel)="cancelTax()"
+    [nzFooter]="modalFooterTax" [nzNoAnimation]="true" [nzMaskClosable]="false">
+    <form nz-form >
+        <nz-form-item>
+            <nz-form-label nzRequired nzFor="tax_type">Tax Type</nz-form-label>
+            <nz-form-control>
+                <nz-radio-group [(ngModel)]="tax.tax_type" name="tax_type">
+                    <label nz-radio nzValue="flat">Flat</label>
+                    <label nz-radio nzValue="percent">Percent</label>
+                </nz-radio-group>
+            </nz-form-control>
+            <app-field-error [server_message]="taxErrors.tax_type"></app-field-error>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label nzRequired nzFor="tax">Tax</nz-form-label>
+            <nz-form-control>
+                <input nz-input id="tax" name="tax" [(ngModel)]="tax.tax"/>
+            </nz-form-control>
+            <app-field-error [server_message]="taxErrors.tax"></app-field-error>
+        </nz-form-item>
+        <ng-template #modalFooterTax>
+            <button nz-button nzType="default" (click)="cancelTax()">Cancel</button>
+            <button nz-button nzType="primary" (click)="updateTax()" [nzLoading]="isTaxSubmitLoading">{{ TaxEditModalButton }}</button>
+        </ng-template>
+    </form>
+</nz-modal>

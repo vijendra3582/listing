@@ -1,0 +1,21 @@
+<span class="logo-name">{{ globalData.AppName }}</span>
+<div class="d-flex-center d-flex-center-mt4">
+    <form nz-form [formGroup]="forgetForm" class="login-form">
+        <nz-form-item>
+            <nz-form-label nzRequired nzFor="email">E-mail</nz-form-label>
+            <nz-form-control>
+                <input nz-input formControlName="email" id="email" />
+            </nz-form-control>
+            <app-field-error [submitted]="submitted" [server_message]="server_message.email"
+                [control]="forgetForm.get('email')"></app-field-error>
+        </nz-form-item>
+        <nz-form-item nz-row class="register-area">
+            <nz-form-control>
+                <button nz-button nzType="primary" class="login-form-button" [disabled]="!forgetForm.valid"
+                    (click)="forget()">Forget Password</button>
+                Or
+                <a  routerLink="/auth/login">login now!</a>
+            </nz-form-control>
+        </nz-form-item>
+    </form>
+</div>
