@@ -17,6 +17,10 @@ export class AuthService {
         return this.api.post('auth/register', data);
     }
 
+    registerVendor(data) {
+        return this.api.post('auth/registerVendor', data);
+    }
+
     resendVerification(data) {
         return this.api.post('auth/resend-verification', data);
     }

@@ -1,0 +1,378 @@
+<div class="buttons">
+    <span class="heading-uppper-table">{{ BundleAddEditModalTitle }}</span>
+    <a href="javascript:void(0)" (click)="add()" *ngIf="!BundleAddEditModal">New Bundle</a>
+    <a href="javascript:void(0)" (click)="cancel()" *ngIf="BundleAddEditModal">Manage Bundle</a>
+</div>
+<div class="nz-table" *ngIf="!BundleAddEditModal">
+    <nz-table #ajaxTable nzShowSizeChanger [nzFrontPagination]="false" [nzData]="listOfData" [nzLoading]="loading"
+        [nzTotal]="total" [(nzPageIndex)]="pageIndex" [(nzPageSize)]="pageSize" (nzPageIndexChange)="searchData()"
+        (nzPageSizeChange)="searchData(true)">
+        <thead (nzSortChange)="sort($event)" nzSingleSort>
+            <tr>
+                <th nzLeft="0px" nzShowSort nzSortKey="id">Bundle ID</th>
+                <th nzShowSort nzSortKey="name">Name</th>
+                <th>Sale Price</th>
+                <th>Purchase Price</th>
+                <th>Featured</th>
+                <th>Status</th>
+                <th nzRight="0px">Action</th>
+            </tr>
+            <tr>
+                <td class="p-td-search">
+                    <input type="text" (keyup.enter)="searchData(true)" [(ngModel)]="search.id" class="td-search">
+                </td>
+                <td class="p-td-search">
+                    <input type="text" (keyup.enter)="searchData(true)" [(ngModel)]="search.name" class="td-search">
+                </td>
+                <td class="p-td-search disabled"></td>
+                <td class="p-td-search disabled"></td>
+                <td class="p-td-search">
+                    <input type="text" (keyup.enter)="searchData(true)" [(ngModel)]="search.featured" class="td-search">
+                </td>
+                <td class="p-td-search">
+                    <input type="text" (keyup.enter)="searchData(true)" [(ngModel)]="search.status" class="td-search">
+                </td>
+                <td class="p-td-search disabled"></td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let data of ajaxTable.data; index as i">
+                <td nzLeft="0px">{{ data.id }}</td>
+                <td>{{ data.name }}</td>
+                <td>{{ data.sale_price }}</td>
+                <td>{{ data.purchase_price }}</td>
+                <td class="capitalize">
+                    <nz-switch [ngModel]="data.featured" nzCheckedChildren="Yes" nzUnCheckedChildren="No"
+                        (ngModelChange)="changeFeatured(data.id, data.featured)"></nz-switch>
+                </td>
+                <td class="capitalize">
+                    <nz-switch [ngModel]="data.status" nzCheckedChildren="Active" nzUnCheckedChildren="Inactive"
+                        (ngModelChange)="changeStatus(data.id, data.status)"></nz-switch>
+                </td>
+                <td nzRight="0px">
+                    <ul>
+                        <li class="orange"><a (click)="stockM(data.id)" class="stock">Stock</a></li>
+                        <li class="purple"><a (click)="discountM(data.id)" class="discount">Discount</a></li>
+                        <li class="black"><a (click)="taxM(data.id)" class="tax">Tax</a></li>
+                        <li class="gray"><a (click)="edit(data.id)" class="edit">Edit</a></li>
+                        <li class="tomato"><a nz-popconfirm nzPopconfirmTitle="Are you sure delete this product ?"
+                                (nzOnConfirm)="delete(data.id)" nzPopconfirmPlacement="topRight" class="delete"
+                                href="#">Delete</a></li>
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+    </nz-table>
+</div>
+<div class="div-modal" *ngIf="BundleAddEditModal">
+    <nz-steps [nzCurrent]="currentStepForm" nzDirection="vertical">
+        <nz-step nzTitle="Product Detail"></nz-step>
+        <nz-step nzTitle="Bundle Detail"></nz-step>
+        <nz-step nzTitle="Pricing"></nz-step>
+        <nz-step nzTitle="Finish"></nz-step>
+    </nz-steps>
+    <div class="d-flex-center-product d-flex-center-mt4">
+        <form nz-forms [formGroup]="bundleForm" class="product-form">
+            <div class="steps-content step-one" *ngIf="currentStepForm == 0">
+                <div formArrayName="products" *ngFor="let control of bundleForm.controls.products?.value; let i = index" [formGroupName]="i">
+                    <nz-form-item *ngIf="i > 0">
+                        <nz-form-control>
+                            <button nz-button nzType="danger" class="add-button" (click)="removeControl(i)">
+                                <i nz-icon nzType="minus"></i>
+                                Remove
+                            </button>
+                        </nz-form-control>
+                    </nz-form-item>
+                    <nz-form-item>
+                        <nz-form-label nzRequired nzFor="category_id">Category</nz-form-label>
+                        <nz-form-control>
+                            <nz-select nzShowSearch nzAllowClear formControlName="category_id" nzPlaceHolder="Select Category"
+                                [(ngModel)]="bundle.products[i].category_id"
+                                (ngModelChange)="getSubCategory()">
+                                <nz-option *ngFor="let category of categories" nzLabel="{{ category.name }}"
+                                    nzValue="{{ category.id }}"></nz-option>
+                            </nz-select>
+                        </nz-form-control>
+                    </nz-form-item>
+                    <nz-form-item>
+                        <nz-form-label nzRequired nzFor="sub_category_id">Sub Category</nz-form-label>
+                        <nz-form-control>
+                            <nz-select nzShowSearch nzAllowClear formControlName="sub_category_id" nzPlaceHolder="Select Sub Category" [(ngModel)]="bundle.products[i].sub_category_id">
+                                <nz-option *ngFor="let sub_category of sub_categories" nzLabel="{{ sub_category.name }}"
+                                    nzValue="{{ sub_category.id }}"></nz-option>
+                            </nz-select>
+                        </nz-form-control>
+                    </nz-form-item>
+                    <nz-form-item>
+                        <nz-form-label nzRequired nzFor="brand_id">Brand</nz-form-label>
+                        <nz-form-control>
+                            <nz-select nzShowSearch nzAllowClear formControlName="brand_id" nzPlaceHolder="Select Brand"
+                                [(ngModel)]="bundle.products[i].brand_id">
+                                <nz-option *ngFor="let brand of brands" nzLabel="{{ brand.name }}"
+                                    nzValue="{{ brand.id }}">
+                                </nz-option>
+                            </nz-select>
+                        </nz-form-control>
+                    </nz-form-item>
+                    <nz-form-item>
+                        <nz-form-label nzRequired nzFor="product_id">Product</nz-form-label>
+                        <nz-form-control>
+                            <nz-select nzShowSearch nzAllowClear formControlName="product_id" nzPlaceHolder="Select Product"
+                            [(ngModel)]="bundle.products[i].product_id">
+                                <nz-option *ngFor="let product of products" nzLabel="{{ product.name }}"
+                                    nzValue="{{ product.id }}">
+                                </nz-option>
+                            </nz-select>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <nz-form-item>
+                    <nz-form-control>
+                        <button nz-button nzType="dashed" class="add-button" (click)="addControl()">
+                            <i nz-icon nzType="plus"></i>
+                            Add more
+                        </button>
+                    </nz-form-control>
+                </nz-form-item>
+                <div class="steps-action">
+                    <button
+                        [disabled]="!isValidControl"
+                        nz-button nzType="default" (click)="next()">
+                        <span>Next</span>
+                    </button>
+                </div>
+            </div>
+            <div class="steps-content step-two" *ngIf="currentStepForm == 1">
+                <nz-form-item>
+                    <nz-form-label nzRequired nzFor="name">Bundle Name</nz-form-label>
+                    <nz-form-control>
+                        <input nz-input id="name" formControlName="name" [(ngModel)]="bundle.name" />
+                    </nz-form-control>
+                    <app-field-error [submitted]="submitted" [server_message]="server_message.name"
+                        [control]="bundleForm.get('name')"></app-field-error>
+                </nz-form-item>
+                <nz-form-item>
+                    <nz-form-label nzRequired nzFor="slug">Slug</nz-form-label>
+                    <nz-form-control>
+                        <input nz-input id="slug" formControlName="slug" [(ngModel)]="bundle.slug"
+                            (focus)="convertToSlug()" />
+                    </nz-form-control>
+                    <app-field-error [submitted]="submitted" [server_message]="server_message.slug"
+                        [control]="bundleForm.get('slug')"></app-field-error>
+                </nz-form-item>
+                <nz-form-item>
+                    <nz-form-label nzRequired nzFor="description">Description</nz-form-label>
+                    <nz-form-control>
+                        <textarea rows="4" nz-input id="description" formControlName="description"
+                            [(ngModel)]="bundle.description"></textarea>
+                    </nz-form-control>
+                    <app-field-error [submitted]="submitted" [server_message]="server_message.description"
+                        [control]="bundleForm.get('description')"></app-field-error>
+                </nz-form-item>
+                <nz-form-item>
+                    <nz-form-label nzRequired nzFor="stock">Total Stock</nz-form-label>
+                    <nz-form-control>
+                        <input nz-input id="stock" formControlName="stock" [(ngModel)]="bundle.stock"
+                            (focus)="convertToSlug()" />
+                    </nz-form-control>
+                    <app-field-error [submitted]="submitted" [server_message]="server_message.stock"
+                        [control]="bundleForm.get('stock')"></app-field-error>
+                </nz-form-item>
+                <div class="steps-action">
+                    <button nz-button nzType="default" (click)="pre()">
+                        <span>Previous</span>
+                    </button>
+                    <button
+                        [disabled]="bundleForm.get('name').errors || bundleForm.get('slug').errors || bundleForm.get('description').errors  || bundleForm.get('stock').errors"
+                        nz-button nzType="default" (click)="next()">
+                        <span>Next</span>
+                    </button>
+                </div>
+            </div>
+            <div class="steps-content step-three" *ngIf="currentStepForm == 2">
+                <nz-form-item>
+                    <nz-form-label nzRequired nzFor="sale_price">Sale Price</nz-form-label>
+                    <nz-form-control>
+                        <input nz-input id="sale_price" formControlName="sale_price"
+                            (ngModelChange)="onChangeNumber($event, 'sale_price')" [(ngModel)]="bundle.sale_price" />
+                    </nz-form-control>
+                    <app-field-error [submitted]="submitted" [server_message]="server_message.sale_price"
+                        [control]="bundleForm.get('sale_price')"></app-field-error>
+                </nz-form-item>
+                <nz-form-item>
+                    <nz-form-label nzRequired nzFor="purchase_price">Purchase Price</nz-form-label>
+                    <nz-form-control>
+                        <input nz-input id="purchase_price" formControlName="purchase_price"
+                            (ngModelChange)="onChangeNumber($event, 'purchase_price')"
+                            [(ngModel)]="bundle.purchase_price" />
+                    </nz-form-control>
+                    <app-field-error [submitted]="submitted" [server_message]="server_message.purchase_price"
+                        [control]="bundleForm.get('purchase_price')"></app-field-error>
+                </nz-form-item>
+                <nz-form-item>
+                    <nz-form-label nzRequired nzFor="discount_type">Discount Type</nz-form-label>
+                    <nz-form-control>
+                        <nz-radio-group [(ngModel)]="bundle.discount_type" formControlName="discount_type">
+                            <label nz-radio nzValue="flat">Flat</label>
+                            <label nz-radio nzValue="percent">Percent</label>
+                        </nz-radio-group>
+                    </nz-form-control>
+                    <app-field-error [submitted]="submitted" [server_message]="server_message.discount_type"
+                        [control]="bundleForm.get('discount_type')"></app-field-error>
+                </nz-form-item>
+                <nz-form-item>
+                    <nz-form-label nzRequired nzFor="discount">Discount</nz-form-label>
+                    <nz-form-control>
+                        <input nz-input id="discount" formControlName="discount"
+                            (ngModelChange)="onChangeNumber($event, 'discount')" [(ngModel)]="bundle.discount" />
+                    </nz-form-control>
+                    <app-field-error [submitted]="submitted" [server_message]="server_message.discount"
+                        [control]="bundleForm.get('discount')"></app-field-error>
+                </nz-form-item>
+                <nz-form-item>
+                    <nz-form-label nzRequired nzFor="tax_type">Tax Type</nz-form-label>
+                    <nz-form-control>
+                        <nz-radio-group [(ngModel)]="bundle.tax_type" formControlName="tax_type">
+                            <label nz-radio nzValue="flat">Flat</label>
+                            <label nz-radio nzValue="percent">Percent</label>
+                        </nz-radio-group>
+                    </nz-form-control>
+                    <app-field-error [submitted]="submitted" [server_message]="server_message.tax_type"
+                        [control]="bundleForm.get('tax_type')"></app-field-error>
+                </nz-form-item>
+                <nz-form-item>
+                    <nz-form-label nzRequired nzFor="tax">Tax</nz-form-label>
+                    <nz-form-control>
+                        <input nz-input id="tax" formControlName="tax" (ngModelChange)="onChangeNumber($event, 'tax')"
+                            [(ngModel)]="bundle.tax" />
+                    </nz-form-control>
+                    <app-field-error [submitted]="submitted" [server_message]="server_message.tax"
+                        [control]="bundleForm.get('tax')"></app-field-error>
+                </nz-form-item>
+                <div class="steps-action">
+                    <button nz-button nzType="default" (click)="pre()">
+                        <span>Previous</span>
+                    </button>
+                    <button
+                        [disabled]="bundleForm.get('sale_price').errors || bundleForm.get('purchase_price').errors || bundleForm.get('discount').errors  || bundleForm.get('tax').errors"
+                        nz-button nzType="default" (click)="next()">
+                        <span>Next</span>
+                    </button>
+                </div>
+            </div>
+            <div class="steps-content step-four" *ngIf="currentStepForm == 3">
+                <nz-form-item>
+                    <nz-form-label nzRequired nzFor="is_featured">Featured</nz-form-label>
+                    <nz-form-control>
+                        <nz-radio-group [(ngModel)]="bundle.is_featured" formControlName="is_featured">
+                            <label nz-radio nzValue="no">No</label>
+                            <label nz-radio nzValue="yes">Yes</label>
+                        </nz-radio-group>
+                    </nz-form-control>
+                    <app-field-error [submitted]="submitted" [server_message]="server_message.is_featured"
+                        [control]="bundleForm.get('is_featured')"></app-field-error>
+                </nz-form-item>
+                <nz-form-item>
+                    <nz-form-label nzRequired nzFor="status">Status</nz-form-label>
+                    <nz-form-control>
+                        <nz-radio-group [(ngModel)]="bundle.status" formControlName="status">
+                            <label nz-radio nzValue="active">Active</label>
+                            <label nz-radio nzValue="inactive">Inactive</label>
+                        </nz-radio-group>
+                    </nz-form-control>
+                    <app-field-error [submitted]="submitted" [server_message]="server_message.status"
+                        [control]="bundleForm.get('status')"></app-field-error>
+                </nz-form-item>
+                <div class="steps-action">
+                    <button nz-button nzType="default" (click)="pre()">
+                        <span>Previous</span>
+                    </button>
+                    <button nz-button nzType="primary" [nzLoading]="isSubmitLoading" (click)="submit()">
+                        <span>{{ BundleAddEditModalButton }}</span>
+                    </button>
+                </div>
+            </div>
+            <div class="errors">
+                <ul>
+                    <li *ngFor="let item of server_message | keyvalue">
+                        {{ item.value.message }}
+                    </li>
+                </ul>
+            </div>
+        </form>
+    </div>
+</div>
+
+<nz-modal [(nzVisible)]="StockEditModal" nzTitle="{{ StockEditModalTitle }}" (nzOnCancel)="cancelStock()"
+    [nzFooter]="modalFooter" [nzNoAnimation]="true" [nzMaskClosable]="false">
+    <form nz-form>
+        <nz-form-item>
+            <nz-form-label nzRequired nzFor="stock">Total Stock</nz-form-label>
+            <nz-form-control>
+                <input nz-input id="stock" name="stock" [(ngModel)]="stock.stock" />
+            </nz-form-control>
+            <app-field-error [server_message]="stockErrors.stock"></app-field-error>
+        </nz-form-item>
+        <ng-template #modalFooter>
+            <button nz-button nzType="default" (click)="cancelStock()">Cancel</button>
+            <button nz-button nzType="primary" (click)="updateStock()"
+                [nzLoading]="isStockSubmitLoading">{{ StockEditModalButton }}</button>
+        </ng-template>
+    </form>
+</nz-modal>
+
+<nz-modal [(nzVisible)]="DiscountEditModal" nzTitle="{{ DiscountEditModalTitle }}" (nzOnCancel)="cancelDiscount()"
+    [nzFooter]="modalFooterDiscount" [nzNoAnimation]="true" [nzMaskClosable]="false">
+    <form nz-form>
+        <nz-form-item>
+            <nz-form-label nzRequired nzFor="discount_type">Discount Type</nz-form-label>
+            <nz-form-control>
+                <nz-radio-group [(ngModel)]="discount.discount_type" name="discount_type">
+                    <label nz-radio nzValue="flat">Flat</label>
+                    <label nz-radio nzValue="percent">Percent</label>
+                </nz-radio-group>
+            </nz-form-control>
+            <app-field-error [server_message]="discountErrors.discount_type"></app-field-error>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label nzRequired nzFor="discount">Discount</nz-form-label>
+            <nz-form-control>
+                <input nz-input id="discount" name="discount" [(ngModel)]="discount.discount" />
+            </nz-form-control>
+            <app-field-error [server_message]="discountErrors.discount"></app-field-error>
+        </nz-form-item>
+        <ng-template #modalFooterDiscount>
+            <button nz-button nzType="default" (click)="cancelDiscount()">Cancel</button>
+            <button nz-button nzType="primary" (click)="updateDiscount()"
+                [nzLoading]="isDiscountSubmitLoading">{{ DiscountEditModalButton }}</button>
+        </ng-template>
+    </form>
+</nz-modal>
+
+<nz-modal [(nzVisible)]="TaxEditModal" nzTitle="{{ TaxEditModalTitle }}" (nzOnCancel)="cancelTax()"
+    [nzFooter]="modalFooterTax" [nzNoAnimation]="true" [nzMaskClosable]="false">
+    <form nz-form>
+        <nz-form-item>
+            <nz-form-label nzRequired nzFor="tax_type">Tax Type</nz-form-label>
+            <nz-form-control>
+                <nz-radio-group [(ngModel)]="tax.tax_type" name="tax_type">
+                    <label nz-radio nzValue="flat">Flat</label>
+                    <label nz-radio nzValue="percent">Percent</label>
+                </nz-radio-group>
+            </nz-form-control>
+            <app-field-error [server_message]="taxErrors.tax_type"></app-field-error>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label nzRequired nzFor="tax">Tax</nz-form-label>
+            <nz-form-control>
+                <input nz-input id="tax" name="tax" [(ngModel)]="tax.tax" />
+            </nz-form-control>
+            <app-field-error [server_message]="taxErrors.tax"></app-field-error>
+        </nz-form-item>
+        <ng-template #modalFooterTax>
+            <button nz-button nzType="default" (click)="cancelTax()">Cancel</button>
+            <button nz-button nzType="primary" (click)="updateTax()"
+                [nzLoading]="isTaxSubmitLoading">{{ TaxEditModalButton }}</button>
+        </ng-template>
+    </form>
+</nz-modal>

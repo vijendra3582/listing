@@ -8,7 +8,8 @@ import
     SubCategoryComponent,
     BrandComponent,
     ProductComponent,
-    ImportProductComponent
+    ImportProductComponent,
+    BundleComponent
 } from './pages';
 import { Routes } from '@angular/router';
 import { AuthGuard } from './../guards/auth.guard';
@@ -64,5 +65,10 @@ export const adminRoutes: Routes = [
         path: "import-product",
         canActivate: [AuthGuard],
         component: ImportProductComponent
+    },
+    {
+        path: "bundle",
+        canActivate: [AuthGuard],
+        component: BundleComponent
     }
 ];

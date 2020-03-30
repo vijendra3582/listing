@@ -16,8 +16,16 @@ export class CommonService {
         return this.api.post('common/upload', body);
     }
 
+    uploadDocument(body) {
+        return this.api.post('common/uploadDocument', body);
+    }
+
     removeImage(image) {
         return this.api.post('common/removeImage', image);
+    }
+
+    removeDocument(image) {
+        return this.api.post('common/removeDocument', image);
     }
 
 }

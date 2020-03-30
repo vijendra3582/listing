@@ -45,6 +45,10 @@ export class HeaderComponent implements OnInit {
         "link": "/import-product"
       },
       {
+        "title": "Bundles",
+        "link": "/bundle"
+      },
+      {
         "title": "Orders",
         "link": "/order"
       },

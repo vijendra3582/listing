@@ -10,6 +10,7 @@ import { SubCategoryComponent } from './sub-category/sub-category.component';
 import { BrandComponent } from './brand/brand.component';
 import { ProductComponent } from './product/product.component';
 import { ImportProductComponent } from './import-product/import-product.component';
+import { BundleComponent } from './bundle/bundle.component';
 
 export const adminComponents = [
     HeaderComponent,
@@ -23,7 +24,8 @@ export const adminComponents = [
     SubCategoryComponent,
     BrandComponent,
     ProductComponent,
-    ImportProductComponent
+    ImportProductComponent,
+    BundleComponent
 ];
 
 
@@ -39,3 +41,5 @@ export * from './sub-category/sub-category.component';
 export * from './brand/brand.component';
 export * from './product/product.component';
 export * from './import-product/import-product.component';
+export * from './bundle/bundle.component';
+
