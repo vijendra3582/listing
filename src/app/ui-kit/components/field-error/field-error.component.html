@@ -1,4 +1,4 @@
-<div *ngIf="(submitted) && control.errors && !server_message" class="form-error-div">
+<div *ngIf="control.touched && control.errors && !server_message" class="form-error-div">
     <span *ngIf="control.errors['required']">Field is required.</span>
     <span *ngIf="control.errors['checkUsername']">Username is not valid.</span>
     <span *ngIf="control.errors['email']">Email is not valid.</span>
@@ -6,7 +6,6 @@
     <span *ngIf="control.errors['minlength']">Minimum length is {{control.errors['minlength']['requiredLength']}}.</span>
     <span *ngIf="control.errors['maxlength']">Maximum length is {{control.errors['maxlength']['requiredLength']}}.</span>
     <span *ngIf="control.errors['smallandspace']">Only small and space characters are allowed.</span>
-    <span *ngIf="control.errors['pattern']">{{ pattern }}.</span>
 </div>
 <div *ngIf="server_message" class="form-error-div">
     <span *ngIf="server_message">{{ server_message ? server_message.message : '' }}</span>

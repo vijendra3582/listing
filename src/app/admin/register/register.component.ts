@@ -30,9 +30,6 @@ export class RegisterComponent implements OnInit {
   uploading: boolean = false;
   uploadingSign: boolean = false;
 
-  addressProof: string = null;
-  addressProofSign: string = null;
-
   constructor(
     private fb: FormBuilder,
     private locationService: LocationService,
@@ -83,36 +80,37 @@ export class RegisterComponent implements OnInit {
   }
 
   beforeUpload = (files: FileList, type) => {
-    this.uploading = true;
+	if(type == "address"){
+	  this.uploading = true;
+	}else if(type == "sign"){
+	  this.uploadingSign = true;
+	}
     const formData = new FormData();
     for (let file of files as any) {
       formData.append('document', file);
     }
-
     this.commonService.uploadDocument(formData).subscribe(
       data => {
         if(type == "address"){
-          this.addressProof = data.files[0].image;
-          this.registerData.gst_add_proof_file = this.addressProof;
+          this.registerData.gst_add_proof_file = [...this.registerData.gst_add_proof_file, ...data.files];
+		  this.uploading = false;
         }else if(type == "sign"){
-          this.addressProofSign = data.files[0].image;
-          this.registerData.gst_add_proof_sign = this.addressProof;
+          this.registerData.gst_add_proof_sign = [...this.registerData.gst_add_proof_sign, ...data.files];
+		  this.uploadingSign = false;
         }
-        
-        this.uploading = false;
       }
     )
     return false;
   }
 
-  removeDocument(document, type) {
+  removeDocument(document, index, type) {
     this.commonService.removeDocument({ "document": document }).subscribe(
       data => {
         if (type == 'address')
-          this.registerData.gst_add_proof_file = null;
+          this.registerData.gst_add_proof_file.splice(index, 1);
 
         if (type == 'sign')
-          this.registerData.gst_add_proof_sign = null;
+          this.registerData.gst_add_proof_sign.splice(index, 1);
       },
       error => {
 
@@ -141,8 +139,8 @@ export class RegisterComponent implements OnInit {
     this.registerData.gst_add_pincode = null;
     this.registerData.gst_add_city = null;
     this.registerData.gst_add_state = null;
-    this.registerData.gst_add_proof_file = null;
-    this.registerData.gst_add_proof_sign = null;
+    this.registerData.gst_add_proof_file = [];
+    this.registerData.gst_add_proof_sign = [];
     this.registerData.is_bank = 0;
     this.registerData.bank_acc_holder_name = null;
     this.registerData.bank_acc_number = null;

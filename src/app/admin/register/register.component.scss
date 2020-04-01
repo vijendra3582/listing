@@ -27,10 +27,6 @@ nz-step {
   padding-bottom: 1rem;
 }
 
-.steps-action > button {
-    margin-right: 2rem;
-}
-
 .steps-content {
   float: left;
   width: 100%;
@@ -38,7 +34,7 @@ nz-step {
 
 .errors {
   float: left;
-  width: 50%;
+  width: 100%;
   color: tomato;
   font-weight: 500;
 }
@@ -46,4 +42,10 @@ nz-step {
 .ant-row {
     float: left;
     width: 100%;
+}
+
+a.back-login {
+    float: left;
+    margin-top: 1rem;
+    font-weight: 500;
 }

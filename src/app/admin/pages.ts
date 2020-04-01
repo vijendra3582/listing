@@ -11,6 +11,7 @@ import { BrandComponent } from './brand/brand.component';
 import { ProductComponent } from './product/product.component';
 import { ImportProductComponent } from './import-product/import-product.component';
 import { BundleComponent } from './bundle/bundle.component';
+import { VendorComponent } from './vendor/vendor.component';
 
 export const adminComponents = [
     HeaderComponent,
@@ -25,7 +26,8 @@ export const adminComponents = [
     BrandComponent,
     ProductComponent,
     ImportProductComponent,
-    BundleComponent
+    BundleComponent,
+	VendorComponent
 ];
 
 
@@ -42,4 +44,5 @@ export * from './brand/brand.component';
 export * from './product/product.component';
 export * from './import-product/import-product.component';
 export * from './bundle/bundle.component';
+export * from './vendor/vendor.component';
 

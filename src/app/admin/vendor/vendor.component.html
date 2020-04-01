@@ -1,25 +1,86 @@
-<span class="logo-name">{{ globalData.AppName }}</span>
-<div class="d-flex-center d-flex-center-mt4">
-    <form nz-form [formGroup]="registerForm" class="register-form">
-		<div class="errors">
-			<ul>
-				<li *ngFor="let item of server_message | keyvalue">
-					{{ item.value.message }}
-				</li>
-			</ul>
-		</div>
+<div class="buttons">
+    <span class="heading-uppper-table">Manage Vendor</span>
+    <a href="javascript:void(0)" (click)="add()">New Vendor</a>
+</div>
+<div class="nz-table">
+    <nz-table #ajaxTable nzShowSizeChanger [nzFrontPagination]="false" [nzData]="listOfData" [nzLoading]="loading"
+        [nzTotal]="total" [(nzPageIndex)]="pageIndex" [(nzPageSize)]="pageSize" (nzPageIndexChange)="searchData()"
+        (nzPageSizeChange)="searchData(true)">
+        <thead (nzSortChange)="sort($event)" nzSingleSort>
+            <tr>
+                <th nzLeft="0px" nzShowSort nzSortKey="id">Vendor ID</th>
+                <th nzShowSort nzSortKey="name">Name</th>
+                <th nzShowSort nzSortKey="email">Email</th>
+                <th nzShowSort nzSortKey="mobile">Mobile</th>
+                <th nzShowSort nzSortKey="status">Status</th>
+                <th nzRight="0px">Action</th>
+            </tr>
+            <tr>
+                <td class="p-td-search">
+                    <input type="text" (keyup.enter)="searchData()" [(ngModel)]="search.id" class="td-search">
+                </td>
+                <td class="p-td-search">
+                    <input type="text" (keyup.enter)="searchData()" [(ngModel)]="search.name" class="td-search">
+                </td>
+                <td class="p-td-search">
+                    <input type="text" (keyup.enter)="searchData()" [(ngModel)]="search.email" class="td-search">
+                </td>
+                <td class="p-td-search">
+                    <input type="text" (keyup.enter)="searchData()" [(ngModel)]="search.mobile" class="td-search">
+                </td>
+                <td class="p-td-search">
+                    <input type="text" (keyup.enter)="searchData()" [(ngModel)]="search.status" class="td-search">
+                </td>
+                <td class="p-td-search disabled">
+
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let data of ajaxTable.data; index as i">
+                <td nzLeft="0px">{{ data.id }}</td>
+                <td>{{ data.name }}</td>
+                <td>{{ data.email }}</td>
+                <td>{{ data.mobile }}</td>
+                <td class="capitalize">{{ data.status }}</td>
+                <td nzRight="0px">
+                    <ul>
+                        <li class="gray">
+                            <a (click)="edit(data.id)" class="edit">Edit</a>
+                        </li>
+                        <li class="tomato">
+                            <a nz-popconfirm nzPopconfirmTitle="Are you sure delete this vendor ?"
+                                (nzOnConfirm)="delete(data.id)" nzPopconfirmPlacement="topRight" class="delete"
+                                href="#">Delete</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+    </nz-table>
+</div>
+<nz-modal [(nzVisible)]="VendorAddEditModal" nzTitle="{{ VendorAddEditModalTitle }}" (nzOnCancel)="cancel()"
+    [nzFooter]="modalFooter" [nzNoAnimation]="true" [nzMaskClosable]="false">
+    <form nz-form [formGroup]="vendorForm" class="register-form">
+        <div class="errors">
+            <ul>
+                <li *ngFor="let item of server_message | keyvalue">
+                    {{ item.value.message }}
+                </li>
+            </ul>
+        </div>
         <div class="steps-content step-one" *ngIf="currentStepForm == 0">
             <nz-form-item>
                 <nz-form-label nzRequired nzFor="mobile">Mobile</nz-form-label>
                 <nz-form-control>
-                    <input formControlName="mobile" id="'mobile'" nz-input [(ngModel)]="registerData.mobile" />
+                    <input formControlName="mobile" id="'mobile'" nz-input [(ngModel)]="vendor.mobile" />
                 </nz-form-control>
                 <app-field-error [submitted]="submitted" [server_message]="server_message.mobile"
-                    [control]="registerForm.get('mobile')"></app-field-error>
+                    [control]="vendorForm.get('mobile')"></app-field-error>
             </nz-form-item>
             <div class="steps-action">
                 <button [disabled]="
-                    registerForm.get('mobile').errors" nz-button nzType="default" (click)="next()">
+                    vendorForm.get('mobile').errors" nz-button nzType="default" (click)="next()">
                     <span>Next</span>
                 </button>
             </div>
@@ -29,54 +90,43 @@
             <nz-form-item>
                 <nz-form-label nzRequired nzFor="name">Name</nz-form-label>
                 <nz-form-control>
-                    <input nz-input id="name" formControlName="name" [(ngModel)]="registerData.name" />
+                    <input nz-input id="name" formControlName="name" [(ngModel)]="vendor.name" />
                 </nz-form-control>
                 <app-field-error [submitted]="submitted" [server_message]="server_message.name"
-                    [server_message]="server_message.name" [control]="registerForm.get('name')"></app-field-error>
+                    [server_message]="server_message.name" [control]="vendorForm.get('name')"></app-field-error>
             </nz-form-item>
             <nz-form-item>
                 <nz-form-label nzRequired nzFor="email">E-mail</nz-form-label>
                 <nz-form-control>
-                    <input nz-input formControlName="email" id="email" [(ngModel)]="registerData.email" />
+                    <input nz-input formControlName="email" id="email" [(ngModel)]="vendor.email" />
                 </nz-form-control>
                 <app-field-error [submitted]="submitted" [server_message]="server_message.email"
-                    [control]="registerForm.get('email')"></app-field-error>
+                    [control]="vendorForm.get('email')"></app-field-error>
             </nz-form-item>
             <nz-form-item>
                 <nz-form-label nzRequired nzFor="mobile">Mobile</nz-form-label>
                 <nz-form-control>
-                    <input formControlName="mobile" id="'mobile'" nz-input [(ngModel)]="registerData.mobile" />
+                    <input formControlName="mobile" id="'mobile'" nz-input [(ngModel)]="vendor.mobile" />
                 </nz-form-control>
                 <app-field-error [submitted]="submitted" [server_message]="server_message.mobile"
-                    [control]="registerForm.get('mobile')"></app-field-error>
+                    [control]="vendorForm.get('mobile')"></app-field-error>
             </nz-form-item>
-            <nz-form-item>
+            <nz-form-item *ngIf="!vendor.id">
                 <nz-form-label nzRequired nzFor="password">Password</nz-form-label>
                 <nz-form-control>
-                    <input nz-input type="password" id="password" formControlName="password"
-                        (ngModelChange)="updateConfirmValidator()" [(ngModel)]="registerData.password" />
+                    <input nz-input id="password" formControlName="password" [(ngModel)]="vendor.password" />
                 </nz-form-control>
                 <app-field-error [submitted]="submitted" [server_message]="server_message.password"
-                    [control]="registerForm.get('password')"></app-field-error>
-            </nz-form-item>
-            <nz-form-item>
-                <nz-form-label nzRequired nzFor="confirm_password">Confirm Password</nz-form-label>
-                <nz-form-control>
-                    <input nz-input type="password" formControlName="confirm_password" id="confirm_password"
-                        [(ngModel)]="registerData.confirm_password" />
-                </nz-form-control>
-                <app-field-error [submitted]="submitted" [server_message]="server_message.confirm_password"
-                    [control]="registerForm.get('confirm_password')"></app-field-error>
+                    [control]="vendorForm.get('password')"></app-field-error>
             </nz-form-item>
             <div class="steps-action">
                 <button nz-button nzType="default" (click)="pre()">
                     <span>Previous</span>
                 </button>
-                <button [disabled]="registerForm.get('name').errors || 
-                registerForm.get('email').errors || 
-                registerForm.get('password').errors || 
-                registerForm.get('confirm_password').errors || 
-                registerForm.get('mobile').errors" nz-button nzType="default" (click)="next()">
+                <button [disabled]="vendorForm.get('name').errors || 
+                vendorForm.get('email').errors || 
+                (vendorForm.get('password').errors && !vendor.id) || 
+                vendorForm.get('mobile').errors" nz-button nzType="default" (click)="next()">
                     <span>Next</span>
                 </button>
             </div>
@@ -87,51 +137,51 @@
                 <nz-form-label nzRequired nzFor="address">Address</nz-form-label>
                 <nz-form-control>
                     <textarea rows="4" nz-input id="address" formControlName="address"
-                        [(ngModel)]="registerData.address"></textarea>
+                        [(ngModel)]="vendor.address"></textarea>
                 </nz-form-control>
                 <app-field-error [submitted]="submitted" [server_message]="server_message.address"
-                    [control]="registerForm.get('address')"></app-field-error>
+                    [control]="vendorForm.get('address')"></app-field-error>
             </nz-form-item>
             <nz-form-item>
                 <nz-form-label nzRequired nzFor="pincode">Pincode</nz-form-label>
                 <nz-form-control>
-                    <input nz-input id="pincode" formControlName="pincode" [(ngModel)]="registerData.pincode" />
+                    <input nz-input id="pincode" formControlName="pincode" [(ngModel)]="vendor.pincode" />
                 </nz-form-control>
                 <app-field-error [submitted]="submitted" [server_message]="server_message.pincode"
-                    [control]="registerForm.get('pincode')"></app-field-error>
+                    [control]="vendorForm.get('pincode')"></app-field-error>
             </nz-form-item>
             <nz-form-item>
                 <nz-form-label nzRequired nzFor="state">State</nz-form-label>
                 <nz-form-control>
                     <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a State" formControlName="state"
-                        [(ngModel)]="registerData.state" (ngModelChange)="getCity('state')">
+                        [(ngModel)]="vendor.state" (ngModelChange)="getCity('state')">
                         <nz-option *ngFor="let option of states.states" [nzLabel]="option.name" [nzValue]="option.id">
                         </nz-option>
                     </nz-select>
                 </nz-form-control>
                 <app-field-error [submitted]="submitted" [server_message]="server_message.state"
-                    [control]="registerForm.get('state')"></app-field-error>
+                    [control]="vendorForm.get('state')"></app-field-error>
             </nz-form-item>
             <nz-form-item>
                 <nz-form-label nzRequired nzFor="city">City</nz-form-label>
                 <nz-form-control>
                     <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a city" formControlName="city"
-                        [(ngModel)]="registerData.city">
+                        [(ngModel)]="vendor.city">
                         <nz-option *ngFor="let option of cities.cities" [nzLabel]="option.name" [nzValue]="option.id">
                         </nz-option>
                     </nz-select>
                 </nz-form-control>
                 <app-field-error [submitted]="submitted" [server_message]="server_message.city"
-                    [control]="registerForm.get('city')"></app-field-error>
+                    [control]="vendorForm.get('city')"></app-field-error>
             </nz-form-item>
             <div class="steps-action">
                 <button nz-button nzType="default" (click)="pre()">
                     <span>Previous</span>
                 </button>
-                <button [disabled]="registerForm.get('address').errors || 
-                registerForm.get('pincode').errors || 
-                registerForm.get('state').errors || 
-                registerForm.get('city').errors" nz-button nzType="default" (click)="next()">
+                <button [disabled]="vendorForm.get('address').errors || 
+                vendorForm.get('pincode').errors || 
+                vendorForm.get('state').errors || 
+                vendorForm.get('city').errors" nz-button nzType="default" (click)="next()">
                     <span>Next</span>
                 </button>
             </div>
@@ -141,90 +191,90 @@
             <nz-form-item>
                 <nz-form-label nzRequired nzFor="is_gst">GST</nz-form-label>
                 <nz-form-control>
-                    <nz-radio-group [(ngModel)]="registerData.is_gst" formControlName="is_gst">
+                    <nz-radio-group [(ngModel)]="vendor.is_gst" formControlName="is_gst">
                         <label nz-radio nzValue="1">I have GST</label>
                         <label nz-radio nzValue="2">I will only sell in GSTIN exempt categories like books</label>
                         <label nz-radio nzValue="0">I have applied for GST & update it later</label>
                     </nz-radio-group>
                 </nz-form-control>
                 <app-field-error [submitted]="submitted" [server_message]="server_message.is_gst"
-                    [control]="registerForm.get('is_gst')"></app-field-error>
+                    [control]="vendorForm.get('is_gst')"></app-field-error>
             </nz-form-item>
-            <div *ngIf="registerData.is_gst == 1">
+            <div *ngIf="vendor.is_gst == 1">
                 <nz-form-item>
                     <nz-form-label nzRequired nzFor="gst_number">GST Number</nz-form-label>
                     <nz-form-control>
                         <input nz-input id="gst_number" formControlName="gst_number"
-                            [(ngModel)]="registerData.gst_number" />
+                            [(ngModel)]="vendor.gst_number" />
                     </nz-form-control>
                     <app-field-error [submitted]="submitted" [server_message]="server_message.gst_number"
-                        [control]="registerForm.get('gst_number')"></app-field-error>
+                        [control]="vendorForm.get('gst_number')"></app-field-error>
                 </nz-form-item>
             </div>
-            <div *ngIf="registerData.is_gst == 2">
+            <div *ngIf="vendor.is_gst == 2">
                 <h5>Information</h5>
                 <nz-form-item>
                     <nz-form-label nzRequired nzFor="gst_bussiness_name">Business Name</nz-form-label>
                     <nz-form-control>
                         <input nz-input id="gst_bussiness_name" formControlName="gst_bussiness_name"
-                            [(ngModel)]="registerData.gst_bussiness_name" />
+                            [(ngModel)]="vendor.gst_bussiness_name" />
                     </nz-form-control>
                     <app-field-error [submitted]="submitted" [server_message]="server_message.gst_bussiness_name"
-                        [control]="registerForm.get('gst_bussiness_name')"></app-field-error>
+                        [control]="vendorForm.get('gst_bussiness_name')"></app-field-error>
                 </nz-form-item>
                 <nz-form-item>
                     <nz-form-label nzRequired nzFor="gst_pan">PAN</nz-form-label>
                     <nz-form-control>
-                        <input nz-input id="gst_pan" formControlName="gst_pan" [(ngModel)]="registerData.gst_pan" />
+                        <input nz-input id="gst_pan" formControlName="gst_pan" [(ngModel)]="vendor.gst_pan" />
                     </nz-form-control>
                     <app-field-error [submitted]="submitted" [server_message]="server_message.gst_pan"
-                        [control]="registerForm.get('gst_pan')"></app-field-error>
+                        [control]="vendorForm.get('gst_pan')"></app-field-error>
                 </nz-form-item>
                 <nz-form-item>
                     <nz-form-label nzRequired nzFor="gst_bussiness_type">Business Type</nz-form-label>
                     <nz-form-control>
-                        <nz-radio-group [(ngModel)]="registerData.gst_bussiness_type"
+                        <nz-radio-group [(ngModel)]="vendor.gst_bussiness_type"
                             formControlName="gst_bussiness_type">
                             <label nz-radio nzValue="proprietor">Proprietor</label>
                             <label nz-radio nzValue="company">Company</label>
                         </nz-radio-group>
                     </nz-form-control>
                     <app-field-error [submitted]="submitted" [server_message]="server_message.gst_bussiness_type"
-                        [control]="registerForm.get('gst_bussiness_type')"></app-field-error>
+                        [control]="vendorForm.get('gst_bussiness_type')"></app-field-error>
                 </nz-form-item>
                 <h5>Address</h5>
                 <nz-form-item>
                     <nz-form-label nzRequired nzFor="gst_add_room">Room / Floor / Building</nz-form-label>
                     <nz-form-control>
                         <input nz-input id="gst_add_room" formControlName="gst_add_room"
-                            [(ngModel)]="registerData.gst_add_room" />
+                            [(ngModel)]="vendor.gst_add_room" />
                     </nz-form-control>
                     <app-field-error [submitted]="submitted" [server_message]="server_message.gst_add_room"
-                        [control]="registerForm.get('gst_add_room')"></app-field-error>
+                        [control]="vendorForm.get('gst_add_room')"></app-field-error>
                 </nz-form-item>
                 <nz-form-item>
                     <nz-form-label nzRequired nzFor="gst_add_street">Street / Locality / Landmark</nz-form-label>
                     <nz-form-control>
                         <input nz-input id="gst_add_street" formControlName="gst_add_street"
-                            [(ngModel)]="registerData.gst_add_street" />
+                            [(ngModel)]="vendor.gst_add_street" />
                     </nz-form-control>
                     <app-field-error [submitted]="submitted" [server_message]="server_message.gst_add_street"
-                        [control]="registerForm.get('gst_add_street')"></app-field-error>
+                        [control]="vendorForm.get('gst_add_street')"></app-field-error>
                 </nz-form-item>
                 <nz-form-item>
                     <nz-form-label nzRequired nzFor="gst_add_pincode">Pincode</nz-form-label>
                     <nz-form-control>
                         <input nz-input id="gst_add_pincode" formControlName="gst_add_pincode"
-                            [(ngModel)]="registerData.gst_add_pincode" />
+                            [(ngModel)]="vendor.gst_add_pincode" />
                     </nz-form-control>
                     <app-field-error [submitted]="submitted" [server_message]="server_message.gst_add_pincode"
-                        [control]="registerForm.get('gst_add_pincode')"></app-field-error>
+                        [control]="vendorForm.get('gst_add_pincode')"></app-field-error>
                 </nz-form-item>
                 <nz-form-item>
                     <nz-form-label nzRequired nzFor="gst_add_state">State</nz-form-label>
                     <nz-form-control>
                         <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a State"
-                            formControlName="gst_add_state" [(ngModel)]="registerData.gst_add_state"
+                            formControlName="gst_add_state" [(ngModel)]="vendor.gst_add_state"
                             (ngModelChange)="getCity('gst')">
                             <nz-option *ngFor="let option of states.states" [nzLabel]="option.name"
                                 [nzValue]="option.id">
@@ -232,26 +282,27 @@
                         </nz-select>
                     </nz-form-control>
                     <app-field-error [submitted]="submitted" [server_message]="server_message.gst_add_state"
-                        [control]="registerForm.get('gst_add_state')"></app-field-error>
+                        [control]="vendorForm.get('gst_add_state')"></app-field-error>
                 </nz-form-item>
                 <nz-form-item>
                     <nz-form-label nzRequired nzFor="gst_add_city">City</nz-form-label>
                     <nz-form-control>
                         <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a city"
-                            formControlName="gst_add_city" [(ngModel)]="registerData.gst_add_city">
+                            formControlName="gst_add_city" [(ngModel)]="vendor.gst_add_city">
                             <nz-option *ngFor="let option of citiesGST.cities" [nzLabel]="option.name"
                                 [nzValue]="option.id">
                             </nz-option>
                         </nz-select>
                     </nz-form-control>
                     <app-field-error [submitted]="submitted" [server_message]="server_message.gst_add_city"
-                        [control]="registerForm.get('gst_add_city')"></app-field-error>
+                        [control]="vendorForm.get('gst_add_city')"></app-field-error>
                 </nz-form-item>
                 <h5>Address Proof</h5>
                 <nz-form-item>
                     <nz-form-label nzRequired nzFor="gst_add_proof_file">File</nz-form-label>
                     <nz-form-control>
-                        <input type="file" id="gst_add_proof_file" (change)="beforeUpload($event.target.files, 'address')">
+                        <input type="file" id="gst_add_proof_file"
+                            (change)="beforeUpload($event.target.files, 'address')">
                         <button [disabled]="uploading" nz-button>
                             <i nz-icon [nzType]="uploading ? 'loading' : 'upload'"></i>
                             <span>Select File</span>
@@ -259,10 +310,9 @@
                     </nz-form-control>
                     <div class="uploaded-images">
                         <ul>
-                            <li *ngFor="let document of registerData.gst_add_proof_file; index as i">
+                            <li *ngFor="let document of vendor.gst_add_proof_file; index as i">
                                 <span class="image-name">{{ document }}</span>
-                                <span class="remove"
-                                    (click)="removeDocument(document, i, 'address')"><i nz-icon
+                                <span class="remove" (click)="removeDocument(document, i, 'address')"><i nz-icon
                                         nzType="close-circle" nzTheme="outline"></i></span>
                             </li>
                         </ul>
@@ -278,12 +328,11 @@
                             <span>Select File</span>
                         </button>
                     </nz-form-control>
-					<div class="uploaded-images">
+                    <div class="uploaded-images">
                         <ul>
-                            <li *ngFor="let document of registerData.gst_add_proof_sign; index as i">
+                            <li *ngFor="let document of vendor.gst_add_proof_sign; index as i">
                                 <span class="image-name">{{ document }}</span>
-                                <span class="remove"
-                                    (click)="removeDocument(document, i, 'sign')"><i nz-icon
+                                <span class="remove" (click)="removeDocument(document, i, 'sign')"><i nz-icon
                                         nzType="close-circle" nzTheme="outline"></i></span>
                             </li>
                         </ul>
@@ -294,17 +343,17 @@
                 <button nz-button nzType="default" (click)="pre()">
                     <span>Previous</span>
                 </button>
-                <button [disabled]="registerForm.get('is_gst').errors || 
-                    registerForm.get('gst_bussiness_name').errors || 
-                    registerForm.get('gst_pan').errors || 
-                    registerForm.get('gst_bussiness_type').errors || 
-                    registerForm.get('gst_add_room').errors || 
-                    registerForm.get('gst_add_street').errors || 
-                    registerForm.get('gst_add_pincode').errors || 
-                    registerForm.get('gst_add_city').errors || 
-                    registerForm.get('gst_add_state').errors || 
-                    registerForm.get('gst_add_proof_file').errors || 
-                    registerForm.get('gst_add_proof_sign').errors" nz-button nzType="default" (click)="next()">
+                <button [disabled]="vendorForm.get('is_gst').errors || 
+                    vendorForm.get('gst_bussiness_name').errors || 
+                    vendorForm.get('gst_pan').errors || 
+                    vendorForm.get('gst_bussiness_type').errors || 
+                    vendorForm.get('gst_add_room').errors || 
+                    vendorForm.get('gst_add_street').errors || 
+                    vendorForm.get('gst_add_pincode').errors || 
+                    vendorForm.get('gst_add_city').errors || 
+                    vendorForm.get('gst_add_state').errors || 
+                    vendorForm.get('gst_add_proof_file').errors || 
+                    vendorForm.get('gst_add_proof_sign').errors" nz-button nzType="default" (click)="next()">
                     <span>Next</span>
                 </button>
             </div>
@@ -314,49 +363,58 @@
             <nz-form-item>
                 <nz-form-label nzRequired nzFor="is_bank">Bank</nz-form-label>
                 <nz-form-control>
-                    <nz-radio-group [(ngModel)]="registerData.is_bank" formControlName="is_bank">
+                    <nz-radio-group [(ngModel)]="vendor.is_bank" formControlName="is_bank">
                         <label nz-radio nzValue="1">I have bank account</label>
                         <label nz-radio nzValue="0">I have applied for bank account & update it later</label>
                     </nz-radio-group>
                 </nz-form-control>
                 <app-field-error [submitted]="submitted" [server_message]="server_message.is_bank"
-                    [control]="registerForm.get('is_bank')"></app-field-error>
+                    [control]="vendorForm.get('is_bank')"></app-field-error>
             </nz-form-item>
-            <div *ngIf="registerData.is_bank == 1">
+            <div *ngIf="vendor.is_bank == 1">
                 <nz-form-item>
                     <nz-form-label nzRequired nzFor="bank_acc_holder_name">Account Holder Name</nz-form-label>
                     <nz-form-control>
                         <input nz-input id="bank_acc_holder_name" formControlName="bank_acc_holder_name"
-                            [(ngModel)]="registerData.bank_acc_holder_name" />
+                            [(ngModel)]="vendor.bank_acc_holder_name" />
                     </nz-form-control>
                     <app-field-error [submitted]="submitted" [server_message]="server_message.bank_acc_holder_name"
-                        [control]="registerForm.get('bank_acc_holder_name')"></app-field-error>
+                        [control]="vendorForm.get('bank_acc_holder_name')"></app-field-error>
                 </nz-form-item>
                 <nz-form-item>
                     <nz-form-label nzRequired nzFor="bank_acc_number">Account No.</nz-form-label>
                     <nz-form-control>
                         <input nz-input id="bank_acc_number" formControlName="bank_acc_number"
-                            [(ngModel)]="registerData.bank_acc_number" />
+                            [(ngModel)]="vendor.bank_acc_number" />
                     </nz-form-control>
                     <app-field-error [submitted]="submitted" [server_message]="server_message.bank_acc_number"
-                        [control]="registerForm.get('bank_acc_number')"></app-field-error>
+                        [control]="vendorForm.get('bank_acc_number')"></app-field-error>
+                </nz-form-item>
+                <nz-form-item>
+                    <nz-form-label nzRequired nzFor="status">Status</nz-form-label>
+                    <nz-form-control>
+                        <nz-radio-group [(ngModel)]="vendor.status" formControlName="status">
+                            <label nz-radio nzValue="active">Active</label>
+                            <label nz-radio nzValue="pending">Inactive</label>
+                        </nz-radio-group>
+                    </nz-form-control>
+                    <app-field-error [submitted]="submitted" [server_message]="server_message.status"
+                        [control]="vendorForm.get('status')"></app-field-error>
                 </nz-form-item>
             </div>
             <div class="steps-action">
                 <button nz-button nzType="default" (click)="pre()">
                     <span>Previous</span>
                 </button>
-                <button [disabled]="registerForm.get('is_bank').errors || 
-                    registerForm.get('bank_acc_holder_name').errors || 
-                    registerForm.get('bank_acc_number').errors" nz-button nzType="primary" (click)="register()">
-                    <span>Register</span>
+                <button [disabled]="vendorForm.get('is_bank').errors || 
+                    vendorForm.get('bank_acc_holder_name').errors || 
+                    vendorForm.get('bank_acc_number').errors" nz-button nzType="primary" (click)="submit()">
+                    <span>{{ VendorAddEditModalButton }}</span>
                 </button>
             </div>
         </div>
-        <nz-form-item nz-row class="register-area">
-            <nz-form-control>
-                <a class="back-login" routerLink="/auth/login">Go to login</a>
-            </nz-form-control>
-        </nz-form-item>
+        <ng-template #modalFooter>
+            <button nz-button nzType="default" (click)="cancel()">Cancel</button>
+        </ng-template>
     </form>
-</div>
+</nz-modal>

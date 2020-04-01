@@ -9,7 +9,8 @@ import
     BrandComponent,
     ProductComponent,
     ImportProductComponent,
-    BundleComponent
+    BundleComponent,
+	VendorComponent
 } from './pages';
 import { Routes } from '@angular/router';
 import { AuthGuard } from './../guards/auth.guard';
@@ -70,5 +71,10 @@ export const adminRoutes: Routes = [
         path: "bundle",
         canActivate: [AuthGuard],
         component: BundleComponent
+    },
+    {
+        path: "vendor",
+        canActivate: [AuthGuard],
+        component: VendorComponent
     }
 ];
