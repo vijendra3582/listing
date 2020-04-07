@@ -1,8 +1,25 @@
 <nz-header>
-    <a routerLink="/dashboard"><div class="logo"></div></a>
+    <a routerLink="/dashboard">
+        <div class="logo"></div>
+    </a>
     <ul nz-menu nzMode="horizontal" class="menu-item">
-        <li *ngFor="let menu of adminMenu;" nzSelected nz-menu-item routerLink="{{ menu.link }}">
-            {{ menu.title }}
+        <li nz-menu-item routerLink="/dashboard">Dashboard</li>
+        <li nz-submenu nzTitle="Products" nzIcon="caret-down">
+            <ul class="sub-menu-item">
+                <li nz-menu-item routerLink="/category">Category</li>
+                <li nz-menu-item routerLink="/sub-category">Sub Category</li>
+                <li nz-menu-item routerLink="/brand">Brand</li>
+                <li nz-menu-item routerLink="/product">Products</li>
+                <li nz-menu-item routerLink="/import-product">Import Product</li>
+                <li nz-menu-item routerLink="/bundle">Bundles</li>
+            </ul>
+        </li>
+        <li nz-menu-item routerLink="/order">Orders</li>
+        <li nz-menu-item routerLink="/user">Users</li>
+        <li nz-menu-item routerLink="/vendor">Vendors</li>
+        <li nz-menu-item routerLink="/staff">Staff</li>
+        <li nz-menu-item routerLink="/discount-coupon">Discount Coupon</li>
+        <li nz-menu-item routerLink="/ticket">Ticket</li>
         <li (click)="logout()" nz-menu-item class="logout-menu">Logout<i nz-icon nzType="logout" nzTheme="outline"></i>
         </li>
     </ul>

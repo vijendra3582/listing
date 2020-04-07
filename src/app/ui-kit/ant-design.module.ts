@@ -14,6 +14,7 @@ import { NzStatisticModule } from 'ng-zorro-antd/statistic';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzMessageModule } from 'ng-zorro-antd/message';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
+import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 
 export const ANT_DESIGN = [
     NzLayoutModule,
@@ -31,5 +32,6 @@ export const ANT_DESIGN = [
     NzRadioModule,
     NzSwitchModule,
     NzMessageModule,
-	NzPopconfirmModule
+    NzPopconfirmModule,
+    NzDatePickerModule
 ];

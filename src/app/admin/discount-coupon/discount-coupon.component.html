@@ -1,0 +1,182 @@
+<div class="buttons">
+    <span class="heading-uppper-table">Manage Coupon</span>
+    <a href="javascript:void(0)" (click)="add()">New Coupon</a>
+</div>
+<div class="nz-table">
+    <nz-table #ajaxTable nzShowSizeChanger [nzFrontPagination]="false" [nzData]="listOfData" [nzLoading]="loading"
+        [nzTotal]="total" [(nzPageIndex)]="pageIndex" [(nzPageSize)]="pageSize" (nzPageIndexChange)="searchData()"
+        (nzPageSizeChange)="searchData(true)">
+        <thead (nzSortChange)="sort($event)" nzSingleSort>
+            <tr>
+                <th nzLeft="0px" nzShowSort nzSortKey="id">Coupon ID</th>
+                <th nzShowSort nzSortKey="title">Title</th>
+                <th>Coupon Code</th>
+                <th>Applied On</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Discount Type</th>
+                <th>Discount</th>
+                <th>Status</th>
+                <th nzRight="0px">Action</th>
+            </tr>
+            <tr>
+                <td class="p-td-search">
+                    <input type="text" (keyup.enter)="searchData()" [(ngModel)]="search.id" class="td-search">
+                </td>
+                <td class="p-td-search">
+                    <input type="text" (keyup.enter)="searchData()" [(ngModel)]="search.title" class="td-search">
+                </td>
+                <td class="p-td-search">
+                    <input type="text" (keyup.enter)="searchData()" [(ngModel)]="search.coupon_code" class="td-search">
+                </td>
+                <td class="p-td-search">
+                    <input type="text" (keyup.enter)="searchData()" [(ngModel)]="search.discount_on_type"
+                        class="td-search">
+                </td>
+                <td class="p-td-search">
+                    <input type="text" (keyup.enter)="searchData()" [(ngModel)]="search.valid_from" class="td-search">
+                </td>
+                <td class="p-td-search">
+                    <input type="text" (keyup.enter)="searchData()" [(ngModel)]="search.valid_to" class="td-search">
+                </td>
+                <td class="p-td-search">
+                    <input type="text" (keyup.enter)="searchData()" [(ngModel)]="search.discount_type"
+                        class="td-search">
+                </td>
+                <td class="p-td-search">
+                    <input type="text" (keyup.enter)="searchData()" [(ngModel)]="search.discount_value"
+                        class="td-search">
+                </td>
+                <td class="p-td-search">
+                    <input type="text" (keyup.enter)="searchData()" [(ngModel)]="search.status" class="td-search">
+                </td>
+                <td class="p-td-search disabled">
+
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let data of ajaxTable.data; index as i">
+                <td nzLeft="0px">{{ data.id }}</td>
+                <td>{{ data.title }}</td>
+                <td>{{ data.coupon_code }}</td>
+                <td class="capitalize">{{ data.discount_on_type }}</td>
+                <td>{{ data.valid_from }}</td>
+                <td>{{ data.valid_to }}</td>
+                <td>{{ data.discount_type }}</td>
+                <td>{{ data.discount_value }}</td>
+                <td class="capitalize">{{ data.status }}</td>
+                <td nzRight="0px">
+                    <ul>
+                        <li class="gray">
+                            <a (click)="edit(data.id)" class="edit">Edit</a>
+                        </li>
+                        <li class="tomato">
+                            <a nz-popconfirm nzPopconfirmTitle="Are you sure delete this coupon ?"
+                                (nzOnConfirm)="delete(data.id)" nzPopconfirmPlacement="topRight" class="delete"
+                                href="#">Delete</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+    </nz-table>
+</div>
+<nz-modal [(nzVisible)]="CouponAddEditModal" nzTitle="{{ CouponAddEditModalTitle }}" (nzOnCancel)="cancel()"
+    [nzFooter]="modalFooter" [nzNoAnimation]="true" [nzMaskClosable]="false">
+    <form nz-form [formGroup]="couponForm">
+        <nz-form-item>
+            <nz-form-label nzRequired nzFor="title">Title</nz-form-label>
+            <nz-form-control>
+                <input nz-input id="title" formControlName="title" [(ngModel)]="coupon.title" />
+            </nz-form-control>
+            <app-field-error [submitted]="submitted" [server_message]="server_message.title"
+                [control]="couponForm.get('title')"></app-field-error>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label nzRequired nzFor="coupon_code">Coupon Code</nz-form-label>
+            <nz-form-control>
+                <input nz-input id="coupon_code" formControlName="coupon_code" [(ngModel)]="coupon.coupon_code"/>
+            </nz-form-control>
+            <app-field-error [submitted]="submitted" [server_message]="server_message.coupon_code"
+                [control]="couponForm.get('coupon_code')"></app-field-error>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label nzRequired nzFor="valid_from">Valid From</nz-form-label>
+            <nz-form-control>
+                <nz-date-picker nzShowTime nzFormat="yyyy-MM-dd HH:mm:ss" formControlName="valid_from" nzPlaceHolder="Select Time"
+                    [(ngModel)]="coupon.valid_from"></nz-date-picker>
+            </nz-form-control>
+            <app-field-error [submitted]="submitted" [server_message]="server_message.valid_from"
+                [control]="couponForm.get('valid_from')"></app-field-error>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label nzRequired nzFor="valid_to">Valid To</nz-form-label>
+            <nz-form-control>
+                <nz-date-picker nzShowTime nzFormat="yyyy-MM-dd HH:mm:ss" formControlName="valid_to" nzPlaceHolder="Select Time"
+                    [(ngModel)]="coupon.valid_to"></nz-date-picker>
+            </nz-form-control>
+            <app-field-error [submitted]="submitted" [server_message]="server_message.valid_to"
+                [control]="couponForm.get('valid_to')"></app-field-error>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label nzRequired nzFor="discount_on_type">Discount On</nz-form-label>
+            <nz-form-control>
+                <nz-select nzShowSearch nzAllowClear formControlName="discount_on_type" nzPlaceHolder="Select Type"
+                    [(ngModel)]="coupon.discount_on_type" (ngModelChange)="getDiscountType()">
+                    <nz-option *ngFor="let item of discountOnSelect; let i = index" nzLabel="{{ item.value }}"
+                        nzValue="{{ item.key }}"></nz-option>
+                </nz-select>
+            </nz-form-control>
+            <app-field-error [submitted]="submitted" [server_message]="server_message.discount_on_type"
+                [control]="couponForm.get('discount_on_type')"></app-field-error>
+        </nz-form-item>
+        <nz-form-item *ngIf="coupon.discount_on_type != 'all_product'">
+            <nz-form-label nzRequired nzFor="discount_on_id">{{ discountOnSelectTitle }}</nz-form-label>
+            <nz-form-control>
+                <nz-select nzShowSearch nzMode="multiple" nzAllowClear formControlName="discount_on_id"
+                    nzPlaceHolder="Select {{ discountOnSelectTitle }}" [(ngModel)]="coupon.discount_on_id">
+                    <nz-option *ngFor="let item of discountOnSelectIds; let i = index" nzLabel="{{ item.name }}"
+                        nzValue="{{ item.id }}"></nz-option>
+                </nz-select>
+            </nz-form-control>
+            <app-field-error [submitted]="submitted" [server_message]="server_message.discount_on_id"
+                [control]="couponForm.get('discount_on_id')"></app-field-error>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label nzRequired nzFor="discount_type">Discount Type</nz-form-label>
+            <nz-form-control>
+                <nz-radio-group [(ngModel)]="coupon.discount_type" formControlName="discount_type">
+                    <label nz-radio nzValue="flat">Flat</label>
+                    <label nz-radio nzValue="percent">Percent</label>
+                </nz-radio-group>
+            </nz-form-control>
+            <app-field-error [submitted]="submitted" [server_message]="server_message.discount_type"
+                [control]="couponForm.get('discount_type')"></app-field-error>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label nzRequired nzFor="discount_value">Discount</nz-form-label>
+            <nz-form-control>
+                <input nz-input id="discount_value" formControlName="discount_value" [(ngModel)]="coupon.discount_value" />
+            </nz-form-control>
+            <app-field-error [submitted]="submitted" [server_message]="server_message.discount_value"
+                [control]="couponForm.get('discount_value')"></app-field-error>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label nzRequired nzFor="status">Status</nz-form-label>
+            <nz-form-control>
+                <nz-radio-group [(ngModel)]="coupon.status" formControlName="status">
+                    <label nz-radio nzValue="active">Active</label>
+                    <label nz-radio nzValue="inactive">Inactive</label>
+                </nz-radio-group>
+            </nz-form-control>
+            <app-field-error [submitted]="submitted" [server_message]="server_message.status"
+                [control]="couponForm.get('status')"></app-field-error>
+        </nz-form-item>
+        <ng-template #modalFooter>
+            <button nz-button nzType="default" (click)="cancel()">Cancel</button>
+            <button nz-button nzType="primary" (click)="submit()"
+                [nzLoading]="isSubmitLoading">{{ CouponAddEditModalButton }}</button>
+        </ng-template>
+    </form>
+</nz-modal>

@@ -12,6 +12,11 @@ import { ProductComponent } from './product/product.component';
 import { ImportProductComponent } from './import-product/import-product.component';
 import { BundleComponent } from './bundle/bundle.component';
 import { VendorComponent } from './vendor/vendor.component';
+import { UserComponent } from './user/user.component';
+import { OrderComponent } from './order/order.component';
+import { StaffComponent } from './staff/staff.component';
+import { DiscountCouponComponent } from './discount-coupon/discount-coupon.component';
+import { TicketComponent } from './ticket/ticket.component';
 
 export const adminComponents = [
     HeaderComponent,
@@ -27,7 +32,12 @@ export const adminComponents = [
     ProductComponent,
     ImportProductComponent,
     BundleComponent,
-	VendorComponent
+    VendorComponent,
+    UserComponent,
+    OrderComponent,
+    StaffComponent,
+    DiscountCouponComponent,
+    TicketComponent
 ];
 
 
@@ -45,4 +55,9 @@ export * from './product/product.component';
 export * from './import-product/import-product.component';
 export * from './bundle/bundle.component';
 export * from './vendor/vendor.component';
+export * from './user/user.component';
+export * from './order/order.component';
+export * from './staff/staff.component';
+export * from './discount-coupon/discount-coupon.component';
+export * from './ticket/ticket.component';
 
