@@ -5,8 +5,13 @@
     font-weight: 700;
     margin-bottom: 0rem;
     font-size: .8rem;
+    display: none;
 }
 .form-error-div {
     float: left;
     width: 100%;
+}
+
+.form-error-div span:last-child {
+    display: block !important;
 }

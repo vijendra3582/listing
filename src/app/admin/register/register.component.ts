@@ -6,6 +6,7 @@ import { FormGroup, Validators, FormControl, FormBuilder } from '@angular/forms'
 import { NzMessageService } from 'ng-zorro-antd';
 import { CommonService } from 'src/app/services/common.service';
 import { LocationService } from 'src/app/services/location.service';
+import { ValidateNumber } from 'src/app/validations/custom.validators';
 
 @Component({
   selector: 'app-register',
@@ -148,16 +149,16 @@ export class RegisterComponent implements OnInit {
 
   setForm() {
     this.registerForm = this.fb.group({
-      email: [this.registerData.email, [Validators.email, Validators.required]],
+      email: [this.registerData.email, [Validators.email, Validators.required, Validators.maxLength(255), Validators.minLength(2)]],
       password: [this.registerData.password, [Validators.required, Validators.minLength(8)]],
       confirm_password: [this.registerData.confirm_password, [Validators.required, this.confirmationValidator]],
-      name: [this.registerData.name, [Validators.required]],
-      mobile: [this.registerData.mobile, [Validators.required, Validators.minLength(10), Validators.maxLength(10)]],
-      address: [this.registerData.address, [Validators.required]],
-      pincode: [this.registerData.pincode, [Validators.required]],
+      name: [this.registerData.name, [Validators.required, Validators.maxLength(255), Validators.minLength(2)]],
+      mobile: [this.registerData.mobile, [Validators.required, Validators.minLength(10), Validators.maxLength(10), ValidateNumber]],
+      address: [this.registerData.address, [Validators.required, Validators.maxLength(255), Validators.minLength(2)]],
+      pincode: [this.registerData.pincode, [Validators.required, Validators.maxLength(10), Validators.minLength(2), ValidateNumber]],
       city: [this.registerData.city, [Validators.required]],
-      state: [this.registerData.state, []],
-      is_gst: [this.registerData.is_gst, []],
+      state: [this.registerData.state, [Validators.required]],
+      is_gst: [this.registerData.is_gst, [Validators.required]],
       gst_number: [this.registerData.gst_number, []],
       gst_bussiness_name: [this.registerData.gst_bussiness_name, []],
       gst_pan: [this.registerData.gst_pan, []],
@@ -169,7 +170,7 @@ export class RegisterComponent implements OnInit {
       gst_add_state: [this.registerData.gst_add_state, []],
       gst_add_proof_file: [this.registerData.gst_add_proof_file, []],
       gst_add_proof_sign: [this.registerData.gst_add_proof_sign, []],
-      is_bank: [this.registerData.is_bank, []],
+      is_bank: [this.registerData.is_bank, [Validators.required]],
       bank_acc_holder_name: [this.registerData.bank_acc_holder_name, []],
       bank_acc_number: [this.registerData.bank_acc_number, []]
     });

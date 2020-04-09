@@ -252,7 +252,7 @@ export class VendorComponent implements OnInit {
       address: [this.vendor.address, [Validators.required, Validators.maxLength(255), Validators.minLength(2)]],
       pincode: [this.vendor.pincode, [Validators.required, ValidateNumber]],
       city: [this.vendor.city, [Validators.required]],
-      state: [this.vendor.state, []],
+      state: [this.vendor.state, [Validators.required]],
       is_gst: [this.vendor.is_gst, [Validators.required]],
       gst_number: [this.vendor.gst_number, []],
       gst_bussiness_name: [this.vendor.gst_bussiness_name, []],
