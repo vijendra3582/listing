@@ -4,6 +4,7 @@ import { NzMessageService } from 'ng-zorro-antd';
 import { SubCategoryService } from 'src/app/services/sub-category.service';
 import { CategoryService } from 'src/app/services/category.service';
 import { CommonService } from 'src/app/services/common.service';
+import { ValidateSlug } from 'src/app/validations/custom.validators';
 
 @Component({
   selector: 'app-sub-category',
@@ -101,9 +102,9 @@ export class SubCategoryComponent implements OnInit {
   }
 
   getMainCategory() {
-    this.commonService.dropdown('category', '').subscribe(
+    this.commonService.dropdown('category', { "total": this.categories.length }).subscribe(
       data => {
-        this.mainCategory = data.dropdown;
+        this.mainCategory = [...this.mainCategory, ...data.dropdown];
       }
     )
   }
@@ -152,8 +153,8 @@ export class SubCategoryComponent implements OnInit {
 
   setForm() {
     this.categoryForm = this.fb.group({
-      name: [this.subCategory.name, [Validators.required]],
-      slug: [this.subCategory.slug, [Validators.required]],
+      name: [this.subCategory.name, [Validators.required, Validators.maxLength(255), Validators.minLength(2)]],
+      slug: [this.subCategory.slug, [Validators.required, Validators.maxLength(255), Validators.minLength(2), ValidateSlug]],
       category_id: [this.subCategory.category_id, [Validators.required]],
       status: [this.subCategory.status, [Validators.required]]
     });

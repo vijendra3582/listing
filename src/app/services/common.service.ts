@@ -8,8 +8,8 @@ import { ApiClient } from '../common/api.client';
 export class CommonService {
     constructor(private api: ApiClient) { }
 
-    dropdown(type, where) {
-        return this.api.get('common/dropdown/' + type + '?' + where);
+    dropdown(type, data) {
+        return this.api.post('common/dropdown/' + type, data);
     }
 
     upload(body) {

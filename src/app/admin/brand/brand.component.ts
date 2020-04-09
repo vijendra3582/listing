@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { BrandService } from 'src/app/services/brand.service';
 import { NzMessageService } from 'ng-zorro-antd';
+import { ValidateSlug } from 'src/app/validations/custom.validators';
 
 @Component({
   selector: 'app-brand',
@@ -132,8 +133,8 @@ export class BrandComponent implements OnInit {
 
   setForm() {
     this.brandForm = this.fb.group({
-      name: [this.brand.name, [Validators.required]],
-      slug: [this.brand.slug, [Validators.required]],
+      name: [this.brand.name, [Validators.required, Validators.maxLength(255), Validators.minLength(2)]],
+      slug: [this.brand.slug, [Validators.required, Validators.maxLength(255), Validators.minLength(2), ValidateSlug]],
       status: [this.brand.status, [Validators.required]]
     });
   }

@@ -4,6 +4,7 @@ import { VendorService } from 'src/app/services/vendor.service';
 import { NzMessageService } from 'ng-zorro-antd';
 import { CommonService } from 'src/app/services/common.service';
 import { LocationService } from 'src/app/services/location.service';
+import { ValidateNumber } from 'src/app/validations/custom.validators';
 
 @Component({
   selector: 'app-vendor',
@@ -243,16 +244,16 @@ export class VendorComponent implements OnInit {
 
   setForm() {
     this.vendorForm = this.fb.group({
-      email: [this.vendor.email, [Validators.email, Validators.required]],
-      password: [this.vendor.password, [Validators.required, Validators.minLength(8)]],
-      name: [this.vendor.name, [Validators.required]],
+      email: [this.vendor.email, [Validators.email, Validators.required, Validators.maxLength(255), Validators.minLength(2)]],
+      password: [this.vendor.password, [Validators.required, Validators.minLength(8), Validators.maxLength(255)]],
+      name: [this.vendor.name, [Validators.required, Validators.maxLength(255), Validators.minLength(2)]],
       status: [this.vendor.status, [Validators.required]],
-      mobile: [this.vendor.mobile, [Validators.required, Validators.minLength(10), Validators.maxLength(10)]],
-      address: [this.vendor.address, [Validators.required]],
-      pincode: [this.vendor.pincode, [Validators.required]],
+      mobile: [this.vendor.mobile, [Validators.required, Validators.minLength(10), Validators.maxLength(10), ValidateNumber]],
+      address: [this.vendor.address, [Validators.required, Validators.maxLength(255), Validators.minLength(2)]],
+      pincode: [this.vendor.pincode, [Validators.required, ValidateNumber]],
       city: [this.vendor.city, [Validators.required]],
       state: [this.vendor.state, []],
-      is_gst: [this.vendor.is_gst, []],
+      is_gst: [this.vendor.is_gst, [Validators.required]],
       gst_number: [this.vendor.gst_number, []],
       gst_bussiness_name: [this.vendor.gst_bussiness_name, []],
       gst_pan: [this.vendor.gst_pan, []],
@@ -264,7 +265,7 @@ export class VendorComponent implements OnInit {
       gst_add_state: [this.vendor.gst_add_state, []],
       gst_add_proof_file: [this.vendor.gst_add_proof_file, []],
       gst_add_proof_sign: [this.vendor.gst_add_proof_sign, []],
-      is_bank: [this.vendor.is_bank, []],
+      is_bank: [this.vendor.is_bank, [Validators.required]],
       bank_acc_holder_name: [this.vendor.bank_acc_holder_name, []],
       bank_acc_number: [this.vendor.bank_acc_number, []]
     });

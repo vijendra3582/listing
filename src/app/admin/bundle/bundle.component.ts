@@ -356,9 +356,9 @@ export class BundleComponent implements OnInit {
 
 
   getCategory() {
-    this.commonService.dropdown('category', '').subscribe(
+    this.commonService.dropdown('category', { "total": this.categories.length }).subscribe(
       data => {
-        this.categories = data.dropdown;
+        this.categories = [...this.categories, ...data.dropdown];
       }
     )
   }
@@ -367,17 +367,17 @@ export class BundleComponent implements OnInit {
     if (this.bundle.category_id == null) {
       return;
     }
-    this.commonService.dropdown('sub_category', 'category_id=' + this.bundle.category_id).subscribe(
+    this.commonService.dropdown('sub_category', { "total": this.sub_categories.length, "category_id": this.bundle.category_id }).subscribe(
       data => {
-        this.sub_categories = data.dropdown;
+        this.sub_categories = [...this.sub_categories, ...data.dropdown];
       }
     )
   }
 
   getBrands() {
-    this.commonService.dropdown('brand', '').subscribe(
+    this.commonService.dropdown('brand', { "total": this.brands.length }).subscribe(
       data => {
-        this.brands = data.dropdown;
+        this.brands = [...this.brands, ...data.dropdown];
       }
     )
   }
@@ -386,9 +386,9 @@ export class BundleComponent implements OnInit {
     if (this.bundle.category_id == null || this.bundle.sub_category_id == null || this.bundle.brand_id == null) {
       return;
     }
-    this.commonService.dropdown('product', '').subscribe(
+    this.commonService.dropdown('product', { "total": this.products.length, "category_id": this.bundle.category_id, "sub_category_id": this.bundle.sub_category_id, "brand_id": this.bundle.brand_id }).subscribe(
       data => {
-        this.products = data.dropdown;
+        this.products = [...this.products, ...data.dropdown];
       }
     )
   }
@@ -418,11 +418,11 @@ export class BundleComponent implements OnInit {
   setForm() {
     this.bundleForm = this.fb.group({
       products: this.fb.array([this.fb.group({
-		  category_id: null,
-		  sub_category_id: null,
-		  brand_id: null,
-		  product_id: null
-	  })]),
+        category_id: null,
+        sub_category_id: null,
+        brand_id: null,
+        product_id: null
+      })]),
       name: [this.bundle.name, [Validators.required]],
       slug: [this.bundle.slug, [Validators.required]],
       sale_price: [this.bundle.sale_price, [Validators.required]],

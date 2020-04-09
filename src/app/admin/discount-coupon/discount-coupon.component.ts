@@ -3,6 +3,7 @@ import { CommonService } from 'src/app/services/common.service';
 import { CouponService } from 'src/app/services/coupon.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NzMessageService } from 'ng-zorro-antd';
+import { ValidateNoSpace, ValidateDecimal } from 'src/app/validations/custom.validators';
 
 @Component({
   selector: 'app-discount-coupon',
@@ -67,7 +68,7 @@ export class DiscountCouponComponent implements OnInit {
     this.search.discount_on_type = null;
     this.search.valid_from = null;
     this.search.valid_to = null;
-    this.search.discount_type = "flat";
+    this.search.discount_type = null;
     this.search.discount_value = null;
     this.search.status = null;
   }
@@ -148,21 +149,21 @@ export class DiscountCouponComponent implements OnInit {
     this.coupon.valid_to = '';
     this.coupon.discount_on_type = 'all_product';
     this.coupon.discount_on_id = [];
-    this.coupon.discount_type = '';
+    this.coupon.discount_type = 'flat';
     this.coupon.discount_value = '';
     this.coupon.status = 'active';
   }
 
   setForm() {
     this.couponForm = this.fb.group({
-      title: [this.coupon.title, [Validators.required]],
-      coupon_code: [this.coupon.coupon_code, [Validators.required]],
+      title: [this.coupon.title, [Validators.required, Validators.maxLength(255), Validators.minLength(2)]],
+      coupon_code: [this.coupon.coupon_code, [Validators.required, Validators.maxLength(255), Validators.minLength(2), ValidateNoSpace]],
       valid_from: [this.coupon.valid_from, [Validators.required]],
       valid_to: [this.coupon.valid_to, [Validators.required]],
       discount_on_type: [this.coupon.discount_on_type, [Validators.required]],
-      discount_on_id: [this.coupon.discount_on_id, [Validators.required]],
+      discount_on_id: [this.coupon.discount_on_id, []],
       discount_type: [this.coupon.discount_type, [Validators.required]],
-      discount_value: [this.coupon.discount_value, [Validators.required]],
+      discount_value: [this.coupon.discount_value, [Validators.required, ValidateDecimal]],
       status: [this.coupon.status, [Validators.required]]
     });
   }
@@ -189,6 +190,7 @@ export class DiscountCouponComponent implements OnInit {
   }
 
   getDiscountType() {
+    this.discountOnSelectIds = [];
     switch (this.coupon.discount_on_type) {
       case "product":
         this.discountOnSelectTitle = "Product";
@@ -216,33 +218,33 @@ export class DiscountCouponComponent implements OnInit {
   }
 
   getSubCategory() {
-    this.commonService.dropdown('sub_category', '').subscribe(
+    this.commonService.dropdown('sub_category', { "total": this.discountOnSelectIds.length }).subscribe(
       data => {
-        this.discountOnSelectIds = data.dropdown;
+        this.discountOnSelectIds = [...this.discountOnSelectIds, ...data.dropdown];
       }
     )
   }
 
   getCategory() {
-    this.commonService.dropdown('category', '').subscribe(
+    this.commonService.dropdown('category', { "total": this.discountOnSelectIds.length }).subscribe(
       data => {
-        this.discountOnSelectIds = data.dropdown;
+        this.discountOnSelectIds = [...this.discountOnSelectIds, ...data.dropdown];
       }
     )
   }
 
   getBrand() {
-    this.commonService.dropdown('brand', '').subscribe(
+    this.commonService.dropdown('brand', { "total": this.discountOnSelectIds.length }).subscribe(
       data => {
-        this.discountOnSelectIds = data.dropdown;
+        this.discountOnSelectIds = [...this.discountOnSelectIds, ...data.dropdown];
       }
     )
   }
 
   getProduct() {
-    this.commonService.dropdown('product', '').subscribe(
+    this.commonService.dropdown('product', { "total": this.discountOnSelectIds.length }).subscribe(
       data => {
-        this.discountOnSelectIds = data.dropdown;
+        this.discountOnSelectIds = [...this.discountOnSelectIds, ...data.dropdown];
       }
     )
   }

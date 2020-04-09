@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ProductService } from 'src/app/services/product.service';
 import { NzMessageService } from 'ng-zorro-antd';
 import { CommonService } from 'src/app/services/common.service';
+import { ValidateSlug, ValidateDecimal } from 'src/app/validations/custom.validators';
 
 @Component({
   selector: 'app-product',
@@ -372,9 +373,9 @@ export class ProductComponent implements OnInit {
 
 
   getCategory() {
-    this.commonService.dropdown('category', '').subscribe(
+    this.commonService.dropdown('category', { "total": this.categories.length }).subscribe(
       data => {
-        this.categories = data.dropdown;
+        this.categories = [...this.categories, ...data.dropdown];
       }
     )
   }
@@ -383,17 +384,17 @@ export class ProductComponent implements OnInit {
     if (this.product.category_id == null) {
       return;
     }
-    this.commonService.dropdown('sub_category', 'category_id=' + this.product.category_id).subscribe(
+    this.commonService.dropdown('sub_category', { "total": this.sub_categories.length, "category_id": this.product.category_id }).subscribe(
       data => {
-        this.sub_categories = data.dropdown;
+        this.sub_categories = [...this.sub_categories, ...data.dropdown];
       }
     )
   }
 
   getBrands() {
-    this.commonService.dropdown('brand', '').subscribe(
+    this.commonService.dropdown('brand', { "total": this.brands.length }).subscribe(
       data => {
-        this.brands = data.dropdown;
+        this.brands = [...this.brands, ...data.dropdown];
       }
     )
   }
@@ -422,17 +423,17 @@ export class ProductComponent implements OnInit {
       category_id: [this.product.category_id, [Validators.required]],
       sub_category_id: [this.product.sub_category_id, [Validators.required]],
       brand_id: [this.product.brand_id, [Validators.required]],
-      name: [this.product.name, [Validators.required]],
-      slug: [this.product.slug, [Validators.required]],
-      sale_price: [this.product.sale_price, [Validators.required]],
-      purchase_price: [this.product.purchase_price, [Validators.required]],
+      name: [this.product.name, [Validators.required, Validators.maxLength(255), Validators.minLength(2)]],
+      slug: [this.product.slug, [Validators.required, Validators.maxLength(255), Validators.minLength(2), ValidateSlug]],
+      sale_price: [this.product.sale_price, [Validators.required, ValidateDecimal]],
+      purchase_price: [this.product.purchase_price, [Validators.required, ValidateDecimal]],
       is_featured: [this.product.is_featured, [Validators.required]],
       discount_type: [this.product.discount_type, [Validators.required]],
-      discount: [this.product.discount, [Validators.required]],
+      discount: [this.product.discount, [Validators.required, ValidateDecimal]],
       tax_type: [this.product.tax_type, [Validators.required]],
-      tax: [this.product.tax, [Validators.required]],
-      description: [this.product.description, [Validators.required]],
-      stock: [this.product.stock, [Validators.required]],
+      tax: [this.product.tax, [Validators.required, ValidateDecimal]],
+      description: [this.product.description, [Validators.required, Validators.minLength(2)]],
+      stock: [this.product.stock, [Validators.required, ValidateDecimal]],
       status: [this.product.status, [Validators.required]]
     });
   }

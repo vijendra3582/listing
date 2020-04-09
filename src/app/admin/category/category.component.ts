@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CategoryService } from 'src/app/services/category.service';
 import { NzMessageService } from 'ng-zorro-antd';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { ValidateSlug } from 'src/app/validations/custom.validators';
 
 @Component({
   selector: 'app-category',
@@ -132,8 +133,8 @@ export class CategoryComponent implements OnInit {
 
   setForm() {
     this.categoryForm = this.fb.group({
-      name: [this.category.name, [Validators.required]],
-      slug: [this.category.slug, [Validators.required]],
+      name: [this.category.name, [Validators.required, Validators.maxLength(255), Validators.minLength(2)]],
+      slug: [this.category.slug, [Validators.required, Validators.maxLength(255), Validators.minLength(2), ValidateSlug]],
       status: [this.category.status, [Validators.required]]
     });
   }

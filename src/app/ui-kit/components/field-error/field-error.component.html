@@ -1,6 +1,9 @@
 <div *ngIf="control.touched && control.errors && !server_message" class="form-error-div">
     <span *ngIf="control.errors['required']">Field is required.</span>
-    <span *ngIf="control.errors['checkUsername']">Username is not valid.</span>
+    <span *ngIf="control.errors['ValidateSlug']">Slug is not valid.</span>
+    <span *ngIf="control.errors['ValidateNoSpace']">Space is not allowed.</span>
+    <span *ngIf="control.errors['ValidateNumber']">Only numeric value is allowed.</span>
+    <span *ngIf="control.errors['ValidateDecimal']">Only decimal value is allowed.</span>
     <span *ngIf="control.errors['email']">Email is not valid.</span>
     <span *ngIf="!control.errors['required'] && control.errors['confirmPassword']">Password did not matched.</span>
     <span *ngIf="control.errors['minlength']">Minimum length is {{control.errors['minlength']['requiredLength']}}.</span>
