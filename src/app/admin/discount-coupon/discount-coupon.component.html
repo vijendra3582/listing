@@ -136,7 +136,7 @@
             <nz-form-control>
                 <nz-select nzShowSearch nzMode="multiple" nzAllowClear formControlName="discount_on_id"
                     nzPlaceHolder="Select {{ discountOnSelectTitle }}" [(ngModel)]="coupon.discount_on_id">
-                    <nz-option *ngFor="let item of discountOnSelectIds; let i = index" nzLabel="{{ item.name }}"
+                    <nz-option *ngFor="let item of discountOnSelectIds; let i = index" nzLabel="{{ item.sku }} - {{ item.name }}"
                         nzValue="{{ item.id }}"></nz-option>
                 </nz-select>
             </nz-form-control>

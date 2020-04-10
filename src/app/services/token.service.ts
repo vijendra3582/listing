@@ -51,4 +51,8 @@ export class TokenService {
     hasToken() {
         return this.getToken() !== null;
     }
+
+    getUser(){
+        return this.userInfo ? this.userInfo.user: '';
+    }
 }

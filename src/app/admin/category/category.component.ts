@@ -3,6 +3,7 @@ import { CategoryService } from 'src/app/services/category.service';
 import { NzMessageService } from 'ng-zorro-antd';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ValidateSlug } from 'src/app/validations/custom.validators';
+import { TokenService } from 'src/app/services/token.service';
 
 @Component({
   selector: 'app-category',
@@ -30,13 +31,17 @@ export class CategoryComponent implements OnInit {
 
   search: any = {};
 
+  sessionRole: String = "";
+
   constructor(
     private fb: FormBuilder,
+    private tokenService: TokenService,
     private categoryService: CategoryService,
     private responseMessage: NzMessageService
   ) { }
 
   ngOnInit() {
+    this.sessionRole = this.tokenService.getUser().role;
     this.setSearch();
     this.searchData();
     this.setValues();
@@ -99,6 +104,10 @@ export class CategoryComponent implements OnInit {
   }
 
   submit() {
+    if (this.sessionRole == "vendor") {
+      return;
+    }
+
     this.submitted = true;
     if (!this.categoryForm.valid) {
       return;
@@ -118,6 +127,10 @@ export class CategoryComponent implements OnInit {
   }
 
   delete(id) {
+    if (this.sessionRole == "vendor") {
+      return;
+    }
+    
     this.categoryService.delete(id).subscribe(
       data => this.handleResponse(data),
       error => this.handleError(error)

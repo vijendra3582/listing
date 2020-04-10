@@ -1,6 +1,6 @@
 <div class="buttons">
     <span class="heading-uppper-table">Manage Sub Category</span>
-    <a href="javascript:void(0)" (click)="add()">New Sub Category</a>
+    <a href="javascript:void(0)" (click)="add()" *ngIf="sessionRole != 'vendor'">New Sub Category</a>
 </div>
 <div class="nz-table">
     <nz-table #ajaxTable nzShowSizeChanger [nzFrontPagination]="false" [nzData]="listOfData" [nzLoading]="loading"
@@ -13,7 +13,7 @@
                 <th>Parent Category</th>
                 <th>Slug</th>
                 <th>Status</th>
-                <th nzRight="0px">Action</th>
+                <th nzRight="0px" *ngIf="sessionRole != 'vendor'">Action</th>
             </tr>
             <tr>
                 <td class="p-td-search">
@@ -31,7 +31,7 @@
                 <td class="p-td-search">
                     <input type="text" (keyup.enter)="searchData(true)" [(ngModel)]="search.status" class="td-search">
                 </td>
-                <td class="p-td-search disabled">
+                <td class="p-td-search disabled" *ngIf="sessionRole != 'vendor'">
 
                 </td>
             </tr>
@@ -43,7 +43,7 @@
                 <td>{{ data.main_category_name }}</td>
                 <td>{{ data.slug }}</td>
                 <td class="capitalize">{{ data.status }}</td>
-                <td nzRight="0px">
+                <td nzRight="0px" *ngIf="sessionRole != 'vendor'">
                     <ul>
                         <li class="gray">
                             <a (click)="edit(data.id)" class="edit">Edit</a>
