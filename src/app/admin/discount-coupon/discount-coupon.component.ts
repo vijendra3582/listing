@@ -169,19 +169,20 @@ export class DiscountCouponComponent implements OnInit {
   }
 
   handleResponse(data) {
+    this.isSubmitLoading = false;
+    this.submitted = false;
     if (data.status == true) {
       this.CouponAddEditModal = false;
-      this.isSubmitLoading = false;
-
       this.responseMessage.success(data.message, { nzDuration: 2000 });
       this.searchData();
     } else {
-      this.isSubmitLoading = false;
       this.responseMessage.error(data.message, { nzDuration: 2000 });
     }
   }
 
   handleError(error) {
+    this.isSubmitLoading = false;
+    this.submitted = false;
     if (error.error.message.name === "SequelizeDatabaseError") {
       this.responseMessage.error(error.error.message.message, { nzDuration: 2000 });
     } else {
@@ -191,6 +192,8 @@ export class DiscountCouponComponent implements OnInit {
 
   getDiscountType() {
     this.discountOnSelectIds = [];
+    this.coupon.discount_on_id = [];
+
     switch (this.coupon.discount_on_type) {
       case "product":
         this.discountOnSelectTitle = "Product";

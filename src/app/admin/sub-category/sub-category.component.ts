@@ -174,19 +174,20 @@ export class SubCategoryComponent implements OnInit {
   }
 
   handleResponse(data) {
+    this.isSubmitLoading = false;
+    this.submitted = false;
     if (data.status == true) {
       this.SubCategoryAddEditModal = false;
-      this.isSubmitLoading = false;
-
       this.responseMessage.success(data.message, { nzDuration: 2000 });
       this.searchData();
     } else {
-      this.isSubmitLoading = false;
       this.responseMessage.error(data.message, { nzDuration: 2000 });
     }
   }
 
   handleError(error) {
+    this.isSubmitLoading = false;
+    this.submitted = false;
     if (error.error.message.name === "SequelizeDatabaseError") {
       this.responseMessage.error(error.error.message.message, { nzDuration: 2000 });
     } else {

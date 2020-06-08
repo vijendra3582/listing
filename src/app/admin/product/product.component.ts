@@ -461,14 +461,14 @@ export class ProductComponent implements OnInit {
   }
 
   handleResponse(data) {
+    this.isSubmitLoading = false;
+    this.submitted = false;
     if (data.status == true) {
       this.ProductAddEditModal = false;
       this.ProductAddEditModalTitle = 'Manage Products';
-      this.isSubmitLoading = false;
       this.responseMessage.success(data.message, { nzDuration: 2000 });
       this.searchData();
     } else {
-      this.isSubmitLoading = false;
       this.responseMessage.error(data.message, { nzDuration: 2000 });
     }
   }

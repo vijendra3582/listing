@@ -135,14 +135,12 @@ export class ImportProductComponent implements OnInit {
   }
 
   handleResponse(data) {
+    this.isSubmitLoading = false;
+    this.submitted = false;
     if (data.status == true) {
-      this.isSubmitLoading = false;
-      this.submitted = false;
       this.removeFromArray();
       this.responseMessage.success(data.data.message, { nzDuration: 2000 });
     } else {
-      this.isSubmitLoading = false;
-      this.submitted = false;
       this.responseMessage.error(data.data.message, { nzDuration: 2000 });
     }
   }
