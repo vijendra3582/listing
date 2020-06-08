@@ -13,13 +13,15 @@ import { registerLocaleData } from '@angular/common';
 import en from '@angular/common/locales/en';
 import { adminRoutes } from './admin/admin.routing';
 import { adminComponents } from './admin/pages';
+import { RegisterUserComponent } from './admin/register-user/register-user.component';
 
 registerLocaleData(en);
 
 @NgModule({
   declarations: [
     AppComponent,
-    ...adminComponents
+    ...adminComponents,
+    RegisterUserComponent
   ],
   imports: [
     BrowserModule,

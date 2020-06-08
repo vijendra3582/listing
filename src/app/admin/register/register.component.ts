@@ -178,7 +178,7 @@ export class RegisterComponent implements OnInit {
 
   register() {
     this.submitted = true;
-    this.authService.registerVendor(this.registerData).subscribe(
+    this.authService.register(this.registerData).subscribe(
       data => this.handleResponse(data),
       error => this.handleError(error)
     );
