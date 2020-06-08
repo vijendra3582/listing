@@ -1,6 +1,6 @@
 {
     "/api": {
-        "target": "https://listing-vijen.herokuapp.com/api",
+        "target": "http://localhost:8080/api",
         "secure": true,
         "changeOrigin": true,
         "logLevel": "debug",

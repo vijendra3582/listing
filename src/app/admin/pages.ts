@@ -17,6 +17,7 @@ import { OrderComponent } from './order/order.component';
 import { StaffComponent } from './staff/staff.component';
 import { DiscountCouponComponent } from './discount-coupon/discount-coupon.component';
 import { TicketComponent } from './ticket/ticket.component';
+import { RegisterUserComponent } from './register-user/register-user.component';
 
 export const adminComponents = [
     HeaderComponent,
@@ -24,6 +25,7 @@ export const adminComponents = [
     FooterComponent,
     LoginComponent,
     RegisterComponent,
+    RegisterUserComponent,
     ForgetComponent,
     DashboardComponent,
     CategoryComponent,
@@ -46,6 +48,7 @@ export * from './includes/sidebar/sidebar.component';
 export * from './includes/footer/footer.component';
 export * from './login/login.component';
 export * from './register/register.component';
+export * from './register-user/register-user.component';
 export * from './forget/forget.component';
 export * from './dashboard/dashboard.component';
 export * from './category/category.component';

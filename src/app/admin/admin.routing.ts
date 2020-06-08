@@ -3,6 +3,7 @@ import
     DashboardComponent,
     LoginComponent,
     RegisterComponent,
+    RegisterUserComponent,
     ForgetComponent,
     CategoryComponent,
     SubCategoryComponent,
@@ -36,6 +37,11 @@ export const adminRoutes: Routes = [
         path: "auth/register",
         canActivate: [LoginGuard],
         component: RegisterComponent
+    },
+    {
+        path: "auth/user/register",
+        canActivate: [LoginGuard],
+        component: RegisterUserComponent
     },
     {
         path: "auth/forget",
