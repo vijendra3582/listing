@@ -683,6 +683,7 @@ form.login-form {
     /* padding-top: 10px; */
     margin-top: 30px;
   }
+  
   .icons_09 {
     width: 100%;
     display: inline-block;
@@ -703,4 +704,13 @@ form.login-form {
   .left__side__form {
     padding: 19px!important;
   }
+}
+.layout {
+	height: auto;
+	background: rgba(0, 0, 0, 0) -webkit-gradient(linear, left top, left bottom, from(#3278bf), to(rgba(50, 120, 191, 0.8))) repeat scroll 0% 0%;
+	background: rgba(0, 0, 0, 0) linear-gradient(#3278bf 0%, rgba(50, 120, 191, 0.8) 100%) repeat scroll 0% 0%;
+}
+.left__side__form {
+
+	margin-bottom: 22px;
 }
