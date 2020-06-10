@@ -496,3 +496,211 @@ a.download-sample {
     height: auto;
     padding-bottom: 5px;
 }
+.layout {
+	height: 100vh;
+	background:rgba(0, 0, 0, 0) linear-gradient(rgb(50, 120, 191) 0%, rgba(50, 120, 191, 0.8) 100%) repeat scroll 0% 0%;
+}
+span.logo-name {
+	float: left;
+	font-size: 1.5rem;
+	text-align: left;
+	width: 100%;
+	margin-bottom: 2rem;
+	font-weight: 500;
+}
+.d-flex-center {
+	float: left;
+	width: 100%;
+	display: -webkit-box;
+	display: flex;
+	-webkit-box-pack: center;
+	justify-content: left;
+	-webkit-box-align: left;
+	align-items: center;
+}
+.left__side__form {
+	float: left;
+	width: 48%;
+}
+
+.right__side__contents {
+	float: left;
+	width: 52%;
+}
+
+.left__side__form {
+	float: left;
+	width: 34%;
+	background: #fff;
+	box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 5px -1px, rgba(0, 0, 0, 0.2) 0px 6px 10px 0px, rgba(0, 0, 0, 0.2) 0px 1px 18px 0px;
+	/* margin: 29px; */
+	padding: 28px;
+	margin-left: 6%;
+  margin-right: 7%;
+  border-radius: 5px;
+}
+
+.right__side__contents {
+	float: left;
+	width: 52%;
+	padding-right: 139px;
+}
+[nz-form] {
+	max-width: 600px;
+	width: 100%;
+}
+.right__side__contents h3 {
+	color: #fff;
+	font-size: 30px;
+	font-weight: 400;
+}
+.right__side__contents strong {
+	color: #fff;
+	font-size: 17px;
+	margin-top: 11px;
+	display: inline-block;
+}
+.icon__test ul li {
+	list-style: none;
+}
+.icon__test ul {
+	padding-left: 3px;
+}
+.icon__test ul li {
+	list-style: none;
+	width: 25%;
+	display: inline-block;
+	text-align: center;
+	border-right: 1px solid #ffffff69;
+	height: 75px;
+}
+.icons_09 {
+	width: 100%;
+	display: inline-block;
+	font-size: 47px;
+	color: #fff;
+	padding-top: 10px;
+}
+.icon__test ul li {
+	list-style: none;
+	width: 25%;
+	display: inline-block;
+	text-align: center;
+	border-right: 1px solid #ffffff69;
+	height: 135px;
+	/* padding-top: 10px; */
+	margin-top: 30px;
+}
+.cont {
+	color: #fff;
+	font-size: 14px;
+}
+.icon__test ul li {
+	list-style: none;
+	width: 25%;
+	display: inline-block;
+	text-align: center;
+	border-right: 2px solid #ffffff69;
+	height: 104px;
+	/* padding-top: 10px; */
+	margin-top: 30px;
+}
+
+.icon__test ul li:last-child{
+  border-right: none;
+}
+.s__09uygbd {
+	border-top: 1px solid #fff;
+	border-bottom: 1px solid #fff;
+}
+.s__09uygbd strong {
+	margin-bottom: 19px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+.s__09uygbd p {
+	color: #fff;
+}
+.s__09uygbd {
+	border-top: 1px solid #fff;
+	border-bottom: 1px solid #fff;
+	padding-bottom: 38px;
+}
+.foorteee p {
+	color: #fff;
+	margin-top: 29px;
+	padding-bottom: 15px;
+}
+
+form.login-form {
+	padding: 21px;
+	border: none;
+	width: 100% !important;
+	background: #fff;
+}
+
+@media screen and (min-width:320px) and (max-width:767px) {
+  .left__side__form {
+    float: left;
+    width: 100%;
+    background: #fff;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 5px -1px, rgba(0, 0, 0, 0.2) 0px 6px 10px 0px, rgba(0, 0, 0, 0.2) 0px 1px 18px 0px;
+    /* margin: 29px; */
+    padding: 1px;
+    margin-left: 0px;
+    margin-right: 0px;
+    border-radius: 4px;
+  }
+
+  .layout {
+    height: auto;
+    background: rgba(0, 0, 0, 0) -webkit-gradient(linear, left top, left bottom, from(#3278bf), to(rgba(50, 120, 191, 0.8))) repeat scroll 0% 0%;
+    background: rgba(0, 0, 0, 0) linear-gradient(#3278bf 0%, rgba(50, 120, 191, 0.8) 100%) repeat scroll 0% 0%;
+  }
+  .right__side__contents {
+    float: left;
+    width: 100%;
+    padding-right: 0px;
+  }
+  nz-content {
+    padding: 0 20px;
+    margin-top: 64px;
+  }
+  .right__side__contents h3 {
+    color: #fff;
+    font-size: 22px;
+    font-weight: 400;
+    line-height: 27px;
+    margin-top: 22px;
+  }
+  .icon__test ul li {
+    list-style: none;
+    width: 33%;
+    display: inline-block;
+    text-align: center;
+    border-right: 2px solid #ffffff69;
+    height: 104px;
+    /* padding-top: 10px; */
+    margin-top: 30px;
+  }
+  .icons_09 {
+    width: 100%;
+    display: inline-block;
+    font-size: 43px;
+    color: #fff;
+    padding-top: 10px;
+  }
+  span.logo-name {
+    float: left;
+    font-size: 1.5rem;
+    text-align: left;
+    width: 100%;
+    margin-bottom: 10px;
+    font-weight: 500;
+    padding-top: 17px;
+  }
+
+  .left__side__form {
+    padding: 19px!important;
+  }
+}

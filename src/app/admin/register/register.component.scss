@@ -49,3 +49,14 @@ a.back-login {
     margin-top: 1rem;
     font-weight: 500;
 }
+.ant-layout-content {
+	-webkit-box-flex: 1;
+	flex: auto;
+	min-height: 0;
+
+}
+.layout {
+	height: 100vh;
+background: #3A7DC2;
+}
+
