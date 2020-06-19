@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { ConstantsService } from 'src/app/services/constants.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { TokenService } from 'src/app/services/token.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +22,10 @@ export class LoginComponent implements OnInit {
     private authService: AuthService,
     private tokenService: TokenService,
     private siteData: ConstantsService,
-    private router: Router) { }
+    private titleService: Title,
+    private router: Router) { 
+      this.titleService.setTitle('Admin Login - Most Market');
+    }
 
   ngOnInit() {
     this.globalData = this.siteData;

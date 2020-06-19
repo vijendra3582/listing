@@ -7,6 +7,8 @@ import { NzMessageService } from 'ng-zorro-antd';
 import { CommonService } from 'src/app/services/common.service';
 import { LocationService } from 'src/app/services/location.service';
 import { ValidateNumber } from 'src/app/validations/custom.validators';
+import { Title } from '@angular/platform-browser';
+
 
 @Component({
   selector: 'app-register',
@@ -38,8 +40,11 @@ export class RegisterComponent implements OnInit {
     private siteData: ConstantsService,
     private commonService: CommonService,
     private router: Router,
+    private titleService: Title,
     private responseMessage: NzMessageService
-  ) { }
+  ) { 
+    this.titleService.setTitle('Vendor Registration - Most Market');
+  }
 
   ngOnInit() {
     this.globalData = this.siteData;
@@ -186,8 +191,10 @@ export class RegisterComponent implements OnInit {
 
   handleResponse(data) {
     if (data.status == true) {
+      this.currentStepForm = 0;
+      this.setValues();
       this.responseMessage.success(data.message, { nzDuration: 2000 });
-      this.router.navigateByUrl('/auth/login');
+      // this.router.navigateByUrl('/auth/login');
     } else {
       this.responseMessage.error(data.message, { nzDuration: 2000 });
     }

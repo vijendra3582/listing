@@ -1,157 +1,128 @@
-
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
-
 <div class="left__side__form">
-<span class="logo-name">User Registration</span>
-<div class="d-flex-center d-flex-center-mt4">
-    <form nz-form [formGroup]="registerForm" class="register-form">
-        <div class="errors">
-            <ul>
-                <li *ngFor="let item of server_message | keyvalue">
-                    {{ item.value.message }}
-                </li>
-            </ul>
-        </div>
-        <div class="steps-content">
-            <nz-form-item>
-                <nz-form-label nzRequired nzFor="name">Name</nz-form-label>
+    <span class="logo-name">User Registration</span>
+    <div class="d-flex-center d-flex-center-mt4">
+        <form nz-form [formGroup]="registerForm" class="register-form">
+            <div class="errors">
+                <ul>
+                    <li *ngFor="let item of server_message | keyvalue">
+                        {{ item.value.message }}
+                    </li>
+                </ul>
+            </div>
+            <div class="steps-content">
+                <nz-form-item>
+                    <nz-form-label nzRequired nzFor="name">Name</nz-form-label>
+                    <nz-form-control>
+                        <input formControlName="name" id="'name'" nz-input [(ngModel)]="registerData.name" />
+                    </nz-form-control>
+                    <app-field-error [submitted]="submitted" [server_message]="server_message.name" [control]="registerForm.get('name')"></app-field-error>
+                </nz-form-item>
+                <nz-form-item>
+                    <nz-form-label nzRequired nzFor="email">Email</nz-form-label>
+                    <nz-form-control>
+                        <input formControlName="email" id="'email'" nz-input [(ngModel)]="registerData.email" />
+                    </nz-form-control>
+                    <app-field-error [submitted]="submitted" [server_message]="server_message.email" [control]="registerForm.get('email')"></app-field-error>
+                </nz-form-item>
+                <nz-form-item>
+                    <nz-form-label nzRequired nzFor="mobile">Mobile</nz-form-label>
+                    <nz-form-control>
+                        <input formControlName="mobile" id="'mobile'" nz-input [(ngModel)]="registerData.mobile" />
+                    </nz-form-control>
+                    <app-field-error [submitted]="submitted" [server_message]="server_message.mobile" [control]="registerForm.get('mobile')"></app-field-error>
+                </nz-form-item>
+                <nz-form-item>
+                    <nz-form-label nzRequired nzFor="password">Password</nz-form-label>
+                    <nz-form-control>
+                        <input formControlName="password" id="'password'" nz-input [(ngModel)]="registerData.password" />
+                    </nz-form-control>
+                    <app-field-error [submitted]="submitted" [server_message]="server_message.password" [control]="registerForm.get('password')"></app-field-error>
+                </nz-form-item>
+                <nz-form-item>
+                    <nz-form-label nzRequired nzFor="confirm_password">Confirm Password</nz-form-label>
+                    <nz-form-control>
+                        <input formControlName="confirm_password" id="'confirm_password'" nz-input [(ngModel)]="registerData.confirm_password" />
+                    </nz-form-control>
+                    <app-field-error [submitted]="submitted" [server_message]="server_message.confirm_password" [control]="registerForm.get('confirm_password')"></app-field-error>
+                </nz-form-item>
+                <nz-form-item>
+                    <nz-form-label nzRequired nzFor="address">Address</nz-form-label>
+                    <nz-form-control>
+                        <textarea rows="4" nz-input id="address" formControlName="address" [(ngModel)]="registerData.address"></textarea>
+                    </nz-form-control>
+                    <app-field-error [submitted]="submitted" [server_message]="server_message.address" [control]="registerForm.get('address')"></app-field-error>
+                </nz-form-item>
+                <nz-form-item>
+                    <nz-form-label nzRequired nzFor="state">State</nz-form-label>
+                    <nz-form-control>
+                        <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a State" formControlName="state" [(ngModel)]="registerData.state" (ngModelChange)="getCity('state')">
+                            <nz-option *ngFor="let option of states.states" [nzLabel]="option.name" [nzValue]="option.id">
+                            </nz-option>
+                        </nz-select>
+                    </nz-form-control>
+                    <app-field-error [submitted]="submitted" [server_message]="server_message.state" [control]="registerForm.get('state')"></app-field-error>
+                </nz-form-item>
+                <nz-form-item>
+                    <nz-form-label nzRequired nzFor="city">City</nz-form-label>
+                    <nz-form-control>
+                        <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a city" formControlName="city" [(ngModel)]="registerData.city">
+                            <nz-option *ngFor="let option of cities.cities" [nzLabel]="option.name" [nzValue]="option.id">
+                            </nz-option>
+                        </nz-select>
+                    </nz-form-control>
+                    <app-field-error [submitted]="submitted" [server_message]="server_message.city" [control]="registerForm.get('city')"></app-field-error>
+                </nz-form-item>
+                <nz-form-item>
+                    <nz-form-label nzRequired nzFor="profession">Profession</nz-form-label>
+                    <nz-form-control>
+                        <input nz-input id="profession" formControlName="profession" [(ngModel)]="registerData.profession" />
+                    </nz-form-control>
+                    <app-field-error [submitted]="submitted" [server_message]="server_message.profession" [control]="registerForm.get('profession')"></app-field-error>
+                </nz-form-item>
+                <button [disabled]="!registerForm.valid" nz-button nzType="primary" (click)="register()">
+                    <span>Register</span>
+                </button>
+            </div>
+            <!-- <nz-form-item nz-row class="register-area">
                 <nz-form-control>
-                    <input formControlName="name" id="'name'" nz-input [(ngModel)]="registerData.name" />
+                    <a class="back-login" routerLink="/auth/login">Go to login</a>
                 </nz-form-control>
-                <app-field-error [submitted]="submitted" [server_message]="server_message.name"
-                    [control]="registerForm.get('name')"></app-field-error>
-            </nz-form-item>
-            <nz-form-item>
-                <nz-form-label nzRequired nzFor="email">Email</nz-form-label>
-                <nz-form-control>
-                    <input formControlName="email" id="'email'" nz-input [(ngModel)]="registerData.email" />
-                </nz-form-control>
-                <app-field-error [submitted]="submitted" [server_message]="server_message.email"
-                    [control]="registerForm.get('email')"></app-field-error>
-            </nz-form-item>
-            <nz-form-item>
-                <nz-form-label nzRequired nzFor="mobile">Mobile</nz-form-label>
-                <nz-form-control>
-                    <input formControlName="mobile" id="'mobile'" nz-input [(ngModel)]="registerData.mobile" />
-                </nz-form-control>
-                <app-field-error [submitted]="submitted" [server_message]="server_message.mobile"
-                    [control]="registerForm.get('mobile')"></app-field-error>
-            </nz-form-item>
-            <nz-form-item>
-                <nz-form-label nzRequired nzFor="password">Password</nz-form-label>
-                <nz-form-control>
-                    <input formControlName="password" id="'password'" nz-input [(ngModel)]="registerData.password" />
-                </nz-form-control>
-                <app-field-error [submitted]="submitted" [server_message]="server_message.password"
-                    [control]="registerForm.get('password')"></app-field-error>
-            </nz-form-item>
-            <nz-form-item>
-                <nz-form-label nzRequired nzFor="confirm_password">Confirm Password</nz-form-label>
-                <nz-form-control>
-                    <input formControlName="confirm_password" id="'confirm_password'" nz-input
-                        [(ngModel)]="registerData.confirm_password" />
-                </nz-form-control>
-                <app-field-error [submitted]="submitted" [server_message]="server_message.confirm_password"
-                    [control]="registerForm.get('confirm_password')"></app-field-error>
-            </nz-form-item>
-            <nz-form-item>
-                <nz-form-label nzRequired nzFor="address">Address</nz-form-label>
-                <nz-form-control>
-                    <textarea rows="4" nz-input id="address" formControlName="address"
-                        [(ngModel)]="registerData.address"></textarea>
-                </nz-form-control>
-                <app-field-error [submitted]="submitted" [server_message]="server_message.address"
-                    [control]="registerForm.get('address')"></app-field-error>
-            </nz-form-item>
-
-            <nz-form-item>
-                <nz-form-label nzRequired nzFor="state">State</nz-form-label>
-                <nz-form-control>
-                    <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a State" formControlName="state"
-                        [(ngModel)]="registerData.state" (ngModelChange)="getCity('state')">
-                        <nz-option *ngFor="let option of states.states" [nzLabel]="option.name" [nzValue]="option.id">
-                        </nz-option>
-                    </nz-select>
-                </nz-form-control>
-                <app-field-error [submitted]="submitted" [server_message]="server_message.state"
-                    [control]="registerForm.get('state')"></app-field-error>
-            </nz-form-item>
-            <nz-form-item>
-                <nz-form-label nzRequired nzFor="city">City</nz-form-label>
-                <nz-form-control>
-                    <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a city" formControlName="city"
-                        [(ngModel)]="registerData.city">
-                        <nz-option *ngFor="let option of cities.cities" [nzLabel]="option.name" [nzValue]="option.id">
-                        </nz-option>
-                    </nz-select>
-                </nz-form-control>
-                <app-field-error [submitted]="submitted" [server_message]="server_message.city"
-                    [control]="registerForm.get('city')"></app-field-error>
-            </nz-form-item>
-            <nz-form-item>
-                <nz-form-label nzRequired nzFor="profession">Profession</nz-form-label>
-                <nz-form-control>
-                    <input nz-input id="profession" formControlName="profession"
-                        [(ngModel)]="registerData.profession" />
-                </nz-form-control>
-                <app-field-error [submitted]="submitted" [server_message]="server_message.profession"
-                    [control]="registerForm.get('profession')"></app-field-error>
-            </nz-form-item>
-            <button [disabled]="!registerForm.valid" nz-button nzType="primary" (click)="register()">
-                <span>Register</span>
-            </button>
-        </div>
-        <nz-form-item nz-row class="register-area">
-            <nz-form-control>
-                <a class="back-login" routerLink="/auth/login">Go to login</a>
-            </nz-form-control>
-        </nz-form-item>
-    </form>
-</div>
+            </nz-form-item> -->
+        </form>
+    </div>
 </div>
 <div class="right__side__contents">
-    
+
     <h3>Contrary to popular belief, Lorem Ipsum is not simply random text.</h3>
     <strong>What is Lorem Ipsum?</strong>
-
     <div class="icon__test">
-
         <ul>
             <li>
                 <span class="icons_09">
                     <i class="fa fa-file"></i>
-
                 </span>
                 <span class="cont">GSTIN*</span>
             </li>
             <li>
                 <span class="icons_09">
                     <i class="fa fa-file"></i>
-
                 </span>
                 <span class="cont">Bank Account</span>
             </li>
-
             <li>
                 <span class="icons_09">
                     <i class="fa fa-file"></i>
-
                 </span>
                 <span class="cont">Products to sell</span>
             </li>
-
         </ul>
     </div>
-
     <div class="foorteee">
         <p>*GSTIN is not required for sellers who only sell books</p>
-
     </div>
     <div class="s__09uygbd">
         <strong>What is Lorem Ipsum?</strong>
-
-        <p>here are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in
-            some form, by injected humour</p>
+        <p>here are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour</p>
         <p>, or randomised words which don't look even slightly believable. If you are going to use a passage</p>
     </div>
 </div>

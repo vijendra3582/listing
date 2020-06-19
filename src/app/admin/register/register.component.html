@@ -1,304 +1,267 @@
-
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
 <div class="d__098yh">
     <div class="left__side__form">
-<span class="logo-name">Vendor Registration</span>
-<div class="d-flex-center d-flex-center-mt4">
-    <form nz-form [formGroup]="registerForm" class="register-form">
-		<div class="errors">
-			<ul>
-				<li *ngFor="let item of server_message | keyvalue">
-					{{ item.value.message }}
-				</li>
-			</ul>
-		</div>
-        <div class="steps-content step-one" *ngIf="currentStepForm == 0">
-            <nz-form-item>
-                <nz-form-label nzRequired nzFor="mobile">Mobile</nz-form-label>
-                <nz-form-control>
-                    <input formControlName="mobile" id="'mobile'" nz-input [(ngModel)]="registerData.mobile" />
-                </nz-form-control>
-                <app-field-error [submitted]="submitted" [server_message]="server_message.mobile"
-                    [control]="registerForm.get('mobile')"></app-field-error>
-            </nz-form-item>
-            <div class="steps-action">
-                <button [disabled]="
+        <span class="logo-name">Vendor Registration</span>
+        <div class="d-flex-center d-flex-center-mt4">
+            <form nz-form [formGroup]="registerForm" class="register-form">
+                <div class="errors">
+                    <ul>
+                        <li *ngFor="let item of server_message | keyvalue">
+                            {{ item.value.message }}
+                        </li>
+                    </ul>
+                </div>
+                <div class="steps-content step-one" *ngIf="currentStepForm == 0">
+                    <nz-form-item>
+                        <nz-form-label nzRequired nzFor="mobile">Mobile</nz-form-label>
+                        <nz-form-control>
+                            <input formControlName="mobile" id="'mobile'" nz-input [(ngModel)]="registerData.mobile" />
+                        </nz-form-control>
+                        <app-field-error [submitted]="submitted" [server_message]="server_message.mobile" [control]="registerForm.get('mobile')"></app-field-error>
+                    </nz-form-item>
+                    <div class="steps-action">
+                        <button [disabled]="
                     registerForm.get('mobile').errors" nz-button nzType="default" (click)="next()">
-                    <span>Next</span>
-                </button>
-            </div>
-        </div>
-        <div class="steps-content step-two" *ngIf="currentStepForm == 1">
-            <h3>Basic Information</h3>
-            <nz-form-item>
-                <nz-form-label nzRequired nzFor="name">Name</nz-form-label>
-                <nz-form-control>
-                    <input nz-input id="name" formControlName="name" [(ngModel)]="registerData.name" />
-                </nz-form-control>
-                <app-field-error [submitted]="submitted" [server_message]="server_message.name"
-                    [server_message]="server_message.name" [control]="registerForm.get('name')"></app-field-error>
-            </nz-form-item>
-            <nz-form-item>
-                <nz-form-label nzRequired nzFor="email">E-mail</nz-form-label>
-                <nz-form-control>
-                    <input nz-input formControlName="email" id="email" [(ngModel)]="registerData.email" />
-                </nz-form-control>
-                <app-field-error [submitted]="submitted" [server_message]="server_message.email"
-                    [control]="registerForm.get('email')"></app-field-error>
-            </nz-form-item>
-            <nz-form-item>
-                <nz-form-label nzRequired nzFor="mobile">Mobile</nz-form-label>
-                <nz-form-control>
-                    <input formControlName="mobile" id="'mobile'" nz-input [(ngModel)]="registerData.mobile" />
-                </nz-form-control>
-                <app-field-error [submitted]="submitted" [server_message]="server_message.mobile"
-                    [control]="registerForm.get('mobile')"></app-field-error>
-            </nz-form-item>
-            <nz-form-item>
-                <nz-form-label nzRequired nzFor="password">Password</nz-form-label>
-                <nz-form-control>
-                    <input nz-input type="password" id="password" formControlName="password"
-                        (ngModelChange)="updateConfirmValidator()" [(ngModel)]="registerData.password" />
-                </nz-form-control>
-                <app-field-error [submitted]="submitted" [server_message]="server_message.password"
-                    [control]="registerForm.get('password')"></app-field-error>
-            </nz-form-item>
-            <nz-form-item>
-                <nz-form-label nzRequired nzFor="confirm_password">Confirm Password</nz-form-label>
-                <nz-form-control>
-                    <input nz-input type="password" formControlName="confirm_password" id="confirm_password"
-                        [(ngModel)]="registerData.confirm_password" />
-                </nz-form-control>
-                <app-field-error [submitted]="submitted" [server_message]="server_message.confirm_password"
-                    [control]="registerForm.get('confirm_password')"></app-field-error>
-            </nz-form-item>
-            <div class="steps-action">
-                <button nz-button nzType="default" (click)="pre()">
-                    <span>Previous</span>
-                </button>
-                <button [disabled]="registerForm.get('name').errors || 
+                            <span>Next</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="steps-content step-two" *ngIf="currentStepForm == 1">
+                    <h3>Basic Information</h3>
+                    <nz-form-item>
+                        <nz-form-label nzRequired nzFor="name">Name</nz-form-label>
+                        <nz-form-control>
+                            <input nz-input id="name" formControlName="name" [(ngModel)]="registerData.name" />
+                        </nz-form-control>
+                        <app-field-error [submitted]="submitted" [server_message]="server_message.name" [server_message]="server_message.name" [control]="registerForm.get('name')">
+                        </app-field-error>
+                    </nz-form-item>
+                    <nz-form-item>
+                        <nz-form-label nzRequired nzFor="email">E-mail</nz-form-label>
+                        <nz-form-control>
+                            <input nz-input formControlName="email" id="email" [(ngModel)]="registerData.email" />
+                        </nz-form-control>
+                        <app-field-error [submitted]="submitted" [server_message]="server_message.email" [control]="registerForm.get('email')"></app-field-error>
+                    </nz-form-item>
+                    <nz-form-item>
+                        <nz-form-label nzRequired nzFor="mobile">Mobile</nz-form-label>
+                        <nz-form-control>
+                            <input formControlName="mobile" id="'mobile'" nz-input [(ngModel)]="registerData.mobile" />
+                        </nz-form-control>
+                        <app-field-error [submitted]="submitted" [server_message]="server_message.mobile" [control]="registerForm.get('mobile')"></app-field-error>
+                    </nz-form-item>
+                    <nz-form-item>
+                        <nz-form-label nzRequired nzFor="password">Password</nz-form-label>
+                        <nz-form-control>
+                            <input nz-input type="password" id="password" formControlName="password" (ngModelChange)="updateConfirmValidator()" [(ngModel)]="registerData.password" />
+                        </nz-form-control>
+                        <app-field-error [submitted]="submitted" [server_message]="server_message.password" [control]="registerForm.get('password')"></app-field-error>
+                    </nz-form-item>
+                    <nz-form-item>
+                        <nz-form-label nzRequired nzFor="confirm_password">Confirm Password</nz-form-label>
+                        <nz-form-control>
+                            <input nz-input type="password" formControlName="confirm_password" id="confirm_password" [(ngModel)]="registerData.confirm_password" />
+                        </nz-form-control>
+                        <app-field-error [submitted]="submitted" [server_message]="server_message.confirm_password" [control]="registerForm.get('confirm_password')"></app-field-error>
+                    </nz-form-item>
+                    <div class="steps-action">
+                        <button nz-button nzType="default" (click)="pre()">
+                            <span>Previous</span>
+                        </button>
+                        <button [disabled]="registerForm.get('name').errors || 
                 registerForm.get('email').errors || 
                 registerForm.get('password').errors || 
                 registerForm.get('confirm_password').errors || 
                 registerForm.get('mobile').errors" nz-button nzType="default" (click)="next()">
-                    <span>Next</span>
-                </button>
-            </div>
-        </div>
-        <div class="steps-content step-three" *ngIf="currentStepForm == 2">
-            <h3>Address Details</h3>
-            <nz-form-item>
-                <nz-form-label nzRequired nzFor="address">Address</nz-form-label>
-                <nz-form-control>
-                    <textarea rows="4" nz-input id="address" formControlName="address"
-                        [(ngModel)]="registerData.address"></textarea>
-                </nz-form-control>
-                <app-field-error [submitted]="submitted" [server_message]="server_message.address"
-                    [control]="registerForm.get('address')"></app-field-error>
-            </nz-form-item>
-            <nz-form-item>
-                <nz-form-label nzRequired nzFor="pincode">Pincode</nz-form-label>
-                <nz-form-control>
-                    <input nz-input id="pincode" formControlName="pincode" [(ngModel)]="registerData.pincode" />
-                </nz-form-control>
-                <app-field-error [submitted]="submitted" [server_message]="server_message.pincode"
-                    [control]="registerForm.get('pincode')"></app-field-error>
-            </nz-form-item>
-            <nz-form-item>
-                <nz-form-label nzRequired nzFor="state">State</nz-form-label>
-                <nz-form-control>
-                    <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a State" formControlName="state"
-                        [(ngModel)]="registerData.state" (ngModelChange)="getCity('state')">
-                        <nz-option *ngFor="let option of states.states" [nzLabel]="option.name" [nzValue]="option.id">
-                        </nz-option>
-                    </nz-select>
-                </nz-form-control>
-                <app-field-error [submitted]="submitted" [server_message]="server_message.state"
-                    [control]="registerForm.get('state')"></app-field-error>
-            </nz-form-item>
-            <nz-form-item>
-                <nz-form-label nzRequired nzFor="city">City</nz-form-label>
-                <nz-form-control>
-                    <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a city" formControlName="city"
-                        [(ngModel)]="registerData.city">
-                        <nz-option *ngFor="let option of cities.cities" [nzLabel]="option.name" [nzValue]="option.id">
-                        </nz-option>
-                    </nz-select>
-                </nz-form-control>
-                <app-field-error [submitted]="submitted" [server_message]="server_message.city"
-                    [control]="registerForm.get('city')"></app-field-error>
-            </nz-form-item>
-            <div class="steps-action">
-                <button nz-button nzType="default" (click)="pre()">
-                    <span>Previous</span>
-                </button>
-                <button [disabled]="registerForm.get('address').errors || 
+                            <span>Next</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="steps-content step-three" *ngIf="currentStepForm == 2">
+                    <h3>Address Details</h3>
+                    <nz-form-item>
+                        <nz-form-label nzRequired nzFor="address">Address</nz-form-label>
+                        <nz-form-control>
+                            <textarea rows="4" nz-input id="address" formControlName="address" [(ngModel)]="registerData.address"></textarea>
+                        </nz-form-control>
+                        <app-field-error [submitted]="submitted" [server_message]="server_message.address" [control]="registerForm.get('address')"></app-field-error>
+                    </nz-form-item>
+                    <nz-form-item>
+                        <nz-form-label nzRequired nzFor="pincode">Pincode</nz-form-label>
+                        <nz-form-control>
+                            <input nz-input id="pincode" formControlName="pincode" [(ngModel)]="registerData.pincode" />
+                        </nz-form-control>
+                        <app-field-error [submitted]="submitted" [server_message]="server_message.pincode" [control]="registerForm.get('pincode')"></app-field-error>
+                    </nz-form-item>
+                    <nz-form-item>
+                        <nz-form-label nzRequired nzFor="state">State</nz-form-label>
+                        <nz-form-control>
+                            <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a State" formControlName="state" [(ngModel)]="registerData.state" (ngModelChange)="getCity('state')">
+                                <nz-option *ngFor="let option of states.states" [nzLabel]="option.name" [nzValue]="option.id">
+                                </nz-option>
+                            </nz-select>
+                        </nz-form-control>
+                        <app-field-error [submitted]="submitted" [server_message]="server_message.state" [control]="registerForm.get('state')"></app-field-error>
+                    </nz-form-item>
+                    <nz-form-item>
+                        <nz-form-label nzRequired nzFor="city">City</nz-form-label>
+                        <nz-form-control>
+                            <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a city" formControlName="city" [(ngModel)]="registerData.city">
+                                <nz-option *ngFor="let option of cities.cities" [nzLabel]="option.name" [nzValue]="option.id">
+                                </nz-option>
+                            </nz-select>
+                        </nz-form-control>
+                        <app-field-error [submitted]="submitted" [server_message]="server_message.city" [control]="registerForm.get('city')"></app-field-error>
+                    </nz-form-item>
+                    <div class="steps-action">
+                        <button nz-button nzType="default" (click)="pre()">
+                            <span>Previous</span>
+                        </button>
+                        <button [disabled]="registerForm.get('address').errors || 
                 registerForm.get('pincode').errors || 
                 registerForm.get('state').errors || 
                 registerForm.get('city').errors" nz-button nzType="default" (click)="next()">
-                    <span>Next</span>
-                </button>
-            </div>
-        </div>
-        <div class="steps-content step-four" *ngIf="currentStepForm == 3">
-            <h3>GST Information</h3>
-            <nz-form-item>
-                <nz-form-label nzRequired nzFor="is_gst">GST</nz-form-label>
-                <nz-form-control>
-                    <nz-radio-group [(ngModel)]="registerData.is_gst" formControlName="is_gst">
-                        <label nz-radio nzValue="1">I have GST</label>
-                        <label nz-radio nzValue="2">I will only sell in GSTIN exempt categories like books</label>
-                        <label nz-radio nzValue="0">I have applied for GST & update it later</label>
-                    </nz-radio-group>
-                </nz-form-control>
-                <app-field-error [submitted]="submitted" [server_message]="server_message.is_gst"
-                    [control]="registerForm.get('is_gst')"></app-field-error>
-            </nz-form-item>
-            <div *ngIf="registerData.is_gst == 1">
-                <nz-form-item>
-                    <nz-form-label nzRequired nzFor="gst_number">GST Number</nz-form-label>
-                    <nz-form-control>
-                        <input nz-input id="gst_number" formControlName="gst_number"
-                            [(ngModel)]="registerData.gst_number" />
-                    </nz-form-control>
-                    <app-field-error [submitted]="submitted" [server_message]="server_message.gst_number"
-                        [control]="registerForm.get('gst_number')"></app-field-error>
-                </nz-form-item>
-            </div>
-            <div *ngIf="registerData.is_gst == 2">
-                <h5>Information</h5>
-                <nz-form-item>
-                    <nz-form-label nzRequired nzFor="gst_bussiness_name">Business Name</nz-form-label>
-                    <nz-form-control>
-                        <input nz-input id="gst_bussiness_name" formControlName="gst_bussiness_name"
-                            [(ngModel)]="registerData.gst_bussiness_name" />
-                    </nz-form-control>
-                    <app-field-error [submitted]="submitted" [server_message]="server_message.gst_bussiness_name"
-                        [control]="registerForm.get('gst_bussiness_name')"></app-field-error>
-                </nz-form-item>
-                <nz-form-item>
-                    <nz-form-label nzRequired nzFor="gst_pan">PAN</nz-form-label>
-                    <nz-form-control>
-                        <input nz-input id="gst_pan" formControlName="gst_pan" [(ngModel)]="registerData.gst_pan" />
-                    </nz-form-control>
-                    <app-field-error [submitted]="submitted" [server_message]="server_message.gst_pan"
-                        [control]="registerForm.get('gst_pan')"></app-field-error>
-                </nz-form-item>
-                <nz-form-item>
-                    <nz-form-label nzRequired nzFor="gst_bussiness_type">Business Type</nz-form-label>
-                    <nz-form-control>
-                        <nz-radio-group [(ngModel)]="registerData.gst_bussiness_type"
-                            formControlName="gst_bussiness_type">
-                            <label nz-radio nzValue="proprietor">Proprietor</label>
-                            <label nz-radio nzValue="company">Company</label>
-                        </nz-radio-group>
-                    </nz-form-control>
-                    <app-field-error [submitted]="submitted" [server_message]="server_message.gst_bussiness_type"
-                        [control]="registerForm.get('gst_bussiness_type')"></app-field-error>
-                </nz-form-item>
-                <h5>Address</h5>
-                <nz-form-item>
-                    <nz-form-label nzRequired nzFor="gst_add_room">Room / Floor / Building</nz-form-label>
-                    <nz-form-control>
-                        <input nz-input id="gst_add_room" formControlName="gst_add_room"
-                            [(ngModel)]="registerData.gst_add_room" />
-                    </nz-form-control>
-                    <app-field-error [submitted]="submitted" [server_message]="server_message.gst_add_room"
-                        [control]="registerForm.get('gst_add_room')"></app-field-error>
-                </nz-form-item>
-                <nz-form-item>
-                    <nz-form-label nzRequired nzFor="gst_add_street">Street / Locality / Landmark</nz-form-label>
-                    <nz-form-control>
-                        <input nz-input id="gst_add_street" formControlName="gst_add_street"
-                            [(ngModel)]="registerData.gst_add_street" />
-                    </nz-form-control>
-                    <app-field-error [submitted]="submitted" [server_message]="server_message.gst_add_street"
-                        [control]="registerForm.get('gst_add_street')"></app-field-error>
-                </nz-form-item>
-                <nz-form-item>
-                    <nz-form-label nzRequired nzFor="gst_add_pincode">Pincode</nz-form-label>
-                    <nz-form-control>
-                        <input nz-input id="gst_add_pincode" formControlName="gst_add_pincode"
-                            [(ngModel)]="registerData.gst_add_pincode" />
-                    </nz-form-control>
-                    <app-field-error [submitted]="submitted" [server_message]="server_message.gst_add_pincode"
-                        [control]="registerForm.get('gst_add_pincode')"></app-field-error>
-                </nz-form-item>
-                <nz-form-item>
-                    <nz-form-label nzRequired nzFor="gst_add_state">State</nz-form-label>
-                    <nz-form-control>
-                        <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a State"
-                            formControlName="gst_add_state" [(ngModel)]="registerData.gst_add_state"
-                            (ngModelChange)="getCity('gst')">
-                            <nz-option *ngFor="let option of states.states" [nzLabel]="option.name"
-                                [nzValue]="option.id">
-                            </nz-option>
-                        </nz-select>
-                    </nz-form-control>
-                    <app-field-error [submitted]="submitted" [server_message]="server_message.gst_add_state"
-                        [control]="registerForm.get('gst_add_state')"></app-field-error>
-                </nz-form-item>
-                <nz-form-item>
-                    <nz-form-label nzRequired nzFor="gst_add_city">City</nz-form-label>
-                    <nz-form-control>
-                        <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a city"
-                            formControlName="gst_add_city" [(ngModel)]="registerData.gst_add_city">
-                            <nz-option *ngFor="let option of citiesGST.cities" [nzLabel]="option.name"
-                                [nzValue]="option.id">
-                            </nz-option>
-                        </nz-select>
-                    </nz-form-control>
-                    <app-field-error [submitted]="submitted" [server_message]="server_message.gst_add_city"
-                        [control]="registerForm.get('gst_add_city')"></app-field-error>
-                </nz-form-item>
-                <h5>Address Proof</h5>
-                <nz-form-item>
-                    <nz-form-label nzRequired nzFor="gst_add_proof_file">File</nz-form-label>
-                    <nz-form-control>
-                        <input type="file" id="gst_add_proof_file" (change)="beforeUpload($event.target.files, 'address')">
-                        <button [disabled]="uploading" nz-button>
-                            <i nz-icon [nzType]="uploading ? 'loading' : 'upload'"></i>
-                            <span>Select File</span>
+                            <span>Next</span>
                         </button>
-                    </nz-form-control>
-                    <div class="uploaded-images">
-                        <ul>
-                            <li *ngFor="let document of registerData.gst_add_proof_file; index as i">
-                                <span class="image-name">{{ document }}</span>
-                                <span class="remove"
-                                    (click)="removeDocument(document, i, 'address')"><i nz-icon
-                                        nzType="close-circle" nzTheme="outline"></i></span>
-                            </li>
-                        </ul>
                     </div>
-                </nz-form-item>
-                <h5>Signature</h5>
-                <nz-form-item>
-                    <nz-form-label nzRequired nzFor="gst_add_proof_sign">File</nz-form-label>
-                    <nz-form-control>
-                        <input type="file" id="gst_add_proof_sign" (change)="beforeUpload($event.target.files, 'sign')">
-                        <button [disabled]="uploadingSign" nz-button>
-                            <i nz-icon [nzType]="uploadingSign ? 'loading' : 'upload'"></i>
-                            <span>Select File</span>
+                </div>
+                <div class="steps-content step-four" *ngIf="currentStepForm == 3">
+                    <h3>GST Information</h3>
+                    <nz-form-item>
+                        <nz-form-label nzRequired nzFor="is_gst">GST</nz-form-label>
+                        <nz-form-control>
+                            <nz-radio-group [(ngModel)]="registerData.is_gst" formControlName="is_gst">
+                                <label nz-radio nzValue="1">I have GST</label>
+                                <label nz-radio nzValue="2">I will only sell in GSTIN exempt categories like
+                                    books</label>
+                                <label nz-radio nzValue="0">I have applied for GST & update it later</label>
+                            </nz-radio-group>
+                        </nz-form-control>
+                        <app-field-error [submitted]="submitted" [server_message]="server_message.is_gst" [control]="registerForm.get('is_gst')"></app-field-error>
+                    </nz-form-item>
+                    <div *ngIf="registerData.is_gst == 1">
+                        <nz-form-item>
+                            <nz-form-label nzRequired nzFor="gst_number">GST Number</nz-form-label>
+                            <nz-form-control>
+                                <input nz-input id="gst_number" formControlName="gst_number" [(ngModel)]="registerData.gst_number" />
+                            </nz-form-control>
+                            <app-field-error [submitted]="submitted" [server_message]="server_message.gst_number" [control]="registerForm.get('gst_number')"></app-field-error>
+                        </nz-form-item>
+                    </div>
+                    <div *ngIf="registerData.is_gst == 2">
+                        <h5>Information</h5>
+                        <nz-form-item>
+                            <nz-form-label nzRequired nzFor="gst_bussiness_name">Business Name</nz-form-label>
+                            <nz-form-control>
+                                <input nz-input id="gst_bussiness_name" formControlName="gst_bussiness_name" [(ngModel)]="registerData.gst_bussiness_name" />
+                            </nz-form-control>
+                            <app-field-error [submitted]="submitted" [server_message]="server_message.gst_bussiness_name" [control]="registerForm.get('gst_bussiness_name')"></app-field-error>
+                        </nz-form-item>
+                        <nz-form-item>
+                            <nz-form-label nzRequired nzFor="gst_pan">PAN</nz-form-label>
+                            <nz-form-control>
+                                <input nz-input id="gst_pan" formControlName="gst_pan" [(ngModel)]="registerData.gst_pan" />
+                            </nz-form-control>
+                            <app-field-error [submitted]="submitted" [server_message]="server_message.gst_pan" [control]="registerForm.get('gst_pan')"></app-field-error>
+                        </nz-form-item>
+                        <nz-form-item>
+                            <nz-form-label nzRequired nzFor="gst_bussiness_type">Business Type</nz-form-label>
+                            <nz-form-control>
+                                <nz-radio-group [(ngModel)]="registerData.gst_bussiness_type" formControlName="gst_bussiness_type">
+                                    <label nz-radio nzValue="proprietor">Proprietor</label>
+                                    <label nz-radio nzValue="company">Company</label>
+                                </nz-radio-group>
+                            </nz-form-control>
+                            <app-field-error [submitted]="submitted" [server_message]="server_message.gst_bussiness_type" [control]="registerForm.get('gst_bussiness_type')"></app-field-error>
+                        </nz-form-item>
+                        <h5>Address</h5>
+                        <nz-form-item>
+                            <nz-form-label nzRequired nzFor="gst_add_room">Room / Floor / Building</nz-form-label>
+                            <nz-form-control>
+                                <input nz-input id="gst_add_room" formControlName="gst_add_room" [(ngModel)]="registerData.gst_add_room" />
+                            </nz-form-control>
+                            <app-field-error [submitted]="submitted" [server_message]="server_message.gst_add_room" [control]="registerForm.get('gst_add_room')"></app-field-error>
+                        </nz-form-item>
+                        <nz-form-item>
+                            <nz-form-label nzRequired nzFor="gst_add_street">Street / Locality / Landmark
+                            </nz-form-label>
+                            <nz-form-control>
+                                <input nz-input id="gst_add_street" formControlName="gst_add_street" [(ngModel)]="registerData.gst_add_street" />
+                            </nz-form-control>
+                            <app-field-error [submitted]="submitted" [server_message]="server_message.gst_add_street" [control]="registerForm.get('gst_add_street')"></app-field-error>
+                        </nz-form-item>
+                        <nz-form-item>
+                            <nz-form-label nzRequired nzFor="gst_add_pincode">Pincode</nz-form-label>
+                            <nz-form-control>
+                                <input nz-input id="gst_add_pincode" formControlName="gst_add_pincode" [(ngModel)]="registerData.gst_add_pincode" />
+                            </nz-form-control>
+                            <app-field-error [submitted]="submitted" [server_message]="server_message.gst_add_pincode" [control]="registerForm.get('gst_add_pincode')"></app-field-error>
+                        </nz-form-item>
+                        <nz-form-item>
+                            <nz-form-label nzRequired nzFor="gst_add_state">State</nz-form-label>
+                            <nz-form-control>
+                                <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a State" formControlName="gst_add_state" [(ngModel)]="registerData.gst_add_state" (ngModelChange)="getCity('gst')">
+                                    <nz-option *ngFor="let option of states.states" [nzLabel]="option.name" [nzValue]="option.id">
+                                    </nz-option>
+                                </nz-select>
+                            </nz-form-control>
+                            <app-field-error [submitted]="submitted" [server_message]="server_message.gst_add_state" [control]="registerForm.get('gst_add_state')"></app-field-error>
+                        </nz-form-item>
+                        <nz-form-item>
+                            <nz-form-label nzRequired nzFor="gst_add_city">City</nz-form-label>
+                            <nz-form-control>
+                                <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a city" formControlName="gst_add_city" [(ngModel)]="registerData.gst_add_city">
+                                    <nz-option *ngFor="let option of citiesGST.cities" [nzLabel]="option.name" [nzValue]="option.id">
+                                    </nz-option>
+                                </nz-select>
+                            </nz-form-control>
+                            <app-field-error [submitted]="submitted" [server_message]="server_message.gst_add_city" [control]="registerForm.get('gst_add_city')"></app-field-error>
+                        </nz-form-item>
+                        <h5>Address Proof</h5>
+                        <nz-form-item>
+                            <nz-form-label nzRequired nzFor="gst_add_proof_file">File</nz-form-label>
+                            <nz-form-control>
+                                <input type="file" id="gst_add_proof_file" (change)="beforeUpload($event.target.files, 'address')">
+                                <button [disabled]="uploading" nz-button>
+                                    <i nz-icon [nzType]="uploading ? 'loading' : 'upload'"></i>
+                                    <span>Select File</span>
+                                </button>
+                            </nz-form-control>
+                            <div class="uploaded-images">
+                                <ul>
+                                    <li *ngFor="let document of registerData.gst_add_proof_file; index as i">
+                                        <span class="image-name">{{ document }}</span>
+                                        <span class="remove" (click)="removeDocument(document, i, 'address')"><i nz-icon
+                                                nzType="close-circle" nzTheme="outline"></i></span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </nz-form-item>
+                        <h5>Signature</h5>
+                        <nz-form-item>
+                            <nz-form-label nzRequired nzFor="gst_add_proof_sign">File</nz-form-label>
+                            <nz-form-control>
+                                <input type="file" id="gst_add_proof_sign" (change)="beforeUpload($event.target.files, 'sign')">
+                                <button [disabled]="uploadingSign" nz-button>
+                                    <i nz-icon [nzType]="uploadingSign ? 'loading' : 'upload'"></i>
+                                    <span>Select File</span>
+                                </button>
+                            </nz-form-control>
+                            <div class="uploaded-images">
+                                <ul>
+                                    <li *ngFor="let document of registerData.gst_add_proof_sign; index as i">
+                                        <span class="image-name">{{ document }}</span>
+                                        <span class="remove" (click)="removeDocument(document, i, 'sign')"><i nz-icon
+                                                nzType="close-circle" nzTheme="outline"></i></span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </nz-form-item>
+                    </div>
+                    <div class="steps-action">
+                        <button nz-button nzType="default" (click)="pre()">
+                            <span>Previous</span>
                         </button>
-                    </nz-form-control>
-					<div class="uploaded-images">
-                        <ul>
-                            <li *ngFor="let document of registerData.gst_add_proof_sign; index as i">
-                                <span class="image-name">{{ document }}</span>
-                                <span class="remove"
-                                    (click)="removeDocument(document, i, 'sign')"><i nz-icon
-                                        nzType="close-circle" nzTheme="outline"></i></span>
-                            </li>
-                        </ul>
-                    </div>
-                </nz-form-item>
-            </div>
-            <div class="steps-action">
-                <button nz-button nzType="default" (click)="pre()">
-                    <span>Previous</span>
-                </button>
-                <button [disabled]="registerForm.get('is_gst').errors || 
+                        <button [disabled]="registerForm.get('is_gst').errors || 
                     registerForm.get('gst_bussiness_name').errors || 
                     registerForm.get('gst_pan').errors || 
                     registerForm.get('gst_bussiness_type').errors || 
@@ -309,106 +272,89 @@
                     registerForm.get('gst_add_state').errors || 
                     registerForm.get('gst_add_proof_file').errors || 
                     registerForm.get('gst_add_proof_sign').errors" nz-button nzType="default" (click)="next()">
-                    <span>Next</span>
-                </button>
-            </div>
-        </div>
-        <div class="steps-content step-five" *ngIf="currentStepForm == 4">
-            <h3>Bank Details</h3>
-            <nz-form-item>
-                <nz-form-label nzRequired nzFor="is_bank">Bank</nz-form-label>
-                <nz-form-control>
-                    <nz-radio-group [(ngModel)]="registerData.is_bank" formControlName="is_bank">
-                        <label nz-radio nzValue="1">I have bank account</label>
-                        <label nz-radio nzValue="0">I have applied for bank account & update it later</label>
-                    </nz-radio-group>
-                </nz-form-control>
-                <app-field-error [submitted]="submitted" [server_message]="server_message.is_bank"
-                    [control]="registerForm.get('is_bank')"></app-field-error>
-            </nz-form-item>
-            <div *ngIf="registerData.is_bank == 1">
-                <nz-form-item>
-                    <nz-form-label nzRequired nzFor="bank_acc_holder_name">Account Holder Name</nz-form-label>
-                    <nz-form-control>
-                        <input nz-input id="bank_acc_holder_name" formControlName="bank_acc_holder_name"
-                            [(ngModel)]="registerData.bank_acc_holder_name" />
-                    </nz-form-control>
-                    <app-field-error [submitted]="submitted" [server_message]="server_message.bank_acc_holder_name"
-                        [control]="registerForm.get('bank_acc_holder_name')"></app-field-error>
-                </nz-form-item>
-                <nz-form-item>
-                    <nz-form-label nzRequired nzFor="bank_acc_number">Account No.</nz-form-label>
-                    <nz-form-control>
-                        <input nz-input id="bank_acc_number" formControlName="bank_acc_number"
-                            [(ngModel)]="registerData.bank_acc_number" />
-                    </nz-form-control>
-                    <app-field-error [submitted]="submitted" [server_message]="server_message.bank_acc_number"
-                        [control]="registerForm.get('bank_acc_number')"></app-field-error>
-                </nz-form-item>
-            </div>
-            <div class="steps-action">
-                <button nz-button nzType="default" (click)="pre()">
-                    <span>Previous</span>
-                </button>
-                <button [disabled]="registerForm.get('is_bank').errors || 
+                            <span>Next</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="steps-content step-five" *ngIf="currentStepForm == 4">
+                    <h3>Bank Details</h3>
+                    <nz-form-item>
+                        <nz-form-label nzRequired nzFor="is_bank">Bank</nz-form-label>
+                        <nz-form-control>
+                            <nz-radio-group [(ngModel)]="registerData.is_bank" formControlName="is_bank">
+                                <label nz-radio nzValue="1">I have bank account</label>
+                                <label nz-radio nzValue="0">I have applied for bank account & update it later</label>
+                            </nz-radio-group>
+                        </nz-form-control>
+                        <app-field-error [submitted]="submitted" [server_message]="server_message.is_bank" [control]="registerForm.get('is_bank')"></app-field-error>
+                    </nz-form-item>
+                    <div *ngIf="registerData.is_bank == 1">
+                        <nz-form-item>
+                            <nz-form-label nzRequired nzFor="bank_acc_holder_name">Account Holder Name</nz-form-label>
+                            <nz-form-control>
+                                <input nz-input id="bank_acc_holder_name" formControlName="bank_acc_holder_name" [(ngModel)]="registerData.bank_acc_holder_name" />
+                            </nz-form-control>
+                            <app-field-error [submitted]="submitted" [server_message]="server_message.bank_acc_holder_name" [control]="registerForm.get('bank_acc_holder_name')"></app-field-error>
+                        </nz-form-item>
+                        <nz-form-item>
+                            <nz-form-label nzRequired nzFor="bank_acc_number">Account No.</nz-form-label>
+                            <nz-form-control>
+                                <input nz-input id="bank_acc_number" formControlName="bank_acc_number" [(ngModel)]="registerData.bank_acc_number" />
+                            </nz-form-control>
+                            <app-field-error [submitted]="submitted" [server_message]="server_message.bank_acc_number" [control]="registerForm.get('bank_acc_number')"></app-field-error>
+                        </nz-form-item>
+                    </div>
+                    <div class="steps-action">
+                        <button nz-button nzType="default" (click)="pre()">
+                            <span>Previous</span>
+                        </button>
+                        <button [disabled]="registerForm.get('is_bank').errors || 
                     registerForm.get('bank_acc_holder_name').errors || 
                     registerForm.get('bank_acc_number').errors" nz-button nzType="primary" (click)="register()">
-                    <span>Register</span>
-                </button>
-            </div>
+                            <span>Register</span>
+                        </button>
+                    </div>
+                </div>
+                <!-- <nz-form-item nz-row class="register-area">
+                    <nz-form-control>
+                        <a class="back-login" routerLink="/auth/login">Go to login</a>
+                    </nz-form-control>
+                </nz-form-item> -->
+            </form>
         </div>
-        <nz-form-item nz-row class="register-area">
-            <nz-form-control>
-                <a class="back-login" routerLink="/auth/login">Go to login</a>
-            </nz-form-control>
-        </nz-form-item>
-    </form>
-</div>
-</div>
-
-
+    </div>
     <div class="right__side__contents">
         <h3>Contrary to popular belief, Lorem Ipsum is not simply random text.</h3>
         <strong>What is Lorem Ipsum?</strong>
-        
         <div class="icon__test">
-        
             <ul>
-        <li>
-            <span class="icons_09">
-            <i class="fa fa-file"></i>
-        
-        </span>
-        <span class="cont">GSTIN*</span>
-        </li>
-        <li>
-            <span class="icons_09">
-            <i class="fa fa-file"></i>
-        
-        </span>
-        <span class="cont">Bank Account</span>
-        </li>
-        
-        <li>
-            <span class="icons_09">
-            <i class="fa fa-file"></i>
-        
-        </span>
-        <span class="cont">Products to sell</span>
-        </li>
-        
+                <li>
+                    <span class="icons_09">
+                        <i class="fa fa-file"></i>
+                    </span>
+                    <span class="cont">GSTIN*</span>
+                </li>
+                <li>
+                    <span class="icons_09">
+                        <i class="fa fa-file"></i>
+                    </span>
+                    <span class="cont">Bank Account</span>
+                </li>
+                <li>
+                    <span class="icons_09">
+                        <i class="fa fa-file"></i>
+                    </span>
+                    <span class="cont">Products to sell</span>
+                </li>
             </ul>
         </div>
-        
         <div class="foorteee">
-        <p>*GSTIN is not required for sellers who only sell books</p>
-        
+            <p>*GSTIN is not required for sellers who only sell books</p>
         </div>
         <div class="s__09uygbd">
             <strong>What is Lorem Ipsum?</strong>
-        
             <p>here are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour</p>
             <p>, or randomised words which don't look even slightly believable. If you are going to use a passage</p>
         </div>
-        </div>
+    </div>
 </div>
