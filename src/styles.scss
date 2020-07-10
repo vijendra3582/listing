@@ -123,7 +123,7 @@ div#wrapper {
     margin-top: 2px;
 }
 
-label>.anticon {
+label > .anticon {
     margin-left: 3px;
     margin-right: 3px;
 }
@@ -239,7 +239,7 @@ nz-footer {
 form.login-form {
     padding: 21px;
     border: 1px solid #d3d3d3;
-    width: 26%!important;
+    width: 26% !important;
     background: #fff;
 }
 
@@ -247,20 +247,20 @@ form.login-form {
     width: 100%;
 }
 
-.ant-menu-horizontal>.ant-menu-item-active,
-.ant-menu-horizontal>.ant-menu-item-open,
-.ant-menu-horizontal>.ant-menu-item-selected,
-.ant-menu-horizontal>.ant-menu-item:hover,
-.ant-menu-horizontal>.ant-menu-submenu-active,
-.ant-menu-horizontal>.ant-menu-submenu-open,
-.ant-menu-horizontal>.ant-menu-submenu-selected,
-.ant-menu-horizontal>.ant-menu-submenu:hover {
+.ant-menu-horizontal > .ant-menu-item-active,
+.ant-menu-horizontal > .ant-menu-item-open,
+.ant-menu-horizontal > .ant-menu-item-selected,
+.ant-menu-horizontal > .ant-menu-item:hover,
+.ant-menu-horizontal > .ant-menu-submenu-active,
+.ant-menu-horizontal > .ant-menu-submenu-open,
+.ant-menu-horizontal > .ant-menu-submenu-selected,
+.ant-menu-horizontal > .ant-menu-submenu:hover {
     color: #fff;
     border-bottom: 0;
 }
 
-.ant-menu-horizontal>.ant-menu-item,
-.ant-menu-horizontal>.ant-menu-submenu {
+.ant-menu-horizontal > .ant-menu-item,
+.ant-menu-horizontal > .ant-menu-submenu {
     border-bottom: 0;
 }
 
@@ -275,7 +275,7 @@ form.login-form {
     color: #fff !important;
 }
 
-.ant-table-thead>tr>th {
+.ant-table-thead > tr > th {
     border-bottom: 1px solid lightgray;
 }
 
@@ -349,7 +349,7 @@ td.capitalize {
     text-transform: capitalize;
 }
 
-.ant-modal-footer button+button {
+.ant-modal-footer button + button {
     padding-bottom: 2px;
 }
 
@@ -376,7 +376,7 @@ nz-row.ant-row:first-child {
     font-weight: 700;
 }
 
-.ant-table-tbody>tr:nth-child(odd) td {
+.ant-table-tbody > tr:nth-child(odd) td {
     background: #dedede !important;
 }
 
@@ -410,7 +410,7 @@ td.p-td-search input {
     border-right-width: 2px !important;
 }
 
-.footer-div-modal>button {
+.footer-div-modal > button {
     margin-right: 26px;
 }
 
@@ -433,18 +433,18 @@ td.p-td-search input {
     margin: 2rem 0;
 }
 
-.ant-table-tbody>tr>td {
+.ant-table-tbody > tr > td {
     border-bottom: 1px solid #fff;
     background: #fff;
 }
 
-.ant-steps-item-wait>.ant-steps-item-container>.ant-steps-item-content>.ant-steps-item-title::after,
-.ant-steps-item-wait>.ant-steps-item-container>.ant-steps-item-tail::after {
+.ant-steps-item-wait > .ant-steps-item-container > .ant-steps-item-content > .ant-steps-item-title::after,
+.ant-steps-item-wait > .ant-steps-item-container > .ant-steps-item-tail::after {
     background-color: #d3d3d3;
 }
 
-.ant-steps-item-process>.ant-steps-item-container>.ant-steps-item-content>.ant-steps-item-title::after,
-.ant-steps-item-process>.ant-steps-item-container>.ant-steps-item-tail::after {
+.ant-steps-item-process > .ant-steps-item-container > .ant-steps-item-content > .ant-steps-item-title::after,
+.ant-steps-item-process > .ant-steps-item-container > .ant-steps-item-tail::after {
     background-color: #d3d3d3;
 }
 
@@ -574,7 +574,7 @@ a.download-sample {
     background: #fff;
 }
 
-.steps-action>button {
+.steps-action > button {
     margin-right: 2rem;
 }
 
@@ -630,7 +630,8 @@ span.logo-name {
     float: left;
     width: 34%;
     background: #fff;
-    box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 5px -1px, rgba(0, 0, 0, 0.2) 0px 6px 10px 0px, rgba(0, 0, 0, 0.2) 0px 1px 18px 0px;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 5px -1px, rgba(0, 0, 0, 0.2) 0px 6px 10px 0px,
+        rgba(0, 0, 0, 0.2) 0px 1px 18px 0px;
     /* margin: 29px; */
     padding: 28px;
     margin-left: 6%;
@@ -752,12 +753,13 @@ form.login-form {
     background: #fff;
 }
 
-@media screen and (min-width:320px) and (max-width:767px) {
+@media screen and (min-width: 320px) and (max-width: 767px) {
     .left__side__form {
         float: left;
         width: 100%;
         background: #fff;
-        box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 5px -1px, rgba(0, 0, 0, 0.2) 0px 6px 10px 0px, rgba(0, 0, 0, 0.2) 0px 1px 18px 0px;
+        box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 5px -1px, rgba(0, 0, 0, 0.2) 0px 6px 10px 0px,
+            rgba(0, 0, 0, 0.2) 0px 1px 18px 0px;
         /* margin: 29px; */
         padding: 1px;
         margin-left: 0px;
@@ -766,7 +768,13 @@ form.login-form {
     }
     .layout {
         height: auto;
-        background: rgba(0, 0, 0, 0) -webkit-gradient(linear, left top, left bottom, from(#3278bf), to(rgba(50, 120, 191, 0.8))) repeat scroll 0% 0%;
+        background: rgba(0, 0, 0, 0) -webkit-gradient(
+                linear,
+                left top,
+                left bottom,
+                from(#3278bf),
+                to(rgba(50, 120, 191, 0.8))
+            ) repeat scroll 0% 0%;
         background: rgba(0, 0, 0, 0) linear-gradient(#3278bf 0%, rgba(50, 120, 191, 0.8) 100%) repeat scroll 0% 0%;
     }
     .right__side__contents {
@@ -812,16 +820,33 @@ form.login-form {
         padding-top: 17px;
     }
     .left__side__form {
-        padding: 19px!important;
+        padding: 19px !important;
     }
 }
 
 .layout {
     height: auto;
-    background: rgba(0, 0, 0, 0) -webkit-gradient(linear, left top, left bottom, from(#3278bf), to(rgba(50, 120, 191, 0.8))) repeat scroll 0% 0%;
+    background: rgba(0, 0, 0, 0) -webkit-gradient(
+            linear,
+            left top,
+            left bottom,
+            from(#3278bf),
+            to(rgba(50, 120, 191, 0.8))
+        ) repeat scroll 0% 0%;
     background: rgba(0, 0, 0, 0) linear-gradient(#3278bf 0%, rgba(50, 120, 191, 0.8) 100%) repeat scroll 0% 0%;
 }
 
 .left__side__form {
     margin-bottom: 22px;
+}
+
+li.ant-menu-item:focus {
+    border: 0 !important;
+    box-shadow: none;
+    outline: none;
+}
+
+label.ant-radio-wrapper {
+    float: left;
+    width: 100%;
 }

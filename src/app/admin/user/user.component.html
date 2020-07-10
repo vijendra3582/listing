@@ -1,1 +1,162 @@
-<p>user works!</p>
+<div class="buttons">
+    <span class="heading-uppper-table">Manage User</span>
+    <a href="javascript:void(0)" (click)="add()">New User</a>
+</div>
+<div class="nz-table">
+    <nz-table #ajaxTable nzShowSizeChanger [nzFrontPagination]="false" [nzData]="listOfData" [nzLoading]="loading"
+        [nzTotal]="total" [(nzPageIndex)]="pageIndex" [(nzPageSize)]="pageSize" (nzPageIndexChange)="searchData()"
+        (nzPageSizeChange)="searchData(true)">
+        <thead (nzSortChange)="sort($event)" nzSingleSort>
+            <tr>
+                <th nzLeft="0px" nzShowSort nzSortKey="id">User ID</th>
+                <th nzShowSort nzSortKey="name">Name</th>
+                <th nzShowSort nzSortKey="email">Email</th>
+                <th nzShowSort nzSortKey="mobile">Mobile</th>
+                <th nzShowSort nzSortKey="status">Status</th>
+                <th nzRight="0px">Action</th>
+            </tr>
+            <tr>
+                <td class="p-td-search">
+                    <input type="text" (keyup.enter)="searchData()" [(ngModel)]="search.id" class="td-search">
+                </td>
+                <td class="p-td-search">
+                    <input type="text" (keyup.enter)="searchData()" [(ngModel)]="search.name" class="td-search">
+                </td>
+                <td class="p-td-search">
+                    <input type="text" (keyup.enter)="searchData()" [(ngModel)]="search.email" class="td-search">
+                </td>
+                <td class="p-td-search">
+                    <input type="text" (keyup.enter)="searchData()" [(ngModel)]="search.mobile" class="td-search">
+                </td>
+                <td class="p-td-search">
+                    <input type="text" (keyup.enter)="searchData()" [(ngModel)]="search.status" class="td-search">
+                </td>
+                <td class="p-td-search disabled">
+
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let data of ajaxTable.data; index as i">
+                <td nzLeft="0px">{{ data.id }}</td>
+                <td>{{ data.name }}</td>
+                <td>{{ data.email }}</td>
+                <td>{{ data.mobile }}</td>
+                <td class="capitalize">{{ data.status }}</td>
+                <td nzRight="0px">
+                    <ul>
+                        <li class="gray">
+                            <a (click)="edit(data.id)" class="edit">Edit</a>
+                        </li>
+                        <li class="tomato">
+                            <a nz-popconfirm nzPopconfirmTitle="Are you sure delete this user ?"
+                                (nzOnConfirm)="delete(data.id)" nzPopconfirmPlacement="topRight" class="delete"
+                                href="#">Delete</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+    </nz-table>
+</div>
+<nz-modal [(nzVisible)]="UserAddEditModal" nzTitle="{{ UserAddEditModalTitle }}" (nzOnCancel)="cancel()"
+    [nzNoAnimation]="true" [nzMaskClosable]="false">
+    <form nz-form [formGroup]="userForm" class="register-form">
+        <div class="errors">
+            <ul>
+                <li *ngFor="let item of server_message | keyvalue">
+                    {{ item.value.message }}
+                </li>
+            </ul>
+        </div>
+        <div class="steps-content">
+            <nz-form-item>
+                <nz-form-label nzRequired nzFor="name">Name</nz-form-label>
+                <nz-form-control>
+                    <input formControlName="name" id="'name'" nz-input [(ngModel)]="user.name" />
+                </nz-form-control>
+                <app-field-error [submitted]="submitted" [server_message]="server_message.name"
+                    [control]="userForm.get('name')"></app-field-error>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label nzRequired nzFor="email">Email</nz-form-label>
+                <nz-form-control>
+                    <input formControlName="email" id="'email'" nz-input [(ngModel)]="user.email" />
+                </nz-form-control>
+                <app-field-error [submitted]="submitted" [server_message]="server_message.email"
+                    [control]="userForm.get('email')"></app-field-error>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label nzRequired nzFor="mobile">Mobile</nz-form-label>
+                <nz-form-control>
+                    <input formControlName="mobile" id="'mobile'" nz-input [(ngModel)]="user.mobile" />
+                </nz-form-control>
+                <app-field-error [submitted]="submitted" [server_message]="server_message.mobile"
+                    [control]="userForm.get('mobile')"></app-field-error>
+            </nz-form-item>
+            <nz-form-item *ngIf="!user.id">
+                <nz-form-label nzRequired nzFor="password">Password</nz-form-label>
+                <nz-form-control>
+                    <input formControlName="password" id="'password'" nz-input [(ngModel)]="user.password" />
+                </nz-form-control>
+                <app-field-error [submitted]="submitted" [server_message]="server_message.password"
+                    [control]="userForm.get('password')"></app-field-error>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label nzRequired nzFor="address">Address</nz-form-label>
+                <nz-form-control>
+                    <textarea rows="4" nz-input id="address" formControlName="address"
+                        [(ngModel)]="user.address"></textarea>
+                </nz-form-control>
+                <app-field-error [submitted]="submitted" [server_message]="server_message.address"
+                    [control]="userForm.get('address')"></app-field-error>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label nzRequired nzFor="state">State</nz-form-label>
+                <nz-form-control>
+                    <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a State" formControlName="state"
+                        [(ngModel)]="user.state" (ngModelChange)="getCity('state')">
+                        <nz-option *ngFor="let option of states.states" [nzLabel]="option.name" [nzValue]="option.id">
+                        </nz-option>
+                    </nz-select>
+                </nz-form-control>
+                <app-field-error [submitted]="submitted" [server_message]="server_message.state"
+                    [control]="userForm.get('state')"></app-field-error>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label nzRequired nzFor="city">City</nz-form-label>
+                <nz-form-control>
+                    <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a city" formControlName="city"
+                        [(ngModel)]="user.city">
+                        <nz-option *ngFor="let option of cities.cities" [nzLabel]="option.name" [nzValue]="option.id">
+                        </nz-option>
+                    </nz-select>
+                </nz-form-control>
+                <app-field-error [submitted]="submitted" [server_message]="server_message.city"
+                    [control]="userForm.get('city')"></app-field-error>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label nzRequired nzFor="profession">Profession</nz-form-label>
+                <nz-form-control>
+                    <input nz-input id="profession" formControlName="profession" [(ngModel)]="user.profession" />
+                </nz-form-control>
+                <app-field-error [submitted]="submitted" [server_message]="server_message.profession"
+                    [control]="userForm.get('profession')"></app-field-error>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label nzRequired nzFor="status">Status</nz-form-label>
+                <nz-form-control>
+                    <nz-radio-group [(ngModel)]="user.status" formControlName="status">
+                        <label nz-radio nzValue="active">Active</label>
+                        <label nz-radio nzValue="pending">Inactive</label>
+                    </nz-radio-group>
+                </nz-form-control>
+                <app-field-error [submitted]="submitted" [server_message]="server_message.status"
+                    [control]="userForm.get('status')"></app-field-error>
+            </nz-form-item>
+            <button [disabled]="!userForm.valid" nz-button nzType="primary" (click)="submit()">
+                <span>Submit</span>
+            </button>
+        </div>
+    </form>
+</nz-modal>

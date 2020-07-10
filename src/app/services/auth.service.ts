@@ -10,7 +10,7 @@ export class AuthService {
     constructor(private api: ApiClient, private tokenService: TokenService) { }
 
     login(data) {
-        return this.api.post('auth/vendor/login', data);
+        return this.api.post('auth/admin/login', data);
     }
 
     register(data) {

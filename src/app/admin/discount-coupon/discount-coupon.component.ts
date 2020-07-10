@@ -252,4 +252,8 @@ export class DiscountCouponComponent implements OnInit {
     )
   }
 
+  convertDate(date){
+    return date.split("T")[0];
+  }
+
 }

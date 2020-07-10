@@ -292,18 +292,4 @@ export class VendorComponent implements OnInit {
       this.server_message = error.error.message.errors;
     }
   }
-
-  convertToSlug() {
-    if (this.vendor.name == null) {
-      return;
-    }
-    if (this.vendor.id == undefined) {
-      let slug = this.vendor.name
-        .toLowerCase()
-        .replace(/[^\w ]+/g, '')
-        .replace(/ +/g, '-')
-        ;
-      this.vendor.slug = slug;
-    }
-  }
 }
