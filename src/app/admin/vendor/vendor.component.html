@@ -87,6 +87,27 @@
         </div>
         <div class="steps-content step-two" *ngIf="currentStepForm == 1">
             <nz-form-item>
+                <nz-form-label nzRequired nzFor="images">Logo Image</nz-form-label>
+                <nz-form-control>
+                    <input type="file" id="logo" (change)="beforeUploadLogo($event.target.files)"
+                        accept="image/png,image/jpeg,image/gif,image/bmp,image/jpg">
+                    <button [disabled]="uploadingLogo" nz-button>
+                        <i nz-icon [nzType]="uploadingLogo ? 'loading' : 'upload'"></i>
+                        <span>Select File</span>
+                    </button>
+                </nz-form-control>
+                <div class="uploaded-images">
+                    <ul>
+                        <li *ngFor="let image of fileListLogo; index as i">
+                            <img class="upload-image" src="/uploads/images/{{ image }}" />
+                            <span class="image-name">{{ image }}</span>
+                            <span class="remove" (click)="removeImage(image, i, 'imageLogo')"><i nz-icon
+                                    nzType="close-circle" nzTheme="outline"></i></span>
+                        </li>
+                    </ul>
+                </div>
+            </nz-form-item>
+            <nz-form-item>
                 <nz-form-label nzRequired nzFor="name">Name</nz-form-label>
                 <nz-form-control>
                     <input nz-input id="name" formControlName="name" [(ngModel)]="vendor.name" />
@@ -113,7 +134,7 @@
             <nz-form-item *ngIf="!vendor.id">
                 <nz-form-label nzRequired nzFor="password">Password</nz-form-label>
                 <nz-form-control>
-                    <input nz-input id="password" formControlName="password" [(ngModel)]="vendor.password" />
+                    <input nz-input type="password" id="password" formControlName="password" [(ngModel)]="vendor.password" />
                 </nz-form-control>
                 <app-field-error [submitted]="submitted" [server_message]="server_message.password"
                     [control]="vendorForm.get('password')"></app-field-error>
@@ -201,8 +222,7 @@
                 <nz-form-item>
                     <nz-form-label nzRequired nzFor="gst_number">GST Number</nz-form-label>
                     <nz-form-control>
-                        <input nz-input id="gst_number" formControlName="gst_number"
-                            [(ngModel)]="vendor.gst_number" />
+                        <input nz-input id="gst_number" formControlName="gst_number" [(ngModel)]="vendor.gst_number" />
                     </nz-form-control>
                     <app-field-error [submitted]="submitted" [server_message]="server_message.gst_number"
                         [control]="vendorForm.get('gst_number')"></app-field-error>
@@ -230,8 +250,7 @@
                 <nz-form-item>
                     <nz-form-label nzRequired nzFor="gst_bussiness_type">Business Type</nz-form-label>
                     <nz-form-control>
-                        <nz-radio-group [(ngModel)]="vendor.gst_bussiness_type"
-                            formControlName="gst_bussiness_type">
+                        <nz-radio-group [(ngModel)]="vendor.gst_bussiness_type" formControlName="gst_bussiness_type">
                             <label nz-radio nzValue="proprietor">Proprietor</label>
                             <label nz-radio nzValue="company">Company</label>
                         </nz-radio-group>
@@ -308,7 +327,9 @@
                     <div class="uploaded-images">
                         <ul>
                             <li *ngFor="let document of vendor.gst_add_proof_file; index as i">
-                                <span class="image-name">{{ document }}</span>
+                                <a href="/documents/{{ document }}" download="">
+                                    <span class="image-name">{{ document }}</span>
+                                </a>
                                 <span class="remove" (click)="removeDocument(document, i, 'address')"><i nz-icon
                                         nzType="close-circle" nzTheme="outline"></i></span>
                             </li>
@@ -328,7 +349,9 @@
                     <div class="uploaded-images">
                         <ul>
                             <li *ngFor="let document of vendor.gst_add_proof_sign; index as i">
-                                <span class="image-name">{{ document }}</span>
+                                <a href="/documents/{{ document }}" download="">
+                                    <span class="image-name">{{ document }}</span>
+                                </a>
                                 <span class="remove" (click)="removeDocument(document, i, 'sign')"><i nz-icon
                                         nzType="close-circle" nzTheme="outline"></i></span>
                             </li>

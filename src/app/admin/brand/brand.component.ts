@@ -17,8 +17,8 @@ export class BrandComponent implements OnInit {
   total = 1;
   listOfData: any = [];
   loading = true;
-  sortValue: string | null = null;
-  sortKey: string | null = null;
+  sortValue: string | null = '';
+  sortKey: string | null = '';
   BrandAddEditModal: boolean = false;
   BrandAddEditModalTitle = '';
   BrandAddEditModalButton = '';
@@ -55,10 +55,10 @@ export class BrandComponent implements OnInit {
   }
 
   setSearch() {
-    this.search.id = null;
-    this.search.name = null;
-    this.search.slug = null;
-    this.search.status = null;
+    this.search.id = '';
+    this.search.name = '';
+    this.search.slug = '';
+    this.search.status = '';
   }
 
   searchData(reset: boolean = false): void {

@@ -125,31 +125,31 @@ export class RegisterComponent implements OnInit {
   }
 
   setValues() {
-    this.registerData.email = null;
-    this.registerData.password = null;
-    this.registerData.confirm_password = null;
-    this.registerData.name = null;
-    this.registerData.mobile = null;
-    this.registerData.address = null;
-    this.registerData.pincode = null;
-    this.registerData.city = null;
-    this.registerData.state = null;
+    this.registerData.email = '';
+    this.registerData.password = '';
+    this.registerData.confirm_password = '';
+    this.registerData.name = '';
+    this.registerData.mobile = '';
+    this.registerData.address = '';
+    this.registerData.pincode = '';
+    this.registerData.city = '';
+    this.registerData.state = '';
     this.registerData.country = 101;
     this.registerData.is_gst = 0;
-    this.registerData.gst_number = null;
-    this.registerData.gst_bussiness_name = null;
-    this.registerData.gst_pan = null;
+    this.registerData.gst_number = '';
+    this.registerData.gst_bussiness_name = '';
+    this.registerData.gst_pan = '';
     this.registerData.gst_bussiness_type = "proprietor";
-    this.registerData.gst_add_room = null;
-    this.registerData.gst_add_street = null;
-    this.registerData.gst_add_pincode = null;
-    this.registerData.gst_add_city = null;
-    this.registerData.gst_add_state = null;
+    this.registerData.gst_add_room = '';
+    this.registerData.gst_add_street = '';
+    this.registerData.gst_add_pincode = '';
+    this.registerData.gst_add_city = '';
+    this.registerData.gst_add_state = '';
     this.registerData.gst_add_proof_file = [];
     this.registerData.gst_add_proof_sign = [];
     this.registerData.is_bank = 0;
-    this.registerData.bank_acc_holder_name = null;
-    this.registerData.bank_acc_number = null;
+    this.registerData.bank_acc_holder_name = '';
+    this.registerData.bank_acc_number = '';
   }
 
   setForm() {

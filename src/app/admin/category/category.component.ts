@@ -17,8 +17,8 @@ export class CategoryComponent implements OnInit {
   total = 1;
   listOfData: any = [];
   loading = true;
-  sortValue: string | null = null;
-  sortKey: string | null = null;
+  sortValue: string | null = '';
+  sortKey: string | null = '';
   CategoryAddEditModal: boolean = false;
   CategoryAddEditModalTitle = '';
   CategoryAddEditModalButton = '';
@@ -55,10 +55,10 @@ export class CategoryComponent implements OnInit {
   }
 
   setSearch() {
-    this.search.id = null;
-    this.search.name = null;
-    this.search.slug = null;
-    this.search.status = null;
+    this.search.id = '';
+    this.search.name = '';
+    this.search.slug = '';
+    this.search.status = '';
   }
 
   searchData(reset: boolean = false): void {

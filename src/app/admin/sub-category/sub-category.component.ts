@@ -21,8 +21,8 @@ export class SubCategoryComponent implements OnInit {
   total = 1;
   listOfData: any = [];
   loading = true;
-  sortValue: string | null = null;
-  sortKey: string | null = null;
+  sortValue: string | null = '';
+  sortKey: string | null = '';
   SubCategoryAddEditModal: boolean = false;
   SubCategoryAddEditModalTitle = '';
   SubCategoryAddEditModalButton = '';
@@ -61,11 +61,11 @@ export class SubCategoryComponent implements OnInit {
   }
 
   setSearch() {
-    this.search.id = null;
-    this.search.category = null;
-    this.search.name = null;
-    this.search.slug = null;
-    this.search.status = null;
+    this.search.id = '';
+    this.search.category = '';
+    this.search.name = '';
+    this.search.slug = '';
+    this.search.status = '';
   }
 
   searchData(reset: boolean = false): void {
@@ -158,9 +158,9 @@ export class SubCategoryComponent implements OnInit {
 
   setValues() {
     this.subCategory = {};
-    this.subCategory.name = null;
-    this.subCategory.slug = null;
-    this.subCategory.category_id = null;
+    this.subCategory.name = '';
+    this.subCategory.slug = '';
+    this.subCategory.category_id = '';
     this.subCategory.status = 'active';
   }
 

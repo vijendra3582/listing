@@ -18,8 +18,8 @@ export class VendorComponent implements OnInit {
   total = 1;
   listOfData: any = [];
   loading = true;
-  sortValue: string | null = null;
-  sortKey: string | null = null;
+  sortValue: string | null = '';
+  sortKey: string | null = '';
   VendorAddEditModal: boolean = false;
   VendorAddEditModalTitle = '';
   VendorAddEditModalButton = '';
@@ -41,6 +41,9 @@ export class VendorComponent implements OnInit {
 
   uploading: boolean = false;
   uploadingSign: boolean = false;
+
+  uploadingLogo = false;
+  fileListLogo: any = [];
 
   constructor(
     private fb: FormBuilder,
@@ -65,11 +68,11 @@ export class VendorComponent implements OnInit {
   }
 
   setSearch() {
-    this.search.id = null;
-    this.search.name = null;
-    this.search.email = null;
-    this.search.mobile = null;
-    this.search.status = null;
+    this.search.id = '';
+    this.search.name = '';
+    this.search.email = '';
+    this.search.mobile = '';
+    this.search.status = '';
   }
 
   searchData(reset: boolean = false): void {
@@ -90,15 +93,20 @@ export class VendorComponent implements OnInit {
     this.VendorAddEditModal = true;
     this.VendorAddEditModalTitle = "New Vendor";
     this.VendorAddEditModalButton = "Insert";
+    this.fileListLogo = [];
     this.setForm();
     this.setValues();
     this.submitted = false;
+    this.currentStepForm = 0;
   }
 
   edit(id) {
     this.vendorService.single(id).subscribe(
       data => {
         this.vendor = data.data;
+        this.fileListLogo = JSON.parse(this.vendor.logo);
+        this.vendor.gst_add_proof_file = JSON.parse(this.vendor.gst_add_proof_file);
+        this.vendor.gst_add_proof_sign = JSON.parse(this.vendor.gst_add_proof_sign);
         this.VendorAddEditModal = true;
         this.VendorAddEditModalTitle = "Edit : " + this.vendor.name;
         this.VendorAddEditModalButton = "Update";
@@ -117,10 +125,8 @@ export class VendorComponent implements OnInit {
 
   submit() {
     this.submitted = true;
-    // if (!this.vendorForm.valid) {
-    //   return;
-    // }
     this.isSubmitLoading = true;
+    this.vendor.logo = this.fileListLogo;
     if (this.vendor.id === undefined) {
       this.vendorService.insert(this.vendor).subscribe(
         data => this.handleResponse(data),
@@ -197,6 +203,34 @@ export class VendorComponent implements OnInit {
     return false;
   }
 
+  beforeUploadLogo = (file: FileList) => {
+    if (this.fileListLogo.length > 0) {
+      return;
+    }
+    this.uploadingLogo = true;
+    const formData = new FormData();
+    formData.append('images', file[0]);
+    this.commonService.upload(formData).subscribe(
+      data => {
+        this.fileListLogo = [...this.fileListLogo, ...data.files];
+        this.uploadingLogo = false;
+      }
+    )
+    return false;
+  }
+
+  removeImage(image, index, type) {
+    this.commonService.removeImage({ "image": image }).subscribe(
+      data => {
+        if (type == 'imageLogo')
+          this.fileListLogo.splice(index, 1);
+      },
+      error => {
+
+      }
+    )
+  }
+
   removeDocument(document, index, type) {
     this.commonService.removeDocument({ "document": document }).subscribe(
       data => {
@@ -214,31 +248,32 @@ export class VendorComponent implements OnInit {
 
   setValues() {
     this.vendor = {};
-    this.vendor.email = null;
-    this.vendor.password = null;
-    this.vendor.name = null;
-    this.vendor.mobile = null;
-    this.vendor.address = null;
-    this.vendor.pincode = null;
-    this.vendor.city = null;
-    this.vendor.state = null;
+    this.vendor.email = '';
+    this.vendor.password = '';
+    this.vendor.name = '';
+    this.vendor.mobile = '';
+    this.vendor.address = '';
+    this.vendor.pincode = '';
+    this.vendor.city = '';
+    this.vendor.state = '';
     this.vendor.country = 101;
-    this.vendor.is_gst = 0;
-    this.vendor.gst_number = null;
-    this.vendor.gst_bussiness_name = null;
-    this.vendor.gst_pan = null;
-    this.vendor.gst_bussiness_type = "proprietor";
-    this.vendor.gst_add_room = null;
-    this.vendor.gst_add_street = null;
-    this.vendor.gst_add_pincode = null;
-    this.vendor.gst_add_city = null;
-    this.vendor.gst_add_state = null;
+    this.vendor.is_gst = '0';
+    this.vendor.gst_number = '';
+    this.vendor.gst_bussiness_name = '';
+    this.vendor.gst_pan = '';
+    this.vendor.gst_bussiness_type = 'proprietor';
+    this.vendor.gst_add_room = '';
+    this.vendor.gst_add_street = '';
+    this.vendor.gst_add_pincode = '';
+    this.vendor.gst_add_city = '';
+    this.vendor.gst_add_state = '';
+    
     this.vendor.gst_add_proof_file = [];
     this.vendor.gst_add_proof_sign = [];
-    this.vendor.is_bank = 0;
-    this.vendor.bank_acc_holder_name = null;
-    this.vendor.bank_acc_number = null;
-    this.vendor.from_admin = "yes";
+    this.vendor.is_bank = '0';
+    this.vendor.bank_acc_holder_name = '';
+    this.vendor.bank_acc_number = '';
+    this.vendor.from_admin = 'yes';
     this.vendor.status = 'active';
   }
 

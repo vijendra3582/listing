@@ -27,8 +27,8 @@ export class DiscountCouponComponent implements OnInit {
   total = 1;
   listOfData: any = [];
   loading = true;
-  sortValue: string | null = null;
-  sortKey: string | null = null;
+  sortValue: string | null = '';
+  sortKey: string | null = '';
   CouponAddEditModal: boolean = false;
   CouponAddEditModalTitle = '';
   CouponAddEditModalButton = '';
@@ -62,15 +62,15 @@ export class DiscountCouponComponent implements OnInit {
   }
 
   setSearch() {
-    this.search.id = null;
-    this.search.title = null;
-    this.search.coupon_code = null;
-    this.search.discount_on_type = null;
-    this.search.valid_from = null;
-    this.search.valid_to = null;
-    this.search.discount_type = null;
-    this.search.discount_value = null;
-    this.search.status = null;
+    this.search.id = '';
+    this.search.title = '';
+    this.search.coupon_code = '';
+    this.search.discount_on_type = '';
+    this.search.valid_from = '';
+    this.search.valid_to = '';
+    this.search.discount_type = '';
+    this.search.discount_value = '';
+    this.search.status = '';
   }
 
   searchData(reset: boolean = false): void {

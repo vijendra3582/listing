@@ -17,8 +17,8 @@ export class BundleComponent implements OnInit {
   total = 1;
   listOfData: any = [];
   loading = true;
-  sortValue: string | null = null;
-  sortKey: string | null = null;
+  sortValue: string | null = '';
+  sortKey: string | null = '';
   search: any = {};
 
   BundleAddEditModal: boolean = false;
@@ -248,7 +248,7 @@ export class BundleComponent implements OnInit {
       var value = value;
       this.bundle[type] = value;
     } else {
-      this.bundle[type] = null;
+      this.bundle[type] = '';
       return;
     }
   }
@@ -268,10 +268,10 @@ export class BundleComponent implements OnInit {
   }
 
   setSearch() {
-    this.search.id = null;
-    this.search.name = null;
-    this.search.featured = null;
-    this.search.status = null;
+    this.search.id = '';
+    this.search.name = '';
+    this.search.featured = '';
+    this.search.status = '';
   }
 
   searchData(reset: boolean = false): void {
@@ -401,18 +401,18 @@ export class BundleComponent implements OnInit {
       "brand_id": null,
       "product_id": null
     }];
-    this.bundle.name = null;
-    this.bundle.slug = null;
+    this.bundle.name = '';
+    this.bundle.slug = '';
     this.bundle.status = 'active';
-    this.bundle.sale_price = null;
-    this.bundle.purchase_price = null;
+    this.bundle.sale_price = '';
+    this.bundle.purchase_price = '';
     this.bundle.is_featured = 'no';
     this.bundle.discount_type = 'flat';
-    this.bundle.discount = null;
+    this.bundle.discount = '';
     this.bundle.tax_type = 'flat';
-    this.bundle.tax = null;
-    this.bundle.description = null;
-    this.bundle.stock = null;
+    this.bundle.tax = '';
+    this.bundle.description = '';
+    this.bundle.stock = '';
   }
 
   setForm() {

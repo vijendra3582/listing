@@ -17,8 +17,8 @@ export class UserComponent implements OnInit {
   total = 1;
   listOfData: any = [];
   loading = true;
-  sortValue: string | null = null;
-  sortKey: string | null = null;
+  sortValue: string | null = '';
+  sortKey: string | null = '';
   UserAddEditModal: boolean = false;
   UserAddEditModalTitle = '';
   UserAddEditModalButton = '';
@@ -63,11 +63,11 @@ export class UserComponent implements OnInit {
   }
 
   setSearch() {
-    this.search.id = null;
-    this.search.name = null;
-    this.search.email = null;
-    this.search.mobile = null;
-    this.search.status = null;
+    this.search.id = '';
+    this.search.name = '';
+    this.search.email = '';
+    this.search.mobile = '';
+    this.search.status = '';
   }
 
   searchData(reset: boolean = false): void {
@@ -162,15 +162,15 @@ export class UserComponent implements OnInit {
 
   setValues() {
     this.user = {};
-    this.user.email = null;
-    this.user.password = null;
-    this.user.name = null;
-    this.user.mobile = null;
-    this.user.address = null;
-    this.user.city = null;
-    this.user.state = null;
+    this.user.email = '';
+    this.user.password = '';
+    this.user.name = '';
+    this.user.mobile = '';
+    this.user.address = '';
+    this.user.city = '';
+    this.user.state = '';
     this.user.country = 101;
-    this.user.profession = null;
+    this.user.profession = '';
     this.user.status = 'active';
   }
 

@@ -77,16 +77,16 @@ export class RegisterUserComponent implements OnInit {
   }
 
   setValues() {
-    this.registerData.email = null;
-    this.registerData.password = null;
-    this.registerData.confirm_password = null;
-    this.registerData.name = null;
-    this.registerData.mobile = null;
-    this.registerData.address = null;
-    this.registerData.city = null;
-    this.registerData.state = null;
+    this.registerData.email = '';
+    this.registerData.password = '';
+    this.registerData.confirm_password = '';
+    this.registerData.name = '';
+    this.registerData.mobile = '';
+    this.registerData.address = '';
+    this.registerData.city = '';
+    this.registerData.state = '';
     this.registerData.country = 101;
-    this.registerData.profession = null;
+    this.registerData.profession = '';
   }
 
   setForm() {

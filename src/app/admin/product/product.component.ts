@@ -17,8 +17,8 @@ export class ProductComponent implements OnInit {
   total = 1;
   listOfData: any = [];
   loading = true;
-  sortValue: string | null = null;
-  sortKey: string | null = null;
+  sortValue: string | null = '';
+  sortKey: string | null = '';
   search: any = {};
 
   ProductAddEditModal: boolean = false;
@@ -212,7 +212,7 @@ export class ProductComponent implements OnInit {
       var value = value;
       this.product[type] = value;
     } else {
-      this.product[type] = null;
+      this.product[type] = '';
       return;
     }
   }
@@ -279,13 +279,13 @@ export class ProductComponent implements OnInit {
   }
 
   setSearch() {
-    this.search.id = null;
-    this.search.name = null;
-    this.search.category = null;
-    this.search.sub_category = null;
-    this.search.brand = null;
-    this.search.featured = null;
-    this.search.status = null;
+    this.search.id = '';
+    this.search.name = '';
+    this.search.category = '';
+    this.search.sub_category = '';
+    this.search.brand = '';
+    this.search.featured = '';
+    this.search.status = '';
   }
 
   searchData(reset: boolean = false): void {
@@ -322,8 +322,8 @@ export class ProductComponent implements OnInit {
         this.product.category_id = this.product.category_id.toString();
         this.product.sub_category_id = this.product.sub_category_id.toString();
         this.product.brand_id = this.product.brand_id.toString();
-        this.fileList = this.product.images;
-        this.fileListLogo = this.product.logo;
+        this.fileList = JSON.parse(this.product.images);
+        this.fileListLogo = JSON.parse(this.product.logo);
         this.ProductAddEditModal = true;
         this.ProductAddEditModalTitle = "Edit : " + this.product.name;
         this.ProductAddEditModalButton = "Update";
@@ -401,21 +401,21 @@ export class ProductComponent implements OnInit {
 
   setValues() {
     this.product = {};
-    this.product.category_id = null;
-    this.product.sub_category_id = null;
-    this.product.brand_id = null;
-    this.product.name = null;
-    this.product.slug = null;
+    this.product.category_id = '';
+    this.product.sub_category_id = '';
+    this.product.brand_id = '';
+    this.product.name = '';
+    this.product.slug = '';
     this.product.status = 'active';
-    this.product.sale_price = null;
-    this.product.purchase_price = null;
+    this.product.sale_price = '';
+    this.product.purchase_price = '';
     this.product.is_featured = 'no';
     this.product.discount_type = 'flat';
-    this.product.discount = null;
+    this.product.discount = '';
     this.product.tax_type = 'flat';
-    this.product.tax = null;
-    this.product.description = null;
-    this.product.stock = null;
+    this.product.tax = '';
+    this.product.description = '';
+    this.product.stock = '';
   }
 
   setForm() {

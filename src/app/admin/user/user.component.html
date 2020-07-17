@@ -97,7 +97,7 @@
             <nz-form-item *ngIf="!user.id">
                 <nz-form-label nzRequired nzFor="password">Password</nz-form-label>
                 <nz-form-control>
-                    <input formControlName="password" id="'password'" nz-input [(ngModel)]="user.password" />
+                    <input formControlName="password" id="'password'" type="password" nz-input [(ngModel)]="user.password" />
                 </nz-form-control>
                 <app-field-error [submitted]="submitted" [server_message]="server_message.password"
                     [control]="userForm.get('password')"></app-field-error>
