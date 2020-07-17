@@ -77,6 +77,9 @@ export class RegisterUserComponent implements OnInit {
   }
 
   setValues() {
+    this.submitted = false;
+    this.currentStepForm = 0;
+    this.registerData = {};
     this.registerData.email = '';
     this.registerData.password = '';
     this.registerData.confirm_password = '';
@@ -113,7 +116,6 @@ export class RegisterUserComponent implements OnInit {
 
   handleResponse(data) {
     if (data.status == true) {
-      this.currentStepForm = 0;
       this.setValues();
       this.responseMessage.success(data.message, { nzDuration: 2000 });
       // this.router.navigateByUrl('/auth/login');
