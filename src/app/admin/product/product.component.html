@@ -12,7 +12,6 @@
                 <th nzLeft="0px" nzShowSort nzSortKey="id">Product ID</th>
                 <th>Product SKU</th>
                 <th nzShowSort nzSortKey="name">Name</th>
-                <th>Logo</th>
                 <th>Category</th>
                 <th>Sub Category</th>
                 <th>Brand</th>
@@ -28,7 +27,6 @@
                 <td class="p-td-search">
                     <input type="text" (keyup.enter)="searchData(true)" [(ngModel)]="search.name" class="td-search">
                 </td>
-                <td class="p-td-search disabled"></td>
                 <td class="p-td-search">
                     <input type="text" (keyup.enter)="searchData(true)" [(ngModel)]="search.category" class="td-search">
                 </td>
@@ -53,9 +51,6 @@
                 <td nzLeft="0px">{{ data.id }}</td>
                 <td>{{ data.sku }}</td>
                 <td>{{ data.name }}</td>
-                <td>
-                    <img src="/uploads/images/{{ data.logo[0] }}" alt="{{ data.name }}" class="td-image">
-                </td>
                 <td>{{ data.category_name }}</td>
                 <td>{{ data.sub_category_name }}</td>
                 <td>{{ data.brand_name }}</td>
@@ -198,7 +193,7 @@
                     <div class="uploaded-images">
                         <ul>
                             <li *ngFor="let image of fileList; index as i">
-                                <img class="upload-image" src="/uploads/images/{{ image }}"/>
+                                <img class="upload-image" src="/uploads/thumbs/{{ image }}"/>
                                 <span class="image-name">{{ image }}</span>
                                 <span class="remove" (click)="removeImage(image, i, 'image')"><i nz-icon
                                         nzType="close-circle" nzTheme="outline"></i></span>
@@ -218,7 +213,7 @@
                     <div class="uploaded-images">
                         <ul>
                             <li *ngFor="let image of fileListLogo; index as i">
-                                <img class="upload-image" src="/uploads/images/{{ image }}"/>
+                                <img class="upload-image" src="/uploads/thumbs/{{ image }}"/>
                                 <span class="image-name">{{ image }}</span>
                                 <span class="remove" (click)="removeImage(image, i, 'imageLogo')"><i nz-icon
                                         nzType="close-circle" nzTheme="outline"></i></span>
