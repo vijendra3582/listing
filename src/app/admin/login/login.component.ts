@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ConstantsService } from 'src/app/services/constants.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { TokenService } from 'src/app/services/token.service';
@@ -17,14 +17,20 @@ export class LoginComponent implements OnInit {
   submitted = false;
   server_message: any = {};
   globalData: any = {};
+  loginType: String = 'admin';
 
   constructor(
     private authService: AuthService,
     private tokenService: TokenService,
     private siteData: ConstantsService,
     private titleService: Title,
+    private activatedRoute: ActivatedRoute,
     private router: Router) { 
       this.titleService.setTitle('Admin Login - Most Market');
+      var loginType = this.activatedRoute.snapshot.paramMap.get('type');
+      if(loginType){
+        this.loginType = loginType;
+      }
     }
 
   ngOnInit() {
@@ -39,7 +45,7 @@ export class LoginComponent implements OnInit {
   login() {
     this.submitted = true;
     if (this.loginForm.valid) {
-      this.authService.login(this.loginForm.value).subscribe(
+      this.authService.login(this.loginForm.value, this.loginType).subscribe(
         data => this.handleResponse(data),
         error => this.handleError(error)
       );
@@ -49,7 +55,7 @@ export class LoginComponent implements OnInit {
   handleResponse(data) {
     this.tokenService.setUserInfo(data);
     this.loginForm.reset();
-    this.router.navigateByUrl('/dashboard');
+    this.router.navigateByUrl('/');
   }
 
   handleError(err) {

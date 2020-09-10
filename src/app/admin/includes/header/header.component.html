@@ -11,15 +11,15 @@
                 <li nz-menu-item routerLink="/brand">Brand</li>
                 <li nz-menu-item routerLink="/product">Products</li>
                 <li nz-menu-item routerLink="/import-product">Import Product</li>
-                <li nz-menu-item routerLink="/bundle">Bundles</li>
+                <!-- <li nz-menu-item routerLink="/bundle">Bundles</li> -->
             </ul>
         </li>
         <li nz-menu-item routerLink="/order">Orders</li>
         <li nz-menu-item routerLink="/user" *ngIf="sessionRole != 'vendor'">Users</li>
         <li nz-menu-item routerLink="/vendor" *ngIf="sessionRole != 'vendor'">Vendors</li>
-        <li nz-menu-item routerLink="/staff" *ngIf="sessionRole != 'vendor'">Staff</li>
+        <!-- <li nz-menu-item routerLink="/staff" *ngIf="sessionRole != 'vendor'">Staff</li> -->
         <li nz-menu-item routerLink="/discount-coupon">Discount Coupon</li>
-        <li nz-menu-item routerLink="/ticket">Ticket</li>
+        <!-- <li nz-menu-item routerLink="/ticket">Ticket</li> -->
         <li (click)="logout()" nz-menu-item class="logout-menu">Logout<i nz-icon nzType="logout" nzTheme="outline"></i>
         </li>
     </ul>

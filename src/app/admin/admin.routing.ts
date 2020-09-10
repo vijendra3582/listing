@@ -34,6 +34,11 @@ export const adminRoutes: Routes = [
         component: LoginComponent
     },
     {
+        path: "auth/login/:type",
+        canActivate: [LoginGuard],
+        component: LoginComponent
+    },
+    {
         path: "auth/register",
         canActivate: [LoginGuard],
         component: RegisterComponent

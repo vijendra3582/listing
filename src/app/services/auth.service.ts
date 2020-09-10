@@ -9,8 +9,8 @@ import { TokenService } from './../services/token.service';
 export class AuthService {
     constructor(private api: ApiClient, private tokenService: TokenService) { }
 
-    login(data) {
-        return this.api.post('auth/admin/login', data);
+    login(data, type) {
+        return this.api.post('auth/' + type + '/login', data);
     }
 
     register(data) {
@@ -36,8 +36,8 @@ export class AuthService {
     resetPassword(data) {
         return this.api.post('auth/vendor/reset-password', data);
     }
-    
-    logout(){
+
+    logout() {
         this.tokenService.logout();
     }
 }

@@ -60,7 +60,7 @@
                 <td nzLeft="0px">{{ data.id }}</td>
                 <td>{{ data.title }}</td>
                 <td>{{ data.coupon_code }}</td>
-                <td class="capitalize">{{ data.discount_on_type }}</td>
+                <td class="capitalize">{{ data.discount_on_type.replace("_", " ") }}</td>
                 <td>{{ convertDate(data.valid_from) }}</td>
                 <td>{{ convertDate(data.valid_to) }}</td>
                 <td class="capitalize">{{ data.discount_type }}</td>
